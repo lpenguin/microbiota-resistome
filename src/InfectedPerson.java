@@ -2,11 +2,6 @@
  describes class of infected peaple
  */
 
-import java.awt.geom.Arc2D;
-import java.io.IOException;
-import java.util.List;
-import java.util.Random;
-
 public abstract class InfectedPerson extends Person {
 
     public InfectedPerson(double micResistance, boolean pathResistance, int incCountdown) {

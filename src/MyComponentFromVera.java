@@ -1,5 +1,4 @@
-import com.sun.xml.internal.ws.util.StringUtils;
-
+/*
 import javax.swing.*;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -20,29 +19,16 @@ import java.io.IOException;
 //TODO: make separate functions to replace healthy persons with infectious, and infectious with antibiotic treated
 
 
+*/
 /**
  * Created by anna on 20.07.16.
- */
-public class MyComponent {
+ *//*
 
-    public void printBlock(String inpStr) {
-        System.out.print("=="+ new String(new char[inpStr.length()]).replace("\0", "=") +"== \n");
-        System.out.print("= "+inpStr+"= \n");
-        System.out.print("=="+ new String(new char[inpStr.length()]).replace("\0", "=") +"== \n");
-    };
+public class MyComponentFromVera extends JPanel {
 
     //Constructor
-    public MyComponent(int iterationNum) {
-
-        int i = 0;
-        printBlock("Start working!");
-        do {
-            actionCore();
-            i++;
-        } while (i<iterationNum);
-        printBlock("Working finished!");
-
-/*      setBackground(Color.black);
+    public MyComponentFromVera(int width, int height) {
+        setBackground(Color.black);
 
         timer = new Timer(30, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -61,8 +47,7 @@ public class MyComponent {
         JPanel panel = new JPanel();
         panel.add(start);
         setLayout(new BorderLayout());
-        add(panel,BorderLayout.PAGE_START);*/
-
+        add(panel,BorderLayout.PAGE_START);
     }
 
     public Graphics2D graphics;
@@ -159,7 +144,6 @@ public class MyComponent {
     }
 
 
-/*
 
     @Override
     public void paintComponent(Graphics g) {
@@ -183,12 +167,11 @@ public class MyComponent {
             Hospitals.get(i).drawLocation(g);
         }
     }
-*/
 
-    /*@Override
+    @Override
     public Dimension getPreferredSize() {
         return new Dimension(D_WIDTH, D_HEIGHT);
-    }*/
+    }
 
     private void actionCore() {
         if (ticks == 0) {
@@ -502,6 +485,7 @@ public class MyComponent {
 
 
 //if Person has coordinates
+*/
 /*     public void Action(ArrayList<HealthyPerson> TownHealthyPer, ArrayList<IncPeriodPerson> TownInfPer,
                        ArrayList<AntibioticTreatedPerson> TownAntTr) {
         nIncPerTown = TownInfPer.size();
@@ -531,3 +515,4 @@ public class MyComponent {
             }
         }
     }*/
+

@@ -1,9 +1,3 @@
-import java.awt.Graphics;
-import java.io.IOException;
-import java.util.Random;
-
-import javax.swing.JComponent;
-import javax.swing.JFrame;
 import java.util.Random;
 
 
