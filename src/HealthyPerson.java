@@ -15,7 +15,7 @@ public class HealthyPerson extends Person {
     public boolean getToBeChanged(){return this.toBeChanged;}
 
     // marking a person to be infected
-    public void tick(MyComponent myComp, double pInfected, double decreaseCoef, double pHospitalize){
+    public void tick(Simulation myComp, double pInfected, double decreaseCoef, double pHospitalize){
         if(micResistance !=0){
             micResistance = micResistance - decreaseCoef;
             if(micResistance < 0) {micResistance =0;}

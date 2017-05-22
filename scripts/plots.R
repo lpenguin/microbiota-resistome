@@ -1,11 +1,12 @@
 rm(list=ls(all=TRUE)); gc()
 #current.directory <- "/home/vera/agent_resistome/microbiota-resistome/out"
-current.directory <- "/home/anna/agent_resistome/microbiota-resistome/out"
-setwd(current.directory)
+rootDir <- dirname(dirname(rstudioapi::getActiveDocumentContext()$path))
+setwd(rootDir)
 library("testthat")
-source("/home/anna/agent_resistome/microbiota-resistome/src/functions_for_plots.R")
+source(paste("/home/anna/agent_resistome/microbiota-resistome/src/functions_for_plots.R"), sep="")
+source("src/functions_for_plots.R")
 #source("/home/vera/agent_resistome/microbiota-resistome/src/functions_for_plots.R")
-results <- read.table("log.txt", header = T)
+results <- read.table("out/log.txt", header = T)
 results1 <- read.table("plots/no effects/log.txt", header = T)
 results2 <- read.table("plots/wrong_treatment_2/log.txt", header = T)
 results3 <- read.table("plots/microbiota_resist_2/log.txt", header = T)

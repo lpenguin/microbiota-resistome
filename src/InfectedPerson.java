@@ -20,6 +20,6 @@ public abstract class InfectedPerson extends Person {
         }
         return pRes;
     }
-    public abstract void tick(MyComponent myComp, double p, double coef, double changePathResCoef);
+    public abstract void tick(Simulation myComp, double p, double coef, double changePathResCoef);
 }
 

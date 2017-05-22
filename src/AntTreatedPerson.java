@@ -12,13 +12,13 @@ public class AntTreatedPerson extends InfectedPerson {
     public int treatment_countdown;
     public double pGetToHosp;
     public boolean hospitalize=false;
-    public void tick(MyComponent myComp, double p, double growthCoef, double coefficient){
+    public void tick(Simulation myComp, double p, double growthCoef, double coefficient){
         hospitalize = bernoulli(p);
         treatment_countdown = treatment_countdown -1;
         if (incCountdown !=0) {incCountdown = incCountdown-1;}
         boolean tmp = pathResistance;
         pathResistance = changePathResistance(pathResistance,micResistance, coefficient);
-        if(tmp == false & pathResistance == true) {incCountdown = MyComponent.getIncLimit2();} //if pathogene becomes resistant the countdown begins
+        if(tmp == false & pathResistance == true) {incCountdown = Simulation.getN_incLimit2();} //if pathogene becomes resistant the countdown begins
         if(growthCoef > 0){
             if(micResistance !=1){
                 micResistance = micResistance + growthCoef;

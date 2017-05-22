@@ -10,7 +10,7 @@ public class HealthyHospPerson extends Person {
     public int trCountdown;
     public boolean infected = false;
     public boolean pRes;
-    public void tick(MyComponent myComp, double pInfHosp, double decreaseCoef, double pResistant){
+    public void tick(Simulation myComp, double pInfHosp, double decreaseCoef, double pResistant){
         if(micResistance !=0){
             micResistance = micResistance - decreaseCoef;
             if(micResistance < 0) {micResistance = 0;}

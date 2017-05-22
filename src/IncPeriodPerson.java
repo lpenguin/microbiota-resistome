@@ -9,7 +9,7 @@ public class IncPeriodPerson extends InfectedPerson{
     }
 
 
-    public void tick(MyComponent myComp, double p, double decreaseCoef, double coefficient){
+    public void tick(Simulation myComp, double p, double decreaseCoef, double coefficient){
         incCountdown -= 1;
         this.pathResistance = changePathResistance(this.pathResistance,this.micResistance, coefficient);
         if(micResistance !=0) {

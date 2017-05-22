@@ -11,14 +11,14 @@ tests <- function(results){
                  results$AvPathResistance[!is.na(results$AvPathResistance)]>=0,
                rep(T,length(results$AvPathResistance[!is.nan(results$AvPathResistance)])))
 }
-number_of_people <- function(results,  legend_x, legend_y, folder = "plots/tmp",save, title = ""){
+number_of_people <- function(results,  legend_x, legend_y, folder = "plots/tmp",save, inp.title){
   filename <- paste0(folder,"/number_of_people.png")
   if (save == T) png(filename)
  # par(mfrow = c(1,1))
   plot(results$Ticks, results$InfectedPersonsInTown + results$InfectedPersonsInHospital, col = "blue", type = "l",
-       xlab = "время, дни", ylab = "количество человек", lwd=2,main = title,
-       ylim = c(0, max(results$InfectedPersonsInHosp + results$InfectedPersonsInTown,
-                       results$HealthyPersonsInHospital)+500))
+       xlab = "время, дни", ylab = "количество человек", lwd=2,main = inp.title,
+       ylim = c(0, 50+2*max(results$InfectedPersonsInHosp + results$InfectedPersonsInTown,
+                       results$HealthyPersonsInHospital)))
   lines(results$Ticks,results$AvPathResistance*(results$InfectedPersonsInTown+results$InfectedPersonsInHospital),
         col = "red", lwd = 2)
   lines(results$Ticks, results$InfectedPersonsInHospital, col = "green", lwd=2)

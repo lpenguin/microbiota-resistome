@@ -12,11 +12,11 @@ public abstract class Person {
     }
     private static Random random;    // pseudo-random number generator
     private static long seed;       // pseudo-random number generator seed
-    public static double micResistance;
-    public abstract void tick(MyComponent myComp, double p, double coef, double changePathResCoef);
+    public double micResistance;
+    public abstract void tick(Simulation myComp, double p, double coef, double changePathResCoef);
 
     //generating random number from bernoulli distribution
-    static {
+    static { // auto done ????
         seed = System.currentTimeMillis();
         random = new Random(seed);
     }
@@ -25,7 +25,7 @@ public abstract class Person {
         random = new Random(seed);
     }
 
-    public static boolean bernoulli(double p) {
+    public static boolean bernoulli(double p) { //?????????????????
         if (!(p >= 0.0 & p <= 1.0))
             throw new IllegalArgumentException("Probability must be between 0.0 and 1.0");
         double ans = random.nextDouble();

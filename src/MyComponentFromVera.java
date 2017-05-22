@@ -217,7 +217,7 @@ public class MyComponentFromVera extends JPanel {
 
 
 
-        Action(TownHealthyPersons, TownIncPerPersons, TownAntTrPersons, HospPers,
+        action(TownHealthyPersons, TownIncPerPersons, TownAntTrPersons, HospPers,
                 TownAntTtPersons2, TownIncPerPersons2, HealthyHospPersons);
 
         if (ticks == tickslimit) {
@@ -252,7 +252,7 @@ public class MyComponentFromVera extends JPanel {
     }
 
     //action for each component in a list
-    public void Action(ArrayList<HealthyPerson> TownHealthyPer, ArrayList<IncPeriodPerson> TownIncPer,
+    public void action(ArrayList<HealthyPerson> TownHealthyPer, ArrayList<IncPeriodPerson> TownIncPer,
                        ArrayList<AntTreatedPerson> TownAntTr, ArrayList<AntTreatedPerson> HospAntTr,
                        ArrayList<AntTreatedPerson> TownAntTr2, ArrayList<IncPeriodPerson> TownIncPer2,
                        ArrayList<HealthyHospPerson> HealthyHospPer) {
@@ -486,7 +486,7 @@ public class MyComponentFromVera extends JPanel {
 
 //if Person has coordinates
 */
-/*     public void Action(ArrayList<HealthyPerson> TownHealthyPer, ArrayList<IncPeriodPerson> TownInfPer,
+/*     public void action(ArrayList<HealthyPerson> TownHealthyPer, ArrayList<IncPeriodPerson> TownInfPer,
                        ArrayList<AntibioticTreatedPerson> TownAntTr) {
         nIncPerTown = TownInfPer.size();
         nAntTrTown = TownAntTr.size();
