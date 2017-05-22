@@ -2,6 +2,7 @@
 
 iterNum="$1"
 
-javac ../src/Main.java
+rm -f ../src/*.class
+javac -cp ../src/ ../src/Main.java
 java -cp ../src/ Main $iterNum $(realpath "$2")
 

@@ -39,7 +39,7 @@ public class Simulation {
     private final static double C_INF_COEF_1 = 0;//0.125;// coefficient in the next formula (average number of people, that an ill person infects per day
 
     private final static double C_INF_COEF_2 = 0.23;//0.125;//C_INF_COEF_1/10;// coefficient in the next formula (average number of people, that an AntTr person in Town infects per day
-    private static double P_INF = (C_INF_COEF_1 *((double) N_INC_PER_TOWN + (double) N_INC_PER_TOWN_2) + C_INF_COEF_2 * ((double) N_ANT_TR_TOWN) + (double) N_ANT_TR_TOWN_2)/
+    private double P_INF = (C_INF_COEF_1 *((double) N_INC_PER_TOWN + (double) N_INC_PER_TOWN_2) + C_INF_COEF_2 * ((double) N_ANT_TR_TOWN) + (double) N_ANT_TR_TOWN_2)/
             (((double) N_HEALTHY_TOWN) + ((double) N_INFECTED_TOWN));
     private static double avPathResist =0; //percentage of resistant pathogens among all (now initially it can be only 0)
     private final static double C_CHANGE_PATH_RES_COEF = 0.02; //coefficient for probability of pathogen to become resistant because of microbiome resistance
@@ -51,11 +51,11 @@ public class Simulation {
             return P_HOSP_RES;
         } else return P_HOSP_NONRES;
     }  ; //probability to get to a hospital during antibiotic course
-    private final int C_wrongTr =10000000;// 5;// each C_wrongTr infected person is treated wrong (N_ANT_COURSE_TOWN_WRONG)
+    private final static int C_wrongTr =10000000;// 5;// each C_wrongTr infected person is treated wrong (N_ANT_COURSE_TOWN_WRONG)
 
 
     //microbiota properties
-    private static double avMicResist = 0;// initial averaged level of microbiome resistance
+    private double avMicResist = 0;// initial averaged level of microbiome resistance
     private final static double C_GROWTH_COEF = 1./21.;//daily growth of microbiota resistance during antibiotic cource
     private final static double C_DECREASE_COEF = 1./90.;//daily decrease of microbiota resistance in absence of antibiotics
     private double fixAvPathResist =  avPathResist ;//averaged level of path resistance in town resistance in previous time step
@@ -64,8 +64,8 @@ public class Simulation {
 
     //time and graphics parameters
     private int ticks = 0;
-    private static int l = 8;
-    private Timer timer = null;
+    //private static int l = 8;
+    //private Timer timer = null;
     //private final static int town_h = 600;
     private final static int TOWN_W = 300;
     //private final static int hosp_h = 150;
@@ -80,7 +80,7 @@ public class Simulation {
 //  //  private static final String logFile_name = "/home/vera/agent_resistome/microbiota-resistome/out/log.txt";
 //    private File logFile = new File(logFile_name);
 //    private PrintWriter writeFile = null;
-    String ID = null;
+    //String ID = null;
 
     //lists of persons and places
     private static ArrayList<HealthyPerson> townHealthyPersons = new ArrayList<>(N_HEALTHY_TOWN); //state 1 on scheme in "Препринт"
@@ -358,7 +358,7 @@ public class Simulation {
                 rPath = pers.pathResistance;
                 getToHospital = pers.bernoulli(P_INC_HOSP);
                 townIncPerPersons.remove(i);
-                removeIndexes.add(i);
+                //removeIndexes.add(i);
                 //N_INC_PER_TOWN--;
                 i--;
                 if (getToHospital) {
@@ -417,24 +417,22 @@ public class Simulation {
 
 
         //action for AntTreated2 people in town
-        if(townAntTrPersons2.size()>0){
-            for (int i = 0; i< townAntTrPersons2.size(); i++) {
-                townAntTrPersons2.get(i).tick(this, pGetToHosp(townAntTrPersons2.get(i).pathResistance), C_GROWTH_COEF, C_CHANGE_PATH_RES_COEF);
-                AntTreatedPerson pers = townAntTrPersons2.get(i);
-                avMicResist = avMicResist + pers.micResistance;
-                rMic = pers.micResistance;
-                rPath = pers.pathResistance;
-                if (pers.hospitalize) {
-                    townAntTrPersons2.remove(i);
-                    //N_ANT_TR_TOWN_2--;
-                    i--;
-                    hospPers.add(new AntTreatedPerson(rMic, rPath, N_ANT_COURSE_HOSP + 1, 0, 0));
-                } else if (pers.treatment_countdown == 0) {
-                    townAntTrPersons2.remove(i);
-                    //N_ANT_TR_TOWN_2--;
-                    i--;
-                    townIncPerPersons2.add(new IncPeriodPerson(rMic, true, N_INC_LIMIT_2 +1)); //wrong treatment leads to resistance of pathogen
-                }
+        for (int i = 0; i< townAntTrPersons2.size(); i++) {
+            townAntTrPersons2.get(i).tick(this, pGetToHosp(townAntTrPersons2.get(i).pathResistance), C_GROWTH_COEF, C_CHANGE_PATH_RES_COEF);
+            AntTreatedPerson pers = townAntTrPersons2.get(i);
+            avMicResist = avMicResist + pers.micResistance;
+            rMic = pers.micResistance;
+            rPath = pers.pathResistance;
+            if (pers.hospitalize) {
+                townAntTrPersons2.remove(i);
+                //N_ANT_TR_TOWN_2--;
+                i--;
+                hospPers.add(new AntTreatedPerson(rMic, rPath, N_ANT_COURSE_HOSP + 1, 0, 0));
+            } else if (pers.treatment_countdown == 0) {
+                townAntTrPersons2.remove(i);
+                //N_ANT_TR_TOWN_2--;
+                i--;
+                townIncPerPersons2.add(new IncPeriodPerson(rMic, true, N_INC_LIMIT_2 +1)); //wrong treatment leads to resistance of pathogen
             }
         }
 
@@ -442,40 +440,36 @@ public class Simulation {
 
 
         //action for HospAntTr people (in hosp, infected)
-        if(hospPers.size() >0) {
-            for (int i = 0; i < hospPers.size(); i++) {
-                hospPers.get(i).tick(this, 1, -C_DECREASE_COEF, C_CHANGE_PATH_RES_COEF);//resistance decreases, because in hospital people are treated with another antibiotic
-                AntTreatedPerson pers = hospPers.get(i);
-                if (pers.pathResistance) nHospResistant = nHospResistant + 1;
-                avMicResist = avMicResist + pers.micResistance;
-                if (pers.treatment_countdown == 0) {
-                    rMic = pers.micResistance;
-                    hospPers.remove(i);
-                    //N_PERS_HOSP--;
-                    i--;
-                    townHealthyPersons.add(new HealthyPerson(rMic));
-                }
+        for (int i = 0; i < hospPers.size(); i++) {
+            hospPers.get(i).tick(this, 1, -C_DECREASE_COEF, C_CHANGE_PATH_RES_COEF);//resistance decreases, because in hospital people are treated with another antibiotic
+            AntTreatedPerson pers = hospPers.get(i);
+            if (pers.pathResistance) nHospResistant = nHospResistant + 1;
+            avMicResist = avMicResist + pers.micResistance;
+            if (pers.treatment_countdown == 0) {
+                rMic = pers.micResistance;
+                hospPers.remove(i);
+                //N_PERS_HOSP--;
+                i--;
+                townHealthyPersons.add(new HealthyPerson(rMic));
             }
         }
 
 
         //action for healthy people in hosp
-        if(healthyHospPeople.size() >0) {
-            for (int i = 0; i < healthyHospPeople.size(); i++) {
-                healthyHospPeople.get(i).tick(this, P_HOSP_INF, C_DECREASE_COEF, fixAvPathResistH);//resistance decreases, because in hospital people are treated with another antibiotic
-                HealthyHospPerson pers = healthyHospPeople.get(i);
-                avMicResist = avMicResist +pers.micResistance;
-                if(pers.trCountdown == 0) {
-                    rMic = pers.micResistance;
-                    if(!pers.infected){
-                        townHealthyPersons.add(new HealthyPerson(rMic));
-                    } else {
-                        townIncPerPersons.add(new IncPeriodPerson(rMic, pers.infected, N_INC_LIMIT +1));
-                    }
-                    //N_HEALTHY_HOSP--;
-                    healthyHospPeople.remove(i);
-                    i--;
+        for (int i = 0; i < healthyHospPeople.size(); i++) {
+            healthyHospPeople.get(i).tick(this, P_HOSP_INF, C_DECREASE_COEF, fixAvPathResistH);//resistance decreases, because in hospital people are treated with another antibiotic
+            HealthyHospPerson pers = healthyHospPeople.get(i);
+            avMicResist = avMicResist +pers.micResistance;
+            if(pers.trCountdown == 0) {
+                rMic = pers.micResistance;
+                if(!pers.infected){
+                    townHealthyPersons.add(new HealthyPerson(rMic));
+                } else {
+                    townIncPerPersons.add(new IncPeriodPerson(rMic, pers.infected, N_INC_LIMIT +1));
                 }
+                //N_HEALTHY_HOSP--;
+                healthyHospPeople.remove(i);
+                i--;
             }
         }
 
