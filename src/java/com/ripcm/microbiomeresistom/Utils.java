@@ -1,25 +1,21 @@
+package com.ripcm.microbiomeresistom;
+
 import java.util.Random;
 
-
 /**
- * Created by anna on 13.07.16.
+ * Created by nikita on 24.05.17.
  */
-public abstract class Person {
+public class Utils {
+    //generating random number from bernoulli distribution
 
-
-    public Person( double micResistance) {
-        this.micResistance = micResistance;
-    }
     private static Random random;    // pseudo-random number generator
     private static long seed;       // pseudo-random number generator seed
-    public double micResistance;
-    public abstract void tick(Simulation myComp, double p, double coef, double changePathResCoef);
 
-    //generating random number from bernoulli distribution
-    static { // auto done ????
-        seed = System.currentTimeMillis();
-        random = new Random(seed);
+    static {
+        seed = 123;//System.currentTimeMillis();
+        random = new Random(Utils.seed);
     }
+
     public static void setSeed(long s) {
         seed   = s;
         random = new Random(seed);
@@ -31,5 +27,4 @@ public abstract class Person {
         double ans = random.nextDouble();
         return ans < p;
     }
-
 }

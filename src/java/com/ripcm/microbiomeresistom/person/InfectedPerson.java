@@ -1,3 +1,8 @@
+package com.ripcm.microbiomeresistom.person;
+
+import com.ripcm.microbiomeresistom.Simulation;
+import com.ripcm.microbiomeresistom.Utils;
+
 /**
  describes class of infected peaple
  */
@@ -16,7 +21,7 @@ public abstract class InfectedPerson extends Person {
     public boolean changePathResistance(boolean pRes, double micRes,double coefficient) {
         if (pRes == false){
             double pChangePathRes = micRes*coefficient;
-            pRes = ((boolean) bernoulli(pChangePathRes));
+            pRes = ((boolean) Utils.bernoulli(pChangePathRes));
         }
         return pRes;
     }

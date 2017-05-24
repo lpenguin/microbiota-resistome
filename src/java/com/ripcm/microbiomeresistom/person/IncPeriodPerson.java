@@ -1,3 +1,7 @@
+package com.ripcm.microbiomeresistom.person;
+
+import com.ripcm.microbiomeresistom.Simulation;
+
 /**
  * Created by anna on 20.04.16.
  */

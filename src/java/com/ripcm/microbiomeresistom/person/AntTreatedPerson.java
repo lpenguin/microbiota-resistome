@@ -1,3 +1,8 @@
+package com.ripcm.microbiomeresistom.person;
+
+import com.ripcm.microbiomeresistom.Simulation;
+import com.ripcm.microbiomeresistom.Utils;
+
 /**
  * Created by anna on 22.04.16.
  */
@@ -13,7 +18,7 @@ public class AntTreatedPerson extends InfectedPerson {
     public double pGetToHosp;
     public boolean hospitalize=false;
     public void tick(Simulation myComp, double p, double growthCoef, double coefficient){
-        hospitalize = bernoulli(p);
+        hospitalize = Utils.bernoulli(p);
         treatment_countdown = treatment_countdown -1;
         if (incCountdown !=0) {incCountdown = incCountdown-1;}
         boolean tmp = pathResistance;

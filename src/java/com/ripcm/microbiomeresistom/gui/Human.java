@@ -1,4 +1,4 @@
-/**
+package com.ripcm.microbiomeresistom.gui; /**
  this class describes properties and functions common to all humans
  */
 

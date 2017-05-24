@@ -2,7 +2,7 @@
 
 iterNum="$1"
 
-rm -f ../src/*.class
-javac -cp ../src/ ../src/Main.java
-java -cp ../src/ Main $iterNum $(realpath "$2")
+rm -f ../src/com/ripcm/microbiomeresistom/*.class
+javac -cp ../src/ ../src/com/ripcm/microbiomeresistom/Main.java
+java -cp ../src/ com.ripcm.microbiomeresistom.Main $iterNum $(realpath "$2")
 

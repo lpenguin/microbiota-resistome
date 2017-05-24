@@ -1,4 +1,4 @@
-/**
+package com.ripcm.microbiomeresistom.gui; /**
  * Created by vera on 20.04.16.
  */
 

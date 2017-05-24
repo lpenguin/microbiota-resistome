@@ -1,3 +1,5 @@
+package com.ripcm.microbiomeresistom.gui;
+
 import java.awt.Graphics;
 import java.awt.BorderLayout;
 import java.awt.Color;

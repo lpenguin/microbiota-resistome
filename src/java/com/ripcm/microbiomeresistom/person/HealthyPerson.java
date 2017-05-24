@@ -1,3 +1,8 @@
+package com.ripcm.microbiomeresistom.person;
+
+import com.ripcm.microbiomeresistom.Simulation;
+import com.ripcm.microbiomeresistom.Utils;
+
 /**
  * Created by anna on 20.04.16.
  */
@@ -20,9 +25,9 @@ public class HealthyPerson extends Person {
             micResistance = micResistance - decreaseCoef;
             if(micResistance < 0) {micResistance =0;}
         }
-        toBeChanged = bernoulli(pInfected);
+        toBeChanged = Utils.bernoulli(pInfected);
         if (toBeChanged){
-            pathRes = bernoulli(myComp.getFixAvPathResist());
-        } else { toBeHospitalized = bernoulli(pHospitalize);}
+            pathRes = Utils.bernoulli(myComp.getFixAvPathResist());
+        } else { toBeHospitalized = Utils.bernoulli(pHospitalize);}
     }
 }

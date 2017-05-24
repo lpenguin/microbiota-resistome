@@ -1,3 +1,8 @@
+package com.ripcm.microbiomeresistom.person;
+
+import com.ripcm.microbiomeresistom.Simulation;
+import com.ripcm.microbiomeresistom.Utils;
+
 /**
  * Created by anna on 05.12.16.
  */
@@ -17,8 +22,8 @@ public class HealthyHospPerson extends Person {
         }
         if(trCountdown >0) trCountdown = trCountdown-1;
         else {
-            infected = bernoulli(pInfHosp);
-            if(infected) pRes = bernoulli(pResistant);
+            infected = Utils.bernoulli(pInfHosp);
+            if(infected) pRes = Utils.bernoulli(pResistant);
         }
     }
 }

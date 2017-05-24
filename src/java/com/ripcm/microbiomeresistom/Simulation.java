@@ -1,4 +1,10 @@
-import javax.swing.Timer;
+package com.ripcm.microbiomeresistom;
+
+import com.ripcm.microbiomeresistom.person.AntTreatedPerson;
+import com.ripcm.microbiomeresistom.person.HealthyHospPerson;
+import com.ripcm.microbiomeresistom.person.HealthyPerson;
+import com.ripcm.microbiomeresistom.person.IncPeriodPerson;
+
 import java.awt.*;
 import java.util.Iterator;
 import java.util.List;
@@ -39,9 +45,7 @@ public class Simulation {
     private final static double C_INF_COEF_1 = 0;//0.125;// coefficient in the next formula (average number of people, that an ill person infects per day
 
     private final static double C_INF_COEF_2 = 0.23;//0.125;//C_INF_COEF_1/10;// coefficient in the next formula (average number of people, that an AntTr person in Town infects per day
-    private double P_INF = (C_INF_COEF_1 *((double) N_INC_PER_TOWN + (double) N_INC_PER_TOWN_2) + C_INF_COEF_2 * ((double) N_ANT_TR_TOWN) + (double) N_ANT_TR_TOWN_2)/
-            (((double) N_HEALTHY_TOWN) + ((double) N_INFECTED_TOWN));
-    private static double avPathResist =0; //percentage of resistant pathogens among all (now initially it can be only 0)
+    private static double avPathResist = 0; //percentage of resistant pathogens among all (now initially it can be only 0)
     private final static double C_CHANGE_PATH_RES_COEF = 0.02; //coefficient for probability of pathogen to become resistant because of microbiome resistance
     private final static double P_INC_HOSP = 0.0005;//probability of being hospitalized at the first day of antibiotic treatment
     private final static double P_HOSP_NONRES = 0.2;//0.005;//probability of being hospitalized for an AntTreatedPerson with nonresistant pathogen
@@ -268,8 +272,13 @@ public class Simulation {
         N_HEALTHY_HOSP = healthyHospPeople.size();
 
         N_PERS_HOSP = hospPers.size(); //number of infected in hospital*/
-        int numInfectedTown = townIncPerPersons.size() + townAntTrPersons.size() + townIncPerPersons2.size() + townAntTrPersons2.size();
-        P_INF = (C_INF_COEF_1 *((double) townIncPerPersons.size() + (double) townIncPerPersons2.size()) + C_INF_COEF_2 * ((double) N_ANT_TR_TOWN))/
+        int numInfectedTown = townIncPerPersons.size() +
+                              townIncPerPersons2.size() +
+                              townAntTrPersons2.size() +
+                              townAntTrPersons.size();
+
+
+        double p_INF = (C_INF_COEF_1 * ((double) townIncPerPersons.size() + (double) townIncPerPersons2.size()) + C_INF_COEF_2 * ((double) N_ANT_TR_TOWN)) /
                 (((double) townHealthyPersons.size()) + ((double) numInfectedTown));
         //P_INF = 1- java.lang.Math.pow((1-k1/(nHealthyTown+N_INFECTED_TOWN -k1 +1)),(nIncPerTown +N_INC_PER_TOWN_2)) *
         //        java.lang.Math.pow((1-k2/(nHealthyTown+N_INFECTED_TOWN -k2 +1)),(nAntTrTown+nAntTrTown2));
@@ -284,11 +293,11 @@ public class Simulation {
         personAmount.add(numInfectedTown);
         personAmount.add(townIncPerPersons.size());
         personAmount.add(townIncPerPersons2.size());
-        personAmount.add(townAntTrPersons2.size());
+        personAmount.add(townAntTrPersons.size());
         personAmount.add(townAntTrPersons2.size());
         personAmount.add(hospPers.size());
         personAmount.add(healthyHospPeople.size());
-        personAmount.add(P_INF);
+        personAmount.add(p_INF);
         personAmount.add(avMicResist);
         personAmount.add(avPathResist);
 
@@ -298,7 +307,7 @@ public class Simulation {
         System.out.print("nIncPerTown = " + townIncPerPersons.size() + "\n");
         System.out.print("nAntTrTown =" + townAntTrPersons.size() + "\n");
         System.out.print("N_PERS_HOSP =" + hospPers.size() + "\n");
-        System.out.print("P_INF = " + P_INF + "\n");
+        System.out.print("P_INF = " + p_INF + "\n");
         System.out.print("avMicrobiоtaResistance = " + avMicResist + "\n");
         System.out.print("avPathogeneResistance = " + avPathResist + "\n");
         System.out.print("N_HEALTHY_HOSP = " + healthyHospPeople.size() + "\n");
@@ -309,22 +318,19 @@ public class Simulation {
         int nHospResistant =0;
         double townAvPathRes = 0;
         double wrongTrFlag = 1;
-        ArrayList <Integer> removeIndexes = new ArrayList<Integer>(0);
+//        ArrayList <Integer> removeIndexes = new ArrayList<Integer>(0);
 
-        Iterator<HealthyPerson> it = townHealthyPersons.iterator();
-        while (it.hasNext()){
-            HealthyPerson pers = it.next();
-            if(pers.getToBeChanged()){
-                it.remove();
-            }
-        }
+//        Iterator<HealthyPerson> it = townHealthyPersons.iterator();
+//        while (it.hasNext()){
+//            HealthyPerson pers = it.next();
+//            if(pers.getToBeChanged()){
+//                it.remove();
+//            }
+//        }
 
-        for (HealthyPerson person : townHealthyPersons) {
-
-        }
         //action for healthy people in town
         for (int i = 0; i < townHealthyPersons.size(); i++) {
-            townHealthyPersons.get(i).tick(this, P_INF, C_DECREASE_COEF, P_HEALTHY_HOSPITALIZE);
+            townHealthyPersons.get(i).tick(this, p_INF, C_DECREASE_COEF, P_HEALTHY_HOSPITALIZE);
             HealthyPerson pers = townHealthyPersons.get(i);
             avMicResist = avMicResist +pers.micResistance;
             rMic = pers.micResistance;
@@ -356,7 +362,7 @@ public class Simulation {
             if (pers.getIncCountdown() == 0) {
                 rMic = pers.micResistance;
                 rPath = pers.pathResistance;
-                getToHospital = pers.bernoulli(P_INC_HOSP);
+                getToHospital = Utils.bernoulli(P_INC_HOSP);
                 townIncPerPersons.remove(i);
                 //removeIndexes.add(i);
                 //N_INC_PER_TOWN--;
@@ -445,6 +451,8 @@ public class Simulation {
             AntTreatedPerson pers = hospPers.get(i);
             if (pers.pathResistance) nHospResistant = nHospResistant + 1;
             avMicResist = avMicResist + pers.micResistance;
+
+            // TODO: Сделать переход в состояние два (townIncPerPersons2)
             if (pers.treatment_countdown == 0) {
                 rMic = pers.micResistance;
                 hospPers.remove(i);
