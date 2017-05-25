@@ -1,11 +1,8 @@
-package com.ripcm.microbiomeresistom.gui; /**
+package com.ripcm.microbiomeres.gui; /**
  this class describes properties and functions common to all humans
  */
 
 import java.awt.*;
-import java.io.IOException;
-import java.util.Random;
-import java.util.List;
 
 public abstract class Human {
 

@@ -1,6 +1,6 @@
-package com.ripcm.microbiomeresistom.person;
+package com.ripcm.microbiomeres.person;
 
-import com.ripcm.microbiomeresistom.Simulation;
+import com.ripcm.microbiomeres.Simulation;
 
 /**
  * Created by anna on 20.04.16.

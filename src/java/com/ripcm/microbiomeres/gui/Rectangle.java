@@ -1,22 +1,14 @@
-package com.ripcm.microbiomeresistom.gui;
+package com.ripcm.microbiomeres.gui;
 
 import java.awt.Graphics;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import javax.swing.Timer;
-
-import javax.swing.*;
 
 /*class Rectangle extends JComponent {
 

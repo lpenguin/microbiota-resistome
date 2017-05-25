@@ -1,12 +1,11 @@
-package com.ripcm.microbiomeresistom;
+package com.ripcm.microbiomeres;
 
-import com.ripcm.microbiomeresistom.person.AntTreatedPerson;
-import com.ripcm.microbiomeresistom.person.HealthyHospPerson;
-import com.ripcm.microbiomeresistom.person.HealthyPerson;
-import com.ripcm.microbiomeresistom.person.IncPeriodPerson;
+import com.ripcm.microbiomeres.person.AntTreatedPerson;
+import com.ripcm.microbiomeres.person.HealthyHospPerson;
+import com.ripcm.microbiomeres.person.HealthyPerson;
+import com.ripcm.microbiomeres.person.IncPeriodPerson;
 
 import java.awt.*;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
 import java.io.*;
@@ -29,7 +28,7 @@ public class Simulation {
     private static final int N_ANT_TR_TOWN = 0; //AntTreatedPerson, townAntTrPersons | state 3 on scheme in "Препринт"
     private static final int N_ANT_TR_TOWN_2 = 0;//AntTreatedPerson, townAntTrPersons2 | wrong antibiotic treatment (state 4)
     private static final int N_INFECTED_TOWN = N_ANT_TR_TOWN + N_INC_PER_TOWN + N_ANT_TR_TOWN_2 + N_INC_PER_TOWN_2;
-    private static final int N_PERS_HOSP = 0; //AntTreatedPerson, hospPers | infected persons in hospital (state 6 - infected)
+    private static final int N_PERS_HOSP = 0; //AntTreatedPerson, hospAntTrPersons | infected persons in hospital (state 6 - infected)
     private static final int N_HEALTHY_HOSP = 0;//number of hospitalized persons without pathogen
     //number of hospitals (not working yet, only 1 hospital now)
     private final static int N_Hosp = 1; //number of hospitals
@@ -84,16 +83,18 @@ public class Simulation {
 //  //  private static final String logFile_name = "/home/vera/agent_resistome/microbiota-resistome/out/log.txt";
 //    private File logFile = new File(logFile_name);
 //    private PrintWriter writeFile = null;
-    //String ID = null;
+    //private static ArrayList<Location> Hospitals = new ArrayList<Location>(N_Hosp);// for visualization (to be deleted)
 
-    //lists of persons and places
+
+    //lists of persons
+    // and places
+
+    private static ArrayList<AntTreatedPerson> hospAntTrPersons = new ArrayList<>(N_PERS_HOSP);// infected persons in hospital (state 6 - infected)
     private static ArrayList<HealthyPerson> townHealthyPersons = new ArrayList<>(N_HEALTHY_TOWN); //state 1 on scheme in "Препринт"
     private static ArrayList<IncPeriodPerson> townIncPerPersons = new ArrayList<>(N_INC_PER_TOWN);//state 2 on scheme in "Препринт"
     private static ArrayList<IncPeriodPerson> townIncPerPersons2 = new ArrayList<>(N_INC_PER_TOWN_2);//incubation period after wrong treatment (state 5)
     private static ArrayList<AntTreatedPerson> townAntTrPersons = new ArrayList<>(N_ANT_TR_TOWN);//state 3 on scheme in "Препринт"
     private static ArrayList<AntTreatedPerson> townAntTrPersons2 = new ArrayList<>(N_ANT_TR_TOWN_2);//wrong antibiotic treatment (state 4)
-    //private static ArrayList<Location> Hospitals = new ArrayList<Location>(N_Hosp);// for visualization (to be deleted)
-    private static ArrayList<AntTreatedPerson> hospPers = new ArrayList<>(N_PERS_HOSP);// infected persons in hospital (state 6 - infected)
     private static ArrayList<HealthyHospPerson> healthyHospPeople = new ArrayList<>(N_HEALTHY_HOSP);  //"healthy" persons in hospitals (with another pathogen or doctors) (state 6 - not infected)
 
 
@@ -110,7 +111,7 @@ public class Simulation {
         initPersones();
         PrintWriter writeFile = openLogFile(fileName);
         for (ticks=0; ticks< iterationNum; ticks++){
-            /*action(writeFile, townHealthyPersons, townIncPerPersons, townAntTrPersons, hospPers,
+            /*action(writeFile, townHealthyPersons, townIncPerPersons, townAntTrPersons, hospAntTrPersons,
                     townAntTrPersons2, townIncPerPersons2, healthyHospPeople);*/
             action(writeFile);
         }
@@ -214,7 +215,7 @@ public class Simulation {
             int w = (10 + i * 20) % HOSP_W;
             int k = (10 + 20 * i - w) / HOSP_W;
             int h = k * 20 + 10;
-            hospPers.add(new AntTreatedPerson(0,false, N_ANT_COURSE_HOSP +1, 0,0));
+            hospAntTrPersons.add(new AntTreatedPerson(0,false, N_ANT_COURSE_HOSP +1, 0,0));
         }
         for (int i = 0; i< N_HEALTHY_HOSP; i++) {
             healthyHospPeople.add(new HealthyHospPerson(0, N_ANT_COURSE_HOSP +1));
@@ -262,7 +263,7 @@ public class Simulation {
         double rMic;
         boolean rPath;//resistance of current pathogen
         boolean pathRes;
-        boolean getToHospital;
+
         double hospNumber;
       /*N_INC_PER_TOWN = townIncPerPersons.size();
         N_INC_PER_TOWN_2 = townIncPerPersons2.size();
@@ -271,7 +272,7 @@ public class Simulation {
         N_HEALTHY_TOWN = townHealthyPersons.size();
         N_HEALTHY_HOSP = healthyHospPeople.size();
 
-        N_PERS_HOSP = hospPers.size(); //number of infected in hospital*/
+        N_PERS_HOSP = hospAntTrPersons.size(); //number of infected in hospital*/
         int numInfectedTown = townIncPerPersons.size() +
                               townIncPerPersons2.size() +
                               townAntTrPersons2.size() +
@@ -286,7 +287,7 @@ public class Simulation {
 
         //output
         System.out.print(townHealthyPersons.size() + " " + townIncPerPersons.size() + " " + townAntTrPersons.size() + " " +
-                hospPers.size() + " " + townAntTrPersons2.size() + " " + townIncPerPersons2.size() +"\n");
+                hospAntTrPersons.size() + " " + townAntTrPersons2.size() + " " + townIncPerPersons2.size() +"\n");
         List<Number> personAmount = new ArrayList<Number>();
         personAmount.add(ticks);
         personAmount.add(townHealthyPersons.size());
@@ -295,7 +296,7 @@ public class Simulation {
         personAmount.add(townIncPerPersons2.size());
         personAmount.add(townAntTrPersons.size());
         personAmount.add(townAntTrPersons2.size());
-        personAmount.add(hospPers.size());
+        personAmount.add(hospAntTrPersons.size());
         personAmount.add(healthyHospPeople.size());
         personAmount.add(p_INF);
         personAmount.add(avMicResist);
@@ -306,7 +307,7 @@ public class Simulation {
         System.out.print("nHealthyTown =" + townHealthyPersons.size() + "\n");
         System.out.print("nIncPerTown = " + townIncPerPersons.size() + "\n");
         System.out.print("nAntTrTown =" + townAntTrPersons.size() + "\n");
-        System.out.print("N_PERS_HOSP =" + hospPers.size() + "\n");
+        System.out.print("N_PERS_HOSP =" + hospAntTrPersons.size() + "\n");
         System.out.print("P_INF = " + p_INF + "\n");
         System.out.print("avMicrobiоtaResistance = " + avMicResist + "\n");
         System.out.print("avPathogeneResistance = " + avPathResist + "\n");
@@ -362,14 +363,15 @@ public class Simulation {
             if (pers.getIncCountdown() == 0) {
                 rMic = pers.micResistance;
                 rPath = pers.pathResistance;
-                getToHospital = Utils.bernoulli(P_INC_HOSP);
+                boolean getToHospital = Utils.bernoulli(P_INC_HOSP);
                 townIncPerPersons.remove(i);
                 //removeIndexes.add(i);
                 //N_INC_PER_TOWN--;
                 i--;
                 if (getToHospital) {
-                    hospPers.add(new AntTreatedPerson(rMic,rPath, N_ANT_COURSE_HOSP + 1,0,0));
+                    hospAntTrPersons.add(new AntTreatedPerson(rMic,rPath, N_ANT_COURSE_HOSP + 1,0,0));
                 } else {
+                    // TODO: WTF??
                     if (wrongTrFlag < C_wrongTr){
                         townAntTrPersons.add(new AntTreatedPerson(rMic,rPath, N_ANT_COURSE_TOWN_RIGHT + 1,pGetToHosp(rPath),0));
                         wrongTrFlag = wrongTrFlag +1;
@@ -392,7 +394,7 @@ public class Simulation {
                 townIncPerPersons2.remove(i);
                 //N_INC_PER_TOWN_2--;
                 i--;
-                hospPers.add(new AntTreatedPerson(rMic,rPath, N_ANT_COURSE_HOSP + 1,0,0));
+                hospAntTrPersons.add(new AntTreatedPerson(rMic,rPath, N_ANT_COURSE_HOSP + 1,0,0));
             }
         }
 
@@ -407,16 +409,18 @@ public class Simulation {
                 townAntTrPersons.remove(i);
                 //N_ANT_TR_TOWN--;
                 i--;
-                hospPers.add(new AntTreatedPerson(rMic,rPath, N_ANT_COURSE_HOSP + 1,0,0));
+                hospAntTrPersons.add(new AntTreatedPerson(rMic,rPath, N_ANT_COURSE_HOSP + 1,0,0));
 
-            } else if(pers.treatment_countdown == 0) {
+            } else if(pers.treatmentCountdown == 0) {
                 townAntTrPersons.remove(i);
                 //N_ANT_TR_TOWN--;
                 i--;
+
+                //TODO: rPath always false
                 if (!rPath) {
                     townHealthyPersons.add(new HealthyPerson(rMic));
                 } else {
-                    hospPers.add(new AntTreatedPerson(rMic, rPath, N_ANT_COURSE_HOSP + 1, 0,0));
+                    hospAntTrPersons.add(new AntTreatedPerson(rMic, rPath, N_ANT_COURSE_HOSP + 1, 0,0));
                 }
             }
         }
@@ -433,8 +437,8 @@ public class Simulation {
                 townAntTrPersons2.remove(i);
                 //N_ANT_TR_TOWN_2--;
                 i--;
-                hospPers.add(new AntTreatedPerson(rMic, rPath, N_ANT_COURSE_HOSP + 1, 0, 0));
-            } else if (pers.treatment_countdown == 0) {
+                hospAntTrPersons.add(new AntTreatedPerson(rMic, rPath, N_ANT_COURSE_HOSP + 1, 0, 0));
+            } else if (pers.treatmentCountdown == 0) {
                 townAntTrPersons2.remove(i);
                 //N_ANT_TR_TOWN_2--;
                 i--;
@@ -446,16 +450,16 @@ public class Simulation {
 
 
         //action for HospAntTr people (in hosp, infected)
-        for (int i = 0; i < hospPers.size(); i++) {
-            hospPers.get(i).tick(this, 1, -C_DECREASE_COEF, C_CHANGE_PATH_RES_COEF);//resistance decreases, because in hospital people are treated with another antibiotic
-            AntTreatedPerson pers = hospPers.get(i);
+        for (int i = 0; i < hospAntTrPersons.size(); i++) {
+            hospAntTrPersons.get(i).tick(this, 1, -C_DECREASE_COEF, C_CHANGE_PATH_RES_COEF);//resistance decreases, because in hospital people are treated with another antibiotic
+            AntTreatedPerson pers = hospAntTrPersons.get(i);
             if (pers.pathResistance) nHospResistant = nHospResistant + 1;
             avMicResist = avMicResist + pers.micResistance;
 
             // TODO: Сделать переход в состояние два (townIncPerPersons2)
-            if (pers.treatment_countdown == 0) {
+            if (pers.treatmentCountdown == 0) {
                 rMic = pers.micResistance;
-                hospPers.remove(i);
+                hospAntTrPersons.remove(i);
                 //N_PERS_HOSP--;
                 i--;
                 townHealthyPersons.add(new HealthyPerson(rMic));
@@ -482,18 +486,18 @@ public class Simulation {
         }
 
         int nPathResist =nResMembersA(townAntTrPersons) +nResMembersA(townAntTrPersons2) +
-                nResMembersI(townIncPerPersons) + nResMembersI(townIncPerPersons2) + nResMembersA(hospPers);
+                nResMembersI(townIncPerPersons) + nResMembersI(townIncPerPersons2) + nResMembersA(hospAntTrPersons);
         int nPathResistTown = nResMembersA(townAntTrPersons) +nResMembersA(townAntTrPersons2) +
                 nResMembersI(townIncPerPersons) + nResMembersI(townIncPerPersons2);
-        int nPathResistHosp = nResMembersA(hospPers);
+        int nPathResistHosp = nResMembersA(hospAntTrPersons);
 
 
         //avMicResist = avMicResist/(nAntTrTown+nAntTrTown2+N_INC_PER_TOWN_2+nIncPerTown+nHealthyTown+N_HEALTHY_HOSP+N_PERS_HOSP);
         avMicResist = avMicResist/((double) (townHealthyPersons.size() + townIncPerPersons.size()+ townAntTrPersons.size()+
-                townAntTrPersons2.size() + townIncPerPersons2.size()+ hospPers.size()+ healthyHospPeople.size()));
-        avPathResist = nPathResist/((double) (townIncPerPersons.size() + townIncPerPersons2.size()+ townAntTrPersons.size()+ townAntTrPersons2.size() + hospPers.size() ));
+                townAntTrPersons2.size() + townIncPerPersons2.size()+ hospAntTrPersons.size()+ healthyHospPeople.size()));
+        avPathResist = nPathResist/((double) (townIncPerPersons.size() + townIncPerPersons2.size()+ townAntTrPersons.size()+ townAntTrPersons2.size() + hospAntTrPersons.size() ));
         fixAvPathResist = nPathResistTown/((double) (townIncPerPersons.size()+ townAntTrPersons.size() + townAntTrPersons2.size() + townIncPerPersons2.size()));
-        fixAvPathResistH = nPathResistHosp/((double) (hospPers.size() + healthyHospPeople.size()));
+        fixAvPathResistH = nPathResistHosp/((double) (hospAntTrPersons.size() + healthyHospPeople.size()));
     }
 }
 

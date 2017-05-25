@@ -1,7 +1,7 @@
-package com.ripcm.microbiomeresistom.person;
+package com.ripcm.microbiomeres.person;
 
-import com.ripcm.microbiomeresistom.Simulation;
-import com.ripcm.microbiomeresistom.Utils;
+import com.ripcm.microbiomeres.Simulation;
+import com.ripcm.microbiomeres.Utils;
 
 /**
  describes class of infected peaple

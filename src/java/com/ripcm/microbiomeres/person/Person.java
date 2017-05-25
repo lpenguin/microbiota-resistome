@@ -1,9 +1,6 @@
-package com.ripcm.microbiomeresistom.person;
+package com.ripcm.microbiomeres.person;
 
-import com.ripcm.microbiomeresistom.Simulation;
-import com.ripcm.microbiomeresistom.Utils;
-
-import java.util.Random;
+import com.ripcm.microbiomeres.Simulation;
 
 
 /**

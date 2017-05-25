@@ -1,25 +1,25 @@
-package com.ripcm.microbiomeresistom.person;
+package com.ripcm.microbiomeres.person;
 
-import com.ripcm.microbiomeresistom.Simulation;
-import com.ripcm.microbiomeresistom.Utils;
+import com.ripcm.microbiomeres.Simulation;
+import com.ripcm.microbiomeres.Utils;
 
 /**
  * Created by anna on 22.04.16.
  */
 public class AntTreatedPerson extends InfectedPerson {
     //constructor
-    public AntTreatedPerson (double micResistance, boolean pathResistance, int treatment_countdown, double pGetToHosp, int incCountdown){
+    public AntTreatedPerson (double micResistance, boolean pathResistance, int treatmentCountdown, double pGetToHosp, int incCountdown){
         super(micResistance,pathResistance, incCountdown);
-        this.treatment_countdown = treatment_countdown;
+        this.treatmentCountdown = treatmentCountdown;
         this.pGetToHosp = pGetToHosp;
     }
 
-    public int treatment_countdown;
+    public int treatmentCountdown;
     public double pGetToHosp;
     public boolean hospitalize=false;
     public void tick(Simulation myComp, double p, double growthCoef, double coefficient){
         hospitalize = Utils.bernoulli(p);
-        treatment_countdown = treatment_countdown -1;
+        treatmentCountdown -= 1;
         if (incCountdown !=0) {incCountdown = incCountdown-1;}
         boolean tmp = pathResistance;
         pathResistance = changePathResistance(pathResistance,micResistance, coefficient);

@@ -1,4 +1,4 @@
-package com.ripcm.microbiomeresistom;
+package com.ripcm.microbiomeres;
 
 import java.util.Random;
 
@@ -12,6 +12,7 @@ public class Utils {
     private static long seed;       // pseudo-random number generator seed
 
     static {
+        //TODO: !!! set to System.currentTimeMillis();
         seed = 123;//System.currentTimeMillis();
         random = new Random(Utils.seed);
     }

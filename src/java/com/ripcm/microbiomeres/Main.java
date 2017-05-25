@@ -1,4 +1,4 @@
-package com.ripcm.microbiomeresistom;
+package com.ripcm.microbiomeres;
 
 import java.io.FileNotFoundException;
 
