@@ -20,10 +20,12 @@ public class AntTreatedPerson extends InfectedPerson {
     public void tick(Simulation myComp, double p, double growthCoef, double coefficient){
         hospitalize = Utils.bernoulli(p);
         treatmentCountdown -= 1;
-        if (incCountdown !=0) {incCountdown = incCountdown-1;}
-        boolean tmp = pathResistance;
-        pathResistance = changePathResistance(pathResistance,micResistance, coefficient);
-        if(tmp == false & pathResistance == true) {incCountdown = Simulation.getN_incLimit2();} //if pathogene becomes resistant the countdown begins
+        if (incubPeriod !=0) {
+            incubPeriod = incubPeriod -1;}
+        boolean tmp = isResistant;
+        isResistant = changePathResistance(isResistant,micResistance, coefficient);
+        if(tmp == false & isResistant == true) {
+            incubPeriod = Simulation.getN_incLimit2();} //if pathogene becomes resistant the countdown begins
         if(growthCoef > 0){
             if(micResistance !=1){
                 micResistance = micResistance + growthCoef;
