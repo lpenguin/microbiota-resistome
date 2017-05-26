@@ -9,22 +9,21 @@ import com.ripcm.microbiomeres.Utils;
 
 public abstract class InfectedPerson extends Person {
 
-    public InfectedPerson(double micResistance, boolean pathResistance, int incCountdown) {
+    public InfectedPerson(double micResistance, boolean isResistant, int incubPeriod) {
         super(micResistance);
-        this.pathResistance = pathResistance;
-        this.incCountdown = incCountdown;
+        this.isResistant = isResistant;
+        this.incubPeriod = incubPeriod;
     }
-    public int incCountdown;
-    public boolean pathResistance; //TRUE - resistant pathogen, FALSE -non resistant pathogen
-    public int getIncCountdown() {return this.incCountdown;}
-    public void setIncCountdown (int incubCountdown) {this.incCountdown = incubCountdown;}
-    public boolean changePathResistance(boolean pRes, double micRes,double coefficient) {
-        if (pRes == false){
-            double pChangePathRes = micRes*coefficient;
-            pRes = ((boolean) Utils.bernoulli(pChangePathRes));
+    public int incubPeriod;
+    public boolean isResistant; //TRUE - resistant pathogen, FALSE -non resistant pathogen
+    public int getIncubPeriod() {return this.incubPeriod;}
+
+    public boolean changePathResistance(boolean isRes, double micRes,double coefficient) { //isRes - local variable for isResistant
+        if (isRes == false){
+            isRes = Utils.bernoulli(micRes*coefficient); //(boolean)
         }
-        return pRes;
+        return isRes;
     }
-    public abstract void tick(Simulation myComp, double p, double coef, double changePathResCoef);
+    public abstract void tick(Simulation simulation, double p, double coef, double changePathResCoef); //Is it needed???
 }
 

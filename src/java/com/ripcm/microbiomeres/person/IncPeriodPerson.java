@@ -8,14 +8,14 @@ import com.ripcm.microbiomeres.Simulation;
 public class IncPeriodPerson extends InfectedPerson{
 
     //Constructor
-    public IncPeriodPerson (double micResistance,boolean pathResistance, int incCountdown){
-        super(micResistance,pathResistance,incCountdown);
+    public IncPeriodPerson (double micResistance,boolean pathResistance, int incubPeriod){
+        super(micResistance,pathResistance,incubPeriod);
     }
 
 
-    public void tick(Simulation myComp, double p, double decreaseCoef, double coefficient){
-        incCountdown -= 1;
-        this.pathResistance = changePathResistance(this.pathResistance,this.micResistance, coefficient);
+    public void tick(Simulation simulation, double p, double decreaseCoef, double coefficient){
+        incubPeriod -= 1;
+        isResistant = changePathResistance(isResistant, micResistance, coefficient);
         if(micResistance !=0) {
             micResistance = micResistance - decreaseCoef;
             if (micResistance < 0) {
