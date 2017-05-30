@@ -13,7 +13,8 @@ public class Utils {
 
     static {
         //TODO: !!! set to System.currentTimeMillis();
-        seed = 123;//System.currentTimeMillis();
+        //seed = 123;//
+        seed = System.currentTimeMillis();
         random = new Random(Utils.seed);
     }
 

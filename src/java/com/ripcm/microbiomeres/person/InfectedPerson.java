@@ -4,7 +4,7 @@ import com.ripcm.microbiomeres.Simulation;
 import com.ripcm.microbiomeres.Utils;
 
 /**
- describes class of infected peaple
+ describes class of isInfected peaple
  */
 
 public abstract class InfectedPerson extends Person {
@@ -18,11 +18,10 @@ public abstract class InfectedPerson extends Person {
     public boolean isResistant; //TRUE - resistant pathogen, FALSE -non resistant pathogen
     public int getIncubPeriod() {return this.incubPeriod;}
 
-    public boolean changePathResistance(boolean isRes, double micRes,double coefficient) { //isRes - local variable for isResistant
-        if (isRes == false){
-            isRes = Utils.bernoulli(micRes*coefficient); //(boolean)
+    public void changePathResistance(double micRes,double coefficient) { //isRes - local variable for isResistant
+        if (!isResistant) {
+            isResistant = Utils.bernoulli(micRes*coefficient); //(boolean)
         }
-        return isRes;
     }
     public abstract void tick(Simulation simulation, double p, double coef, double changePathResCoef); //Is it needed???
 }

@@ -8,31 +8,31 @@ import com.ripcm.microbiomeres.Utils;
  */
 public class AntTreatedPerson extends InfectedPerson {
     //constructor
-    public AntTreatedPerson (double micResistance, boolean pathResistance, int treatmentCountdown, double pGetToHosp, int incCountdown){
-        super(micResistance,pathResistance, incCountdown);
-        this.treatmentCountdown = treatmentCountdown;
+    public AntTreatedPerson (double micResistance, boolean isResistant, int treatmentPeriod, double pGetToHosp, int incubPeriod){
+        super(micResistance,isResistant, incubPeriod);
+        this.treatmentPeriod = treatmentPeriod;
         this.pGetToHosp = pGetToHosp;
     }
 
-    public int treatmentCountdown;
+    public int treatmentPeriod;
     public double pGetToHosp;
-    public boolean hospitalize=false;
-    public void tick(Simulation myComp, double p, double growthCoef, double coefficient){
-        hospitalize = Utils.bernoulli(p);
-        treatmentCountdown -= 1;
-        if (incubPeriod !=0) {
-            incubPeriod = incubPeriod -1;}
+    public boolean beHospitalized =false;
+    public void tick(Simulation simulation, double pBeHospitalized, double growthCoef, double coefficient){
+        beHospitalized = Utils.bernoulli(pBeHospitalized);
+        treatmentPeriod -= 1;
+        if (incubPeriod !=0) { //??? WTF: it's can't be
+            incubPeriod -= 1;}
         boolean tmp = isResistant;
-        isResistant = changePathResistance(isResistant,micResistance, coefficient);
-        if(tmp == false & isResistant == true) {
+        changePathResistance(micResistance, coefficient);
+        if(!tmp && isResistant) { //??? WTF: it's can't be, it's same pathogen, incub period mustn't be
             incubPeriod = Simulation.getN_incLimit2();} //if pathogene becomes resistant the countdown begins
-        if(growthCoef > 0){
+        if(growthCoef > 0){ // now it isn't needed !
             if(micResistance !=1){
                 micResistance = micResistance + growthCoef;
                 if(micResistance > 1) {micResistance = 1;}
             }
-        } else if(micResistance !=0){
-            micResistance = micResistance + growthCoef;
+        } else if(micResistance !=0){ //it's needed for HospAntreatedPersones so as resistance should decreases, because in hospital people are treated with another antibiotic!
+            micResistance += growthCoef;
             if(micResistance <0) {micResistance = 0;}
         }
     }

@@ -14,5 +14,5 @@ public abstract class Person {
     }
 
     public double micResistance;
-    public abstract void tick(Simulation myComp, double p, double coef, double changePathResCoef);
+    public abstract void tick(Simulation simulation, double p, double coef, double changePathResCoef);
 }

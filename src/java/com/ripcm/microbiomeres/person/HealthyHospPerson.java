@@ -8,22 +8,22 @@ import com.ripcm.microbiomeres.Utils;
  */
 public class HealthyHospPerson extends Person {
     //constructor
-    public HealthyHospPerson (double micResistance, int trCountdown){
+    public HealthyHospPerson (double micResistance, int treatmentPeriod){
         super(micResistance);
-        this.trCountdown = trCountdown;
+        this.treatmentPeriod = treatmentPeriod;
     }
-    public int trCountdown;
-    public boolean infected = false;
+    public int treatmentPeriod;
+    public boolean isInfected = false;
     public boolean pRes;
-    public void tick(Simulation myComp, double pInfHosp, double decreaseCoef, double pResistant){
+    public void tick(Simulation simulation, double pBeInfectedInHospital, double decreaseCoef, double pResistant){
         if(micResistance !=0){
             micResistance = micResistance - decreaseCoef;
             if(micResistance < 0) {micResistance = 0;}
         }
-        if(trCountdown >0) trCountdown = trCountdown-1;
+        if(treatmentPeriod >0) treatmentPeriod = treatmentPeriod -1;
         else {
-            infected = Utils.bernoulli(pInfHosp);
-            if(infected) pRes = Utils.bernoulli(pResistant);
+            isInfected = Utils.bernoulli(pBeInfectedInHospital);
+            if(isInfected)  pRes = Utils.bernoulli(pResistant);
         }
     }
 }
