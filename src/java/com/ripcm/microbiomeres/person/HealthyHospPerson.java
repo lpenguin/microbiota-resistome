@@ -14,7 +14,8 @@ public class HealthyHospPerson extends Person {
     }
     public int treatmentPeriod;
     public boolean isInfected = false;
-    public boolean pRes;
+    public boolean isResistant; //TRUE - resistant pathogen, FALSE -non resistant pathogen
+    //public boolean pRes;
     public void tick(Simulation simulation, double pBeInfectedInHospital, double decreaseCoef, double pResistant){
         if(micResistance !=0){
             micResistance = micResistance - decreaseCoef;
@@ -23,7 +24,7 @@ public class HealthyHospPerson extends Person {
         if(treatmentPeriod >0) treatmentPeriod = treatmentPeriod -1;
         else {
             isInfected = Utils.bernoulli(pBeInfectedInHospital);
-            if(isInfected)  pRes = Utils.bernoulli(pResistant);
+            if(isInfected)  isResistant = Utils.bernoulli(pResistant);
         }
     }
 }

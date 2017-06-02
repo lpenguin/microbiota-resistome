@@ -1,9 +1,6 @@
 package com.ripcm.microbiomeres;
 
-import com.ripcm.microbiomeres.person.AntTreatedPerson;
-import com.ripcm.microbiomeres.person.HealthyHospPerson;
-import com.ripcm.microbiomeres.person.HealthyPerson;
-import com.ripcm.microbiomeres.person.IncPeriodPerson;
+import com.ripcm.microbiomeres.person.*;
 
 import java.awt.*;
 import java.util.List;
@@ -21,6 +18,23 @@ import java.io.PrintWriter;
 public class Simulation {
 
     public Graphics2D graphics;
+    //variables from ModelValues class
+    double C_INF_COEF = ModelValues.C_INFECTED_COEF;
+    double C_INF_COEF_1 =  ModelValues.C_INFECTED_COEF_INCUB;
+    double C_INF_COEF_2 =  ModelValues.C_INFECTED_COEF_ANT_TREATED_IN_TOWN;
+    double C_CHANGE_PATH_RES_COEF = ModelValues.C_PATHOGEN_RESIST_CHANGE_COEF; //coefficient for probability of pathogen to become resistant because of microbiome resistance
+    double P_INC_HOSP = ModelValues.P_INCUB_TO_HOSPITAL;//probability of being hospitalized at the first day of antibiotic treatment
+    double P_WRONG_TREATM = ModelValues.P_WRONG_TREATMENT;//probability of wrong antibiotic treatment
+
+    double P_TREATMENT_TO_HOSP = P_INC_HOSP*100; //I don't know i defined variables right or not
+    double pGetToHosp(boolean isResistant) {//I don't know i defined variables right or not
+        if(isResistant){
+            return P_TREATMENT_TO_HOSP*(C_CHANGE_PATH_RES_COEF*10);
+        } else return P_TREATMENT_TO_HOSP;
+    }; //probability to get to a hospital during antibiotic course
+
+    double P_HOSP_INF = ModelValues.P_BE_INFECTED_IN_HOSPITAL; //probability to be isInfected after being hospitalized for a "healthy" person
+
     //initial number of people
     private static final int N_HEALTHY_TOWN = 10000; //HealthyPerson, townHealthyPersons | state 1 on scheme in "Препринт"
     private static final int N_INC_PER_TOWN = 50;//IncPeriodPerson, townIncPerPersons | state 2 on scheme in "Препринт"
@@ -32,7 +46,7 @@ public class Simulation {
     private static final int N_HEALTHY_HOSP = 0;//number of hospitalized persons without pathogen
     //number of hospitals (not working yet, only 1 hospital now)
     private final static int N_Hosp = 1; //number of hospitals
-    private static final double P_HOSP_INF = 0.01; //probability to be isInfected after being hospitalized for a "healthy" person
+
     private static final double P_HEALTHY_HOSPITALIZE = 0.002;//probability to be hospitalized with another infection
     //pathogene properties
     private final static int N_INC_LIMIT = 2;//incubation period
@@ -41,13 +55,12 @@ public class Simulation {
     private final static int N_ANT_COURSE_TOWN_WRONG = 2; //wrong length of antibiotic course
     private final static int N_ANT_COURSE_HOSP = 7; //length of antibiotic course
 
-    private final static double C_INF_COEF_1 = 0;//0.125;// coefficient in the next formula (average number of people, that an ill person infects per day
 
-    private final static double C_INF_COEF_2 = 0.23;//0.125;//C_INF_COEF_1/10;// coefficient in the next formula (average number of people, that an AntTr person in Town infects per day
     private static double avPathResist = 0; //percentage of resistant pathogens among all (now initially it can be only 0)
-    private final static double C_CHANGE_PATH_RES_COEF = 0.02; //coefficient for probability of pathogen to become resistant because of microbiome resistance
-    private final static double P_WRONG_TRTEATMENT = 0.21;//probability of wrong antibiotic treatment
-    private final static double P_INC_HOSP = 0.0005;//probability of being hospitalized at the first day of antibiotic treatment
+
+
+
+/*
     private final static double P_HOSP_NONRES = 0.2;//0.005;//probability of being hospitalized for an AntTreatedPerson with nonresistant pathogen
     private final static double P_HOSP_RES = 0.1;// 0.01;//probability of being hospitalized for an AntTreatedPerson with resistant pathogen
     private static double pGetToHosp(boolean isResistant) {
@@ -56,6 +69,7 @@ public class Simulation {
         } else return P_HOSP_NONRES;
     }  ; //probability to get to a hospital during antibiotic course
     private final static int C_wrongTr =10000000;// 5;// each C_wrongTr infected person is treated wrong (N_ANT_COURSE_TOWN_WRONG)
+*/
 
 
     //microbiota properties
@@ -186,9 +200,11 @@ public class Simulation {
                               townAntTrPersons2.size() +
                               townAntTrPersons.size();
 
+        double p_INF = (C_INF_COEF * ((double) townIncPerPersons.size() + (double) townIncPerPersons2.size() + (double) N_ANT_TR_TOWN)) /
+                ((double) townHealthyPersons.size() + (double) numInfectedTown);
 
-        double p_INF = (C_INF_COEF_1 * ((double) townIncPerPersons.size() + (double) townIncPerPersons2.size()) + C_INF_COEF_2 * ((double) N_ANT_TR_TOWN)) /
-                (((double) townHealthyPersons.size()) + ((double) numInfectedTown));
+//        double p_INF = (C_INF_COEF_1 * ((double) townIncPerPersons.size() + (double) townIncPerPersons2.size()) + C_INF_COEF_2 * ((double) N_ANT_TR_TOWN)) /
+//                (((double) townHealthyPersons.size()) + ((double) numInfectedTown));
 
         //output
         System.out.print(townHealthyPersons.size() + " " + townIncPerPersons.size() + " " + townAntTrPersons.size() + " " +
@@ -271,7 +287,7 @@ public class Simulation {
                 if (getToHospital) {
                     hospAntTrPersons.add(new AntTreatedPerson(pers.micResistance, pers.isResistant, N_ANT_COURSE_HOSP + 1,0,0));
                 } else {
-                    if (!Utils.bernoulli(P_WRONG_TRTEATMENT)){
+                    if (!Utils.bernoulli(P_WRONG_TREATM)){
                         townAntTrPersons.add(new AntTreatedPerson(pers.micResistance, pers.isResistant, N_ANT_COURSE_TOWN_RIGHT + 1,pGetToHosp(pers.isResistant),0));
                     } else {
                         townAntTrPersons2.add(new AntTreatedPerson(pers.micResistance, pers.isResistant, N_ANT_COURSE_TOWN_WRONG +1, pGetToHosp(true),0));
@@ -362,7 +378,7 @@ public class Simulation {
                 if(!pers.isInfected){
                     townHealthyPersons.add(new HealthyPerson(pers.micResistance));
                 } else {
-                    townIncPerPersons.add(new IncPeriodPerson(pers.micResistance, pers.isInfected, N_INC_LIMIT +1));
+                    townIncPerPersons.add(new IncPeriodPerson(pers.micResistance, pers.isResistant, N_INC_LIMIT +1));
                 }
                 healthyHospPeople.remove(i);
                 i--;
