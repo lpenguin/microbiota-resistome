@@ -94,10 +94,10 @@ public class Simulation {
     public Simulation(int iterationNum, String fileName, String logTransFileName) throws FileNotFoundException {
 
         printBlock("Start working!");
-        initPersones();
         PrintWriter writeFile = openResultsFile(fileName);
         //TODO: checking on empty string instead of logTransFileName
         PrintWriter writeTransLogFile = openTransLogFile(logTransFileName);
+        initPersones(writeTransLogFile);
         for (ticks=0; ticks< iterationNum; ticks++){
             action(writeFile, writeTransLogFile, ticks);
         }
@@ -128,7 +128,7 @@ public class Simulation {
         return writeFile;
     }
 
-    private void initPersones(){
+    private void initPersones(PrintWriter transLogFile){
         //initialise lists of personsrPath
         int idIter = N_HEALTHY_TOWN + N_INFECTED_TOWN + N_PERS_HOSP + N_HEALTHY_HOSP;
         for (int i = 0; i < N_HEALTHY_TOWN + N_INFECTED_TOWN; i++) {
@@ -137,13 +137,16 @@ public class Simulation {
 //            int h = k * 20 + 10;
             if (i < N_INC_PER_TOWN) {
                 townIncPerPersons.add(new IncPeriodPerson("id_"+Integer.toString(idIter),0,false, ModelValues.N_INCUB_LIMIT +1));
+                WriteToTransLogFile(ticks + " " + ("id_"+Integer.toString(idIter)) + " " + "NA"+ " " + "townIncPerPersons", transLogFile);
                 idIter -=1;
             } else {
                 if (i < N_ANT_TR_TOWN) {
                     townAntTrPersons.add(new AntTreatedPerson("id_"+Integer.toString(idIter),0,false, N_ANT_COURSE_TOWN_RIGHT +1, pGetToHosp(false),0));
+                    WriteToTransLogFile(ticks + " " + ("id_"+Integer.toString(idIter)) + " " + "NA"+ " "  + "townAntTrPersons", transLogFile);
                     idIter -=1;
                 } else {
                     townHealthyPersons.add(new HealthyPerson("id_"+Integer.toString(idIter),0));
+                    WriteToTransLogFile(ticks + " " + ("id_"+Integer.toString(idIter)) + " " + "NA"+ " "  + "townHealthyPersons", transLogFile);
                     idIter -=1;
                 }
             }
@@ -154,18 +157,22 @@ public class Simulation {
 //            int k = (10 + 20 * i - w) / HOSP_W;
 //            int h = k * 20 + 10;
             hospAntTrPersons.add(new AntTreatedPerson("id_"+Integer.toString(idIter), 0,false, N_ANT_COURSE_HOSP +1, 0,0));
+            WriteToTransLogFile(ticks + " " + ("id_"+Integer.toString(idIter)) + " " + "NA" + " " + "hospAntTrPersons", transLogFile);
             idIter -=1;
         }
         for (int i = 0; i< N_HEALTHY_HOSP; i++) {
             healthyHospPeople.add(new HealthyHospPerson("id_"+Integer.toString(idIter),0, N_ANT_COURSE_HOSP +1));
+            WriteToTransLogFile(ticks + " " + ("id_"+Integer.toString(idIter)) + " " + "NA"+ " " + "healthyHospPeople", transLogFile);
             idIter -=1;
         }
         for (int i = 0; i< N_INC_PER_TOWN_2; i++) {
             townIncPerPersons2.add(new IncPeriodPerson("id_"+Integer.toString(idIter),0,false, ModelValues.N_INCUB_LIMIT_RESIST +1));
+            WriteToTransLogFile(ticks + " " + ("id_"+Integer.toString(idIter)) + " " + "NA"+ " " + "townIncPerPersons2", transLogFile);
             idIter -=1;
         }
         for (int i = 0; i< N_ANT_TR_TOWN_2; i++) {
             townAntTrPersons2.add(new AntTreatedPerson("id_"+Integer.toString(idIter),0,false, N_ANT_COURSE_TOWN_WRONG +1,pGetToHosp(false),0));
+            WriteToTransLogFile(ticks + " " + ("id_"+Integer.toString(idIter)) + " " + "NA"+ " " + "townAntTrPersons2", transLogFile);
             idIter -=1;
         }
     }
