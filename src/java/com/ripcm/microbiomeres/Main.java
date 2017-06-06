@@ -14,6 +14,7 @@ public class Main {
         for (int i = 0; i < args.length; i++) {
             System.out.println("Argument "+(i+1)+" = "+args[i]);
         }
+
         int iterationNum = Integer.parseInt(args[0]);
         //String outDir = "out/simulations/";
         String fileName = args[1];
