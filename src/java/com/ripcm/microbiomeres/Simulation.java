@@ -32,7 +32,7 @@ public class Simulation {
     private static final int N_INC_PER_TOWN_2 = 0; //IncPeriodPerson, townIncPerPersons2 | incubation period after wrong treatment (state 5)
     private static final int N_ANT_TR_TOWN = 0; //AntTreatedPerson, townAntTrPersons | state 3 on scheme in "Препринт"
     private static final int N_ANT_TR_TOWN_2 = 0;//AntTreatedPerson, townAntTrPersons2 | wrong antibiotic treatment (state 4)
-    private static final int N_INFECTED_TOWN = N_ANT_TR_TOWN + N_INC_PER_TOWN + N_ANT_TR_TOWN_2 + N_INC_PER_TOWN_2;
+    private static final int N_INFECTED_TOWN = N_ANT_TR_TOWN + N_INC_PER_TOWN + N_ANT_TR_TOWN_2 + N_INC_PER_TOWN_2 + 0;
     private static final int N_PERS_HOSP = 0; //AntTreatedPerson, hospAntTrPersons | isInfected persons in hospital (state 6 - isInfected)
     private static final int N_HEALTHY_HOSP = 0;//number of hospitalized persons without pathogen
     //number of hospitals (not working yet, only 1 hospital now)
