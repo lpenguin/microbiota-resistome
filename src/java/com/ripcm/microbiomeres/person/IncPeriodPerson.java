@@ -8,8 +8,8 @@ import com.ripcm.microbiomeres.Simulation;
 public class IncPeriodPerson extends InfectedPerson{
 
     //Constructor
-    public IncPeriodPerson (double micResistance,boolean isResistant, int incubPeriod){
-        super(micResistance,isResistant,incubPeriod);
+    public IncPeriodPerson (String id, double micResistance,boolean isResistant, int incubPeriod){
+        super(id, micResistance,isResistant,incubPeriod);
     }
 
 

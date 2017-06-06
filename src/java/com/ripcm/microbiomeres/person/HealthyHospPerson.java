@@ -8,8 +8,8 @@ import com.ripcm.microbiomeres.Utils;
  */
 public class HealthyHospPerson extends Person {
     //constructor
-    public HealthyHospPerson (double micResistance, int treatmentPeriod){
-        super(micResistance);
+    public HealthyHospPerson (String id, double micResistance, int treatmentPeriod){
+        super(id, micResistance);
         this.treatmentPeriod = treatmentPeriod;
     }
     public int treatmentPeriod;

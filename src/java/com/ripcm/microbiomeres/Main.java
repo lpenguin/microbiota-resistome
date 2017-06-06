@@ -15,13 +15,23 @@ public class Main {
             System.out.println("Argument "+(i+1)+" = "+args[i]);
         }
         int iterationNum = Integer.parseInt(args[0]);
-        String outDir = "out/simulations/";
+        //String outDir = "out/simulations/";
         String fileName = args[1];
-        try {
-            new Simulation(iterationNum, fileName);
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found "+fileName);
-            //e.printStackTrace();
+
+        if (args.length > 2){
+            String logTransFileName = args[2];
+            try{
+                new Simulation(iterationNum, fileName, logTransFileName);
+            } catch (FileNotFoundException e){
+                System.out.println("File not found "+fileName+" or "+logTransFileName);
+            }
+        } else{
+            try {
+                new Simulation(iterationNum, fileName, "");
+            } catch (FileNotFoundException e) {
+                System.out.println("File not found "+fileName);
+                //e.printStackTrace();
+            }
         }
 //  //      SwingUtilities.invokeLater(new Runnable() {
 //            public void run() {

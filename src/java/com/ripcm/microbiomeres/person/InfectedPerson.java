@@ -9,8 +9,8 @@ import com.ripcm.microbiomeres.Utils;
 
 public abstract class InfectedPerson extends Person {
 
-    public InfectedPerson(double micResistance, boolean isResistant, int incubPeriod) {
-        super(micResistance);
+    public InfectedPerson(String id, double micResistance, boolean isResistant, int incubPeriod) {
+        super(id, micResistance);
         this.isResistant = isResistant;
         this.incubPeriod = incubPeriod;
     }

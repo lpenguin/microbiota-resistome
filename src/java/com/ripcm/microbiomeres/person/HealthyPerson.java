@@ -11,8 +11,8 @@ import com.ripcm.microbiomeres.Utils;
 public class HealthyPerson extends Person {
 
     //constructor
-    public HealthyPerson (double micResistance){
-        super(micResistance);
+    public HealthyPerson (String id, double micResistance){
+        super(id, micResistance);
     }
     public boolean toBeChanged = false; // probability that agent will be isInfected
     public boolean toBeHospitalized = false; // probability that agent will be hospitalized with other illness
