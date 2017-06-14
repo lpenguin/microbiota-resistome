@@ -46,6 +46,8 @@ public class Simulation {
 
 
     private static double avPathResist = 0; //percentage of resistant pathogens among all (now initially it can be only 0)
+    private final static double C_INFECTED_COEF = ((double) ModelValues.N_INFECTED_PEOPLE_PER_YEAR*Math.pow(10,3))/
+            ( ModelValues.N_PEOPLE_IN_COUNTRY*Math.pow(10,6));
 
 
 
@@ -219,8 +221,14 @@ public class Simulation {
                               townAntTrPersons2.size() +
                               townAntTrPersons.size();
 
-        double p_INF = (ModelValues.C_INFECTED_COEF * ((double) townIncPerPersons.size() + (double) townIncPerPersons2.size() + (double) N_ANT_TR_TOWN)) /
+        double p_INF = (C_INFECTED_COEF * ((double) townIncPerPersons.size() + (double) townIncPerPersons2.size() + (double) N_ANT_TR_TOWN)) /
                 ((double) townHealthyPersons.size() + (double) numInfectedTown);
+/*
+        System.out.print("p_INF = (C_INFECTED_COEF * ((double) townIncPerPersons.size() + (double) townIncPerPersons2.size() + (double) N_ANT_TR_TOWN)) /\n" +
+                "                ((double) townHealthyPersons.size() + (double) numInfectedTown) = ");
+        System.out.print(C_INFECTED_COEF+" * ("+ townIncPerPersons.size()+ " + " + townIncPerPersons2.size()+ " + " + N_ANT_TR_TOWN+") / ("+
+                townHealthyPersons.size()+" + "+numInfectedTown + ")"+"\n");
+*/
 
 //        double p_INF = (C_INFECTED_COEF_INCUB * ((double) townIncPerPersons.size() + (double) townIncPerPersons2.size()) + C_INFECTED_COEF_ANT_TREATED_IN_TOWN * ((double) N_ANT_TR_TOWN)) /
 //                (((double) townHealthyPersons.size()) + ((double) numInfectedTown));
@@ -428,7 +436,8 @@ public class Simulation {
 
         avMicResist = avMicResist/((double) (townHealthyPersons.size() + townIncPerPersons.size()+ townAntTrPersons.size()+
                 townAntTrPersons2.size() + townIncPerPersons2.size()+ hospAntTrPersons.size()+ healthyHospPeople.size()));
-        avPathResist = nPathResist/((double) (townIncPerPersons.size() + townIncPerPersons2.size()+ townAntTrPersons.size()+ townAntTrPersons2.size() + hospAntTrPersons.size() ));
+        //avPathResist = nPathResist/((double) (townIncPerPersons.size() + townIncPerPersons2.size()+ townAntTrPersons.size()+ townAntTrPersons2.size() + hospAntTrPersons.size() ));
+        avPathResist = avPathResist/((double) (townIncPerPersons.size() + townIncPerPersons2.size()+ townAntTrPersons.size()+ townAntTrPersons2.size() + hospAntTrPersons.size() ));
         fixAvPathResistTown = nPathResistTown/((double) (townIncPerPersons.size()+ townAntTrPersons.size() + townAntTrPersons2.size() + townIncPerPersons2.size()));
         fixAvPathResistHosp = nPathResistHosp/((double) (hospAntTrPersons.size() + healthyHospPeople.size()));
     }

@@ -40,6 +40,14 @@ public class Main {
             ModelValues.C_GROWTH_COEF = Double.valueOf(property.getProperty("C_GROWTH_COEF"));
             ModelValues.C_DECREASE_COEF = Double.valueOf(property.getProperty("C_DECREASE_COEF"));
 
+/*          System.out.print("C_INFECTED_COEF = "+Integer.valueOf(property.getProperty("N_INFECTED_PEOPLE_PER_YEAR"))+" * "+Math.pow(10,2)+" / "+
+                    Double.valueOf(property.getProperty("N_PEOPLE_IN_COUNTRY"))+" * "+Math.pow(10,6)+"\n");
+            System.out.print("C_INFECTED_COEF = "+Integer.valueOf(property.getProperty("N_INFECTED_PEOPLE_PER_YEAR"))*Math.pow(10,2)+" / "+
+                    Double.valueOf(property.getProperty("N_PEOPLE_IN_COUNTRY"))*Math.pow(10,6)+"\n");
+            System.out.print("C_INFECTED_COEF = "+Integer.valueOf(property.getProperty("N_INFECTED_PEOPLE_PER_YEAR"))*Math.pow(10,2)/
+                    (Double.valueOf(property.getProperty("N_PEOPLE_IN_COUNTRY"))*Math.pow(10,6))+"\n");*/
+
+
 
         } catch (IOException e) {
             System.err.println("File not found "+args[2]);

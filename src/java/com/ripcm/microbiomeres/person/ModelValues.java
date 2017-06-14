@@ -9,7 +9,6 @@ public class ModelValues {
     public static int N_INFECTED_PEOPLE_PER_YEAR;
     public static double N_PEOPLE_IN_COUNTRY;
 
-    public final static double C_INFECTED_COEF = (N_INFECTED_PEOPLE_PER_YEAR*Math.pow(10,2))/(N_PEOPLE_IN_COUNTRY*Math.pow(10,6));
     //public final static double C_INFECTED_COEF_INCUB = 0;//0.125;// coefficient in the next formula (average number of people, that an ill person infects per day
     //public final static double C_INFECTED_COEF_ANT_TREATED_IN_TOWN = 0.23;//0.125;//C_INFECTED_COEF_INCUB/10;// coefficient in the next formula (average number of people, that an AntTr person in Town infects per day
     public static double C_PATHOGEN_RESIST_CHANGE_COEF; //coefficient for probability of pathogen to become resistant because of microbiome resistance
