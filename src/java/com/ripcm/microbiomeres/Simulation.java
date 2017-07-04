@@ -77,13 +77,16 @@ public class Simulation {
 
     //lists of persons
     // and places
-    private static ArrayList<AntTreatedPerson> hospAntTrPersons = new ArrayList<>(N_PERS_HOSP);// isInfected persons in hospital (state 6 - isInfected)
-    private static ArrayList<HealthyPerson> townHealthyPersons = new ArrayList<>(N_HEALTHY_TOWN); //state 1 on scheme in "Препринт"
-    private static ArrayList<IncPeriodPerson> townIncPerPersons = new ArrayList<>(N_INC_PER_TOWN);//state 2 on scheme in "Препринт"
-    private static ArrayList<IncPeriodPerson> townIncPerPersons2 = new ArrayList<>(N_INC_PER_TOWN_2);//incubation period after wrong treatment (state 5)
-    private static ArrayList<AntTreatedPerson> townAntTrPersons = new ArrayList<>(N_ANT_TR_TOWN);//state 3 on scheme in "Препринт"
-    private static ArrayList<AntTreatedPerson> townAntTrPersons2 = new ArrayList<>(N_ANT_TR_TOWN_2);//wrong antibiotic treatment (state 4)
-    private static ArrayList<HealthyHospPerson> healthyHospPeople = new ArrayList<>(N_HEALTHY_HOSP);  //"healthy" persons in hospitals (with another pathogen or doctors) (state 6 - not isInfected)
+    private ArrayList<AntTreatedPerson> hospAntTrPersons = new ArrayList<>(N_PERS_HOSP);// isInfected persons in hospital (state 6 - isInfected)
+    private ArrayList<HealthyPerson> townHealthyPersons = new ArrayList<>(N_HEALTHY_TOWN); //state 1 on scheme in "Препринт"
+    private ArrayList<IncPeriodPerson> townIncPerPersons = new ArrayList<>(N_INC_PER_TOWN);//state 2 on scheme in "Препринт"
+    private ArrayList<IncPeriodPerson> townIncPerPersons2 = new ArrayList<>(N_INC_PER_TOWN_2);//incubation period after wrong treatment (state 5)
+    private ArrayList<AntTreatedPerson> townAntTrPersons = new ArrayList<>(N_ANT_TR_TOWN);//state 3 on scheme in "Препринт"
+    private ArrayList<AntTreatedPerson> townAntTrPersons2 = new ArrayList<>(N_ANT_TR_TOWN_2);//wrong antibiotic treatment (state 4)
+    private ArrayList<HealthyHospPerson> healthyHospPeople = new ArrayList<>(N_HEALTHY_HOSP);  //"healthy" persons in hospitals (with another pathogen or doctors) (state 6 - not isInfected)
+    
+    private TransitionLogger transLogger;
+    private PersonAmountLogger personAmountLogger;
 
 
     public void printBlock(String inpStr) {
@@ -96,15 +99,16 @@ public class Simulation {
     public Simulation(int iterationNum, String fileName, String logTransFileName) throws FileNotFoundException {
 
         printBlock("Start working!");
-        PrintWriter writeFile = openResultsFile(fileName);
-        //TODO: checking on empty string instead of logTransFileName
-        PrintWriter writeTransLogFile = openTransLogFile(logTransFileName);
-        initPersones(writeTransLogFile);
+        //TODO: join loggers (logTransFileName and PersonAmountLogger)
+        transLogger = new TransitionLogger(logTransFileName);
+        personAmountLogger = new PersonAmountLogger(fileName);
+        //PrintWriter writeFile = personAmountLogger.openPersonAmountLogFile(fileName);
+        initPersones();
         for (ticks=0; ticks< iterationNum; ticks++){
-            action(writeFile, writeTransLogFile, ticks);
+            action();//(personAmountLogger, ticks);
         }
 
-        writeFile.close();
+        //personAmountLogger.close();
 
         printBlock("Working finished!");
     }
@@ -113,24 +117,7 @@ public class Simulation {
 
     public static int getN_incLimit2() {return ModelValues.N_INCUB_LIMIT;}
 
-
-    private PrintWriter openResultsFile(String fName) throws FileNotFoundException {
-        PrintWriter writeFile = new PrintWriter(fName);
-        //not right seq of column names!!!! change
-        String st = "Ticks HealthyPersonsInTown InfectedPersonsInTown IncPeriodPersonsInTown IncPeriodPersonsInTown2 AntibioticTreatedPersonsInTown AntibioticTreatedPersonsInTown2 InfectedPersonsInHospital HealthyPersonsInHospital pGetInfectedTown AvMicResistance AvPathResistance ";
-        writeFile.println(st);
-        return writeFile;
-    }
-
-    private PrintWriter openTransLogFile(String fName) throws FileNotFoundException {
-        PrintWriter writeFile = new PrintWriter(fName);
-        //not right seq of column names!!!! change
-        String st = "Ticks PersonId TransFromClass TransToClass";
-        writeFile.println(st);
-        return writeFile;
-    }
-
-    private void initPersones(PrintWriter transLogFile){
+    private void initPersones(){
         //initialise lists of personsrPath
         int idIter = N_HEALTHY_TOWN + N_INFECTED_TOWN + N_PERS_HOSP + N_HEALTHY_HOSP;
         for (int i = 0; i < N_HEALTHY_TOWN + N_INFECTED_TOWN; i++) {
@@ -139,16 +126,16 @@ public class Simulation {
 //            int h = k * 20 + 10;
             if (i < N_INC_PER_TOWN) {
                 townIncPerPersons.add(new IncPeriodPerson("id_"+Integer.toString(idIter),0,false, ModelValues.N_INCUB_LIMIT +1));
-                WriteToTransLogFile(ticks + " " + ("id_"+Integer.toString(idIter)) + " " + "NA"+ " " + "townIncPerPersons", transLogFile);
+                transLogger.writeToTransLogFile(ticks + " " + ("id_"+Integer.toString(idIter)) + " " + "NA"+ " " + "townIncPerPersons");
                 idIter -=1;
             } else {
                 if (i < N_ANT_TR_TOWN) {
                     townAntTrPersons.add(new AntTreatedPerson("id_"+Integer.toString(idIter),0,false, N_ANT_COURSE_TOWN_RIGHT +1, pGetToHosp(false),0));
-                    WriteToTransLogFile(ticks + " " + ("id_"+Integer.toString(idIter)) + " " + "NA"+ " "  + "townAntTrPersons", transLogFile);
+                    transLogger.writeToTransLogFile(ticks + " " + ("id_"+Integer.toString(idIter)) + " " + "NA"+ " "  + "townAntTrPersons");
                     idIter -=1;
                 } else {
                     townHealthyPersons.add(new HealthyPerson("id_"+Integer.toString(idIter),0));
-                    WriteToTransLogFile(ticks + " " + ("id_"+Integer.toString(idIter)) + " " + "NA"+ " "  + "townHealthyPersons", transLogFile);
+                    transLogger.writeToTransLogFile(ticks + " " + ("id_"+Integer.toString(idIter)) + " " + "NA"+ " "  + "townHealthyPersons");
                     idIter -=1;
                 }
             }
@@ -159,39 +146,24 @@ public class Simulation {
 //            int k = (10 + 20 * i - w) / HOSP_W;
 //            int h = k * 20 + 10;
             hospAntTrPersons.add(new AntTreatedPerson("id_"+Integer.toString(idIter), 0,false, N_ANT_COURSE_HOSP +1, 0,0));
-            WriteToTransLogFile(ticks + " " + ("id_"+Integer.toString(idIter)) + " " + "NA" + " " + "hospAntTrPersons", transLogFile);
+            transLogger.writeToTransLogFile(ticks + " " + ("id_"+Integer.toString(idIter)) + " " + "NA" + " " + "hospAntTrPersons");
             idIter -=1;
         }
         for (int i = 0; i< N_HEALTHY_HOSP; i++) {
             healthyHospPeople.add(new HealthyHospPerson("id_"+Integer.toString(idIter),0, N_ANT_COURSE_HOSP +1));
-            WriteToTransLogFile(ticks + " " + ("id_"+Integer.toString(idIter)) + " " + "NA"+ " " + "healthyHospPeople", transLogFile);
+            transLogger.writeToTransLogFile(ticks + " " + ("id_"+Integer.toString(idIter)) + " " + "NA"+ " " + "healthyHospPeople");
             idIter -=1;
         }
         for (int i = 0; i< N_INC_PER_TOWN_2; i++) {
             townIncPerPersons2.add(new IncPeriodPerson("id_"+Integer.toString(idIter),0,false, ModelValues.N_INCUB_LIMIT_RESIST +1));
-            WriteToTransLogFile(ticks + " " + ("id_"+Integer.toString(idIter)) + " " + "NA"+ " " + "townIncPerPersons2", transLogFile);
+            transLogger.writeToTransLogFile(ticks + " " + ("id_"+Integer.toString(idIter)) + " " + "NA"+ " " + "townIncPerPersons2");
             idIter -=1;
         }
         for (int i = 0; i< N_ANT_TR_TOWN_2; i++) {
             townAntTrPersons2.add(new AntTreatedPerson("id_"+Integer.toString(idIter),0,false, N_ANT_COURSE_TOWN_WRONG +1,pGetToHosp(false),0));
-            WriteToTransLogFile(ticks + " " + ("id_"+Integer.toString(idIter)) + " " + "NA"+ " " + "townAntTrPersons2", transLogFile);
+            transLogger.writeToTransLogFile(ticks + " " + ("id_"+Integer.toString(idIter)) + " " + "NA"+ " " + "townAntTrPersons2");
             idIter -=1;
         }
-    }
-
-
-    public void WriteToFile(List<Number> l, PrintWriter writeFile) {
-        String st = "";
-        for (Number n : l) {
-            st += n + " ";
-        }
-        writeFile.println(st.trim());
-        writeFile.flush();
-    }
-
-    public void WriteToTransLogFile(String st, PrintWriter writeFile) {
-        writeFile.println(st.trim());
-        writeFile.flush();
     }
 
     public int nResMembersA(ArrayList<AntTreatedPerson> memberList) {
@@ -201,6 +173,7 @@ public class Simulation {
         }
         return n;
     }
+
     public int nResMembersI(ArrayList<IncPeriodPerson> memberList) {
         int n = 0;
         for (int i = 0; i < memberList.size(); i++) {
@@ -211,7 +184,7 @@ public class Simulation {
 
     // What happend with each agent on each tick
     //action for each component in a list
-    public void action(PrintWriter writeFile, PrintWriter writeTransLogFile, int nTicks) {
+    public void action(){//(PrintWriter writeFile, int nTicks) {
         double rMic;
         boolean pathRes;
 
@@ -221,7 +194,7 @@ public class Simulation {
                               townAntTrPersons2.size() +
                               townAntTrPersons.size();
 
-        double p_INF = (C_INFECTED_COEF * ((double) townIncPerPersons.size() + (double) townIncPerPersons2.size() + (double) N_ANT_TR_TOWN)) /
+        double p_INF = (C_INFECTED_COEF * (1.2*((double) townIncPerPersons.size() + (double) townIncPerPersons2.size()) + (double) N_ANT_TR_TOWN + (double) N_ANT_TR_TOWN_2)) /
                 ((double) townHealthyPersons.size() + (double) numInfectedTown);
 /*
         System.out.print("p_INF = (C_INFECTED_COEF * ((double) townIncPerPersons.size() + (double) townIncPerPersons2.size() + (double) N_ANT_TR_TOWN)) /\n" +
@@ -249,7 +222,7 @@ public class Simulation {
         personAmount.add(p_INF);
         personAmount.add(avMicResist);
         personAmount.add(avPathResist);
-        WriteToFile(personAmount, writeFile);
+        personAmountLogger.WritePersonAmountLogFile(personAmount);//WriteToFile(personAmount, writeFile);
 
 
         // it's we see on console
@@ -288,13 +261,13 @@ public class Simulation {
                 townHealthyPersons.remove(i);
                 i--;
                 townIncPerPersons.add(new IncPeriodPerson(pers.id, pers.micResistance, pers.isResistant, ModelValues.N_INCUB_LIMIT + 1));
-                WriteToTransLogFile(ticks + " " + pers.id + " " + "townHealthyPersons" + "townIncPerPersons", writeTransLogFile);
+                transLogger.writeToTransLogFile(ticks + " " + pers.id + " " + "townHealthyPersons" +" "+ "townIncPerPersons");
             } else {
                 if (pers.toBeHospitalized) {
                     townHealthyPersons.remove(i);
                     i--;
                     healthyHospPeople.add(new HealthyHospPerson(pers.id, pers.micResistance, N_ANT_COURSE_HOSP +1)); // ??? WHY here N_ANT_COURSE_HOSP, if it 's heath pers in hospital?
-                    WriteToTransLogFile(ticks + " " + pers.id + " " + "townHealthyPersons" +" "+ "healthyHospPeople", writeTransLogFile);
+                    transLogger.writeToTransLogFile(ticks + " " + pers.id + " " + "townHealthyPersons" +" "+ "healthyHospPeople");
                 }
             }
         }
@@ -316,14 +289,14 @@ public class Simulation {
                 i--;
                 if (getToHospital) {
                     hospAntTrPersons.add(new AntTreatedPerson(pers.id, pers.micResistance, pers.isResistant, N_ANT_COURSE_HOSP + 1,0,0));
-                    WriteToTransLogFile(ticks + " " + pers.id + " " + "townIncPerPersons" +" "+ "hospAntTrPersons", writeTransLogFile);
+                    transLogger.writeToTransLogFile(ticks + " " + pers.id + " " + "townIncPerPersons" +" "+ "hospAntTrPersons");
                 } else {
                     if (!Utils.bernoulli(ModelValues.P_WRONG_TREATMENT)){
                         townAntTrPersons.add(new AntTreatedPerson(pers.id, pers.micResistance, pers.isResistant, N_ANT_COURSE_TOWN_RIGHT + 1,pGetToHosp(pers.isResistant),0));
-                        WriteToTransLogFile(ticks + " " + pers.id + " " + "townIncPerPersons" +" "+ "townAntTrPersons", writeTransLogFile);
+                        transLogger.writeToTransLogFile(ticks + " " + pers.id + " " + "townIncPerPersons" +" "+ "townAntTrPersons");
                     } else {
                         townAntTrPersons2.add(new AntTreatedPerson(pers.id, pers.micResistance, pers.isResistant, N_ANT_COURSE_TOWN_WRONG +1, pGetToHosp(true),0));
-                        WriteToTransLogFile(ticks + " " + pers.id + " " + "townIncPerPersons" +" "+ "townAntTrPersons2", writeTransLogFile);
+                        transLogger.writeToTransLogFile(ticks + " " + pers.id + " " + "townIncPerPersons" +" "+ "townAntTrPersons2");
                     }
                 }
             }
@@ -340,7 +313,7 @@ public class Simulation {
                 townIncPerPersons2.remove(i);
                 i--;
                 hospAntTrPersons.add(new AntTreatedPerson(pers.id, pers.micResistance, pers.isResistant, N_ANT_COURSE_HOSP + 1,0,0));
-                WriteToTransLogFile(ticks + " " + pers.id + " " + "townIncPerPersons2" +" "+ "hospAntTrPersons", writeTransLogFile);
+                transLogger.writeToTransLogFile(ticks + " " + pers.id + " " + "townIncPerPersons2" +" "+ "hospAntTrPersons");
             }
         }
 
@@ -354,7 +327,7 @@ public class Simulation {
                 townAntTrPersons.remove(i);
                 i--;
                 hospAntTrPersons.add(new AntTreatedPerson(pers.id, pers.micResistance,pers.isResistant, N_ANT_COURSE_HOSP + 1,0,0));
-                WriteToTransLogFile(ticks + " " + pers.id + " " + "townAntTrPersons" +" "+ "hospAntTrPersons", writeTransLogFile);
+                transLogger.writeToTransLogFile(ticks + " " + pers.id + " " + "townAntTrPersons" +" "+ "hospAntTrPersons");
 
             } else if(pers.treatmentPeriod == 0) {
                 townAntTrPersons.remove(i);
@@ -363,10 +336,10 @@ public class Simulation {
                 //TODO: isResistant always false
                 if (!pers.isResistant) {
                     townHealthyPersons.add(new HealthyPerson(pers.id, pers.micResistance));
-                    WriteToTransLogFile(ticks + " " + pers.id + " " + "townAntTrPersons" +" "+ "townHealthyPersons", writeTransLogFile);
+                    transLogger.writeToTransLogFile(ticks + " " + pers.id + " " + "townAntTrPersons" +" "+ "townHealthyPersons");
                 } else { // hospital treatment period should be for AB2 !!! OR NOT?????
                     hospAntTrPersons.add(new AntTreatedPerson(pers.id, pers.micResistance, pers.isResistant, N_ANT_COURSE_HOSP + 1, 0,0));
-                    WriteToTransLogFile(ticks + " " + pers.id + " " + "townAntTrPersons" +" "+ "hospAntTrPersons", writeTransLogFile);
+                    transLogger.writeToTransLogFile(ticks + " " + pers.id + " " + "townAntTrPersons" +" "+ "hospAntTrPersons");
                 }
             }
         }
@@ -381,12 +354,12 @@ public class Simulation {
                 townAntTrPersons2.remove(i);
                 i--;
                 hospAntTrPersons.add(new AntTreatedPerson(pers.id, pers.micResistance, pers.isResistant, N_ANT_COURSE_HOSP + 1, 0, 0));
-                WriteToTransLogFile(ticks + " " + pers.id + " " + "townAntTrPersons2" +" "+ "hospAntTrPersons", writeTransLogFile);
+                transLogger.writeToTransLogFile(ticks + " " + pers.id + " " + "townAntTrPersons2" +" "+ "hospAntTrPersons");
             } else if (pers.treatmentPeriod == 0) {
                 townAntTrPersons2.remove(i);
                 i--;
                 townIncPerPersons2.add(new IncPeriodPerson(pers.id, pers.micResistance, true, ModelValues.N_INCUB_LIMIT_RESIST +1)); //wrong treatment leads to resistance of pathogen
-                WriteToTransLogFile(ticks + " " + pers.id + " " + "townAntTrPersons2" +" "+ "townIncPerPersons2", writeTransLogFile);
+                transLogger.writeToTransLogFile(ticks + " " + pers.id + " " + "townAntTrPersons2" +" "+ "townIncPerPersons2");
             }
         }
 
@@ -404,7 +377,7 @@ public class Simulation {
                 hospAntTrPersons.remove(i);
                 i--;
                 townHealthyPersons.add(new HealthyPerson(pers.id, pers.micResistance));
-                WriteToTransLogFile(ticks + " " + pers.id + " " + "hospAntTrPersons" +" "+ "townHealthyPersons", writeTransLogFile);
+                transLogger.writeToTransLogFile(ticks + " " + pers.id + " " + "hospAntTrPersons" +" "+ "townHealthyPersons");
             }
         }
 
@@ -417,10 +390,10 @@ public class Simulation {
             if(pers.treatmentPeriod == 0) {
                 if(!pers.isInfected){
                     townHealthyPersons.add(new HealthyPerson(pers.id, pers.micResistance));
-                    WriteToTransLogFile(ticks + " " + pers.id + " " + "healthyHospPeople" +" "+ "townHealthyPersons", writeTransLogFile);
+                    transLogger.writeToTransLogFile(ticks + " " + pers.id + " " + "healthyHospPeople" +" "+ "townHealthyPersons");
                 } else {
                     townIncPerPersons.add(new IncPeriodPerson(pers.id, pers.micResistance, pers.isResistant, ModelValues.N_INCUB_LIMIT +1));
-                    WriteToTransLogFile(ticks + " " + pers.id + " " + "healthyHospPeople" +" "+ "townIncPerPersons", writeTransLogFile);
+                    transLogger.writeToTransLogFile(ticks + " " + pers.id + " " + "healthyHospPeople" +" "+ "townIncPerPersons");
                 }
                 healthyHospPeople.remove(i);
                 i--;

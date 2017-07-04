@@ -51,6 +51,7 @@ public class Main {
 
         } catch (IOException e) {
             System.err.println("File not found "+args[2]);
+            e.printStackTrace();
         }
 
         if (args.length > 3){
@@ -59,12 +60,14 @@ public class Main {
                 new Simulation(iterationNum, fileName, logTransFileName);
             } catch (FileNotFoundException e){
                 System.out.println("File not found "+fileName+" or "+logTransFileName);
+                e.printStackTrace();
             }
         } else{
             try {
                 new Simulation(iterationNum, fileName, "");
             } catch (FileNotFoundException e) {
                 System.out.println("File not found "+fileName);
+                e.printStackTrace();
                 //e.printStackTrace();
             }
         }

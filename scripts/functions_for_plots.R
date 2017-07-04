@@ -23,7 +23,7 @@ number_of_people <- function(results,  legend_x, legend_y, folder = "plots/tmp",
         col = "red", lwd = 2)
   lines(results$Ticks, results$InfectedPersonsInHospital, col = "green", lwd=2)
   lines(results$Ticks, results$HealthyPersonsInHospital, col = "purple", lwd =2)
-  legend(legend_x, legend_y,
+  legend(legend_x, legend_y, inset=.02, cex=0.5,
          c ("инфицированные", "инфицированнные резистентным патогеном",
             "госпитализированные с данной инфекцией", 
             "находящиеся в больнице по другому поводу"),

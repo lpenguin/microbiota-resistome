@@ -4,6 +4,7 @@ rootDir <- dirname(dirname(rstudioapi::getActiveDocumentContext()$path))
 setwd(rootDir)
 library("reshape")
 library(zoo)
+library(data.table)
 
 dt <- data.frame()
 for (cfile in list.files('out/simulations/May_22_time_16_42/', pattern = '.txt' )) {
@@ -22,13 +23,12 @@ time.t <- max(dt$Ticks)
 delta <- 1
 estim.t <- NULL
 all.lambda <- sapply(seq(0.1, 5, by=.1) , function(lambda) { # or so seq(1/time.t, 5, by=1/time.t)
-  matog <- 0
-  sapply(unique(dt$simulation) , function(sim) { # or so seq(1/time.t, 5, by=1/time.t)
-    # lambda <- 1
+  matog <- sapply(unique(dt$simulation) , function(sim) { # or so seq(1/time.t, 5, by=1/time.t)
+    # lambda <- 0.2
     # sim <- "rep100"
     infect.p <- dt[dt$simulation==sim,"HealthyPersonsInHospital"] #infeected people
-    step.m <- cumsum(rexp(time.t, lambda)) # steps moments, markov moments
-    step.m <- step.m[step.m<=100&step.m>=1] 
+    step.m <- cumsum(rexp(time.t*lambda, lambda)) # steps moments, markov moments
+    step.m <- step.m[step.m<(time.t+1)&step.m>=1] 
     observ <- infect.p[trunc(step.m)] #I dont like that we dont consider 0-step 
     observ.full <- unique(na.locf(merge(data.frame(val=observ, time=trunc(step.m)),data.frame(time=1:time.t), all.y = T), fromLast = F))
     observ.full[is.na(observ.full)] <- 0
@@ -38,15 +38,16 @@ all.lambda <- sapply(seq(0.1, 5, by=.1) , function(lambda) { # or so seq(1/time.
     # observ.full$is.na <- as.numeric(is.na(observ.full$val))
     # observ.full2 <- na.locf(observ.full, fromLast = F)
     
-    # plot(1:time.t, infect.p, col="red", type = "o", lwd=3)
-    # lines(trunc(step.m), observ, col="green",lwd=1)
-    # 
-    matog <- matog + sum(observ.full$diff.sqr)*delta 
-  })
-  matog <- 1*lambda + (matog/100) # 1- constA, 100- kol trajectories
-  estim.t <- rbind(estim.t, data.frame(l=lambda, estim=matog))
-})
+    plot(1:time.t, infect.p, col="red", type = "o", lwd=3)
+    lines(trunc(step.m), observ, col="green",lwd=1)
 
+    return(sum(observ.full$diff.sqr)*delta)
+  })
+  matog <- 1*lambda + (sum(matog)/length(unique(dt$simulation))) # 1- constA, 100- kol trajectories
+  return(data.frame(l=lambda, estim=matog))
+})
+estim.t <- data.frame(t(all.lambda))
+plot(estim.t$l, estim.t$estim, type = "o")
 
 # #Poison procces
 # lambda <- 1

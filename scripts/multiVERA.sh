@@ -13,7 +13,8 @@ for (( i=1; i<=$repNum; i++ ))
 do
    namePath=$outPath"/rep$i.txt"
    echo "Created file "$namePath
-   java -jar ../target/microbiomeres-0.1.jar $iterNum $namePath
+   echo "Prop file "$(realpath "$4")
+   java -jar ../target/microbiomeres-0.1.jar $iterNum $namePath $(realpath "$4") /dev/null
    # rm -f ../src/*.class
    # javac -cp ../src ../src/Main.java
    # java -cp ../src/ Main $iterNum $namePath
