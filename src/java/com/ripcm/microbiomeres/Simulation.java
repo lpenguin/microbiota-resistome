@@ -394,7 +394,7 @@ public class Simulation {
                     transLogger.writeToTransLogFile(ticks + " " + pers.id + " " + "healthyHospPeople" +" "+ "townHealthyPersons");
                 } else {
                     townIncPerPersons.add(new IncPeriodPerson(pers.id, pers.micResistance, pers.isResistant, ModelValues.N_INCUB_LIMIT +1));
-                    transLogger.writeToTransLogFile(ticks + " " + pers.id + " " + "healthyHospPeople" +" "+ "townIncPerPersons");
+                    transLogger.writeToTransLogFile( ticks + " " + pers.id + " " + "healthyHospPeople" +" "+ "townIncPerPersons");
                 }
                 healthyHospPeople.remove(i);
                 i--;
