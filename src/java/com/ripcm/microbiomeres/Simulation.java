@@ -358,6 +358,7 @@ public class Simulation {
             } else if (pers.treatmentPeriod == 0) {
                 townAntTrPersons2.remove(i);
                 i--;
+
                 townIncPerPersons2.add(new IncPeriodPerson(pers.id, pers.micResistance, true, ModelValues.N_INCUB_LIMIT_RESIST +1)); //wrong treatment leads to resistance of pathogen
                 transLogger.writeToTransLogFile(ticks + " " + pers.id + " " + "townAntTrPersons2" +" "+ "townIncPerPersons2");
             }

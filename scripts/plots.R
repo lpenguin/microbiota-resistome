@@ -14,6 +14,8 @@ results3 <- read.table("plots/microbiota_resist_2/log.txt", header = T)
 results4 <- read.table("plots/both_2/log.txt", header = T)
 
 results <- read.table("out/simulations/buf_18_04.txt", header = T)
+results <- read.table("out/simulations/buftable_14_06_3ver.txt", header = T)
+results <- read.table("out/simulations/buftable_15_06.txt", header = T)
 
 tests(results)
 tests(results1)
@@ -23,8 +25,26 @@ tests(results4)
 
 par(mfrow =c(1,1))
 #number_of_people(results,0,17000, save = F, "Shigella")
-number_of_people(results,0,400, save = F, inp.title = "Shigella")
+number_of_people(results,0,350, save = F, inp.title = "Shigella")
 
+###################################
+###--- Area plot for each AB ---###
+###--------- agent state -------###
+###################################
+pdf(file="data/plots/agent_abund_area_plots.pdf")#, height=3.5, width=5)
+#par(xpd=T, mar=par()$mar+c(8,1,1,5))
+number_of_people_are_plot(results, inp.title="Shigella")
+
+
+
+
+
+
+
+
+#####################################
+####-------- I dont use it -------###
+#####################################
 par(mfrow =c(2,2))
 number_of_people(results1,0,17000,"plots/no effects",save = F, "а)")
 number_of_people(results2,0,30000, "plots/wrong_treatment_2", save = F, "б)")
