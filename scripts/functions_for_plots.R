@@ -33,7 +33,7 @@ number_of_people <- function(results,  legend_x, legend_y, folder = "plots/tmp",
   if (save == T) dev.off()
 }
 
-number_of_people_are_plot <- function(res.t, inp.title){
+number_of_people_area_plot <- function(res.t, inp.title){
   # res.t <- results 
   # inp.title <- "Shigella"
    
