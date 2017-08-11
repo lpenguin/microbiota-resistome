@@ -13,7 +13,7 @@ public class CommandLineArgs {
     @Argument(index = 2, required = true)
     public String propertiesFile;
 
-    @Option(name = "-translog")
+    @Argument(index = 3)
     public String transitionLogFile;
 
     @Option(name = "-quiet")
