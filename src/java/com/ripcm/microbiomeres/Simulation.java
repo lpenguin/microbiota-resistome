@@ -36,31 +36,31 @@ public class Simulation {
     private static final int N_PERS_HOSP = 0; //AntTreatedPerson, hospAntTrPersons | isInfected persons in hospital (state 6 - isInfected)
     private static final int N_HEALTHY_HOSP = 0;//number of hospitalized persons without pathogen
     //number of hospitals (not working yet, only 1 hospital now)
-    private final static int N_Hosp = 1; //number of hospitals
+    private static final int N_Hosp = 1; //number of hospitals
 
 
     //pathogene properties
-    private final static int N_ANT_COURSE_TOWN_RIGHT = 5; //wright length of antibiotic course
-    private final static int N_ANT_COURSE_TOWN_WRONG = 2; //wrong length of antibiotic course
-    private final static int N_ANT_COURSE_HOSP = 7; //length of antibiotic course
+    private static final int N_ANT_COURSE_TOWN_RIGHT = 5; //wright length of antibiotic course
+    private static final int N_ANT_COURSE_TOWN_WRONG = 2; //wrong length of antibiotic course
+    private static final int N_ANT_COURSE_HOSP = 7; //length of antibiotic course
 
 
-    private static double avPathResist = 0; //percentage of resistant pathogens among all (now initially it can be only 0)
-    /*private final static double C_INFECTED_COEF =
+    private double avPathResist = 0; //percentage of resistant pathogens among all (now initially it can be only 0)
+    /*private static final double C_INFECTED_COEF =
             ((double) ModelValues.N_INFECTED_PEOPLE_PER_YEAR*Math.pow(10,3))/
             ( ModelValues.N_PEOPLE_IN_COUNTRY*Math.pow(10,6));*/
 
 
 
 /*
-    private final static double P_HOSP_NONRES = 0.2;//0.005;//probability of being hospitalized for an AntTreatedPerson with nonresistant pathogen
-    private final static double P_HOSP_RES = 0.1;// 0.01;//probability of being hospitalized for an AntTreatedPerson with resistant pathogen
+    private static final double P_HOSP_NONRES = 0.2;//0.005;//probability of being hospitalized for an AntTreatedPerson with nonresistant pathogen
+    private static final double P_HOSP_RES = 0.1;// 0.01;//probability of being hospitalized for an AntTreatedPerson with resistant pathogen
     private static double pGetToHosp(boolean isResistant) {
         if(isResistant){
             return P_HOSP_RES;
         } else return P_HOSP_NONRES;
     }  ; //probability to get to a hospital during antibiotic course
-    private final static int C_wrongTr =10000000;// 5;// each C_wrongTr infected person is treated wrong (N_ANT_COURSE_TOWN_WRONG)
+    private static final int C_wrongTr =10000000;// 5;// each C_wrongTr infected person is treated wrong (N_ANT_COURSE_TOWN_WRONG)
 */
 
 
@@ -72,8 +72,8 @@ public class Simulation {
 
     //time and graphics parameters
     private int ticks = 0;
-    private final static int TOWN_W = 300;
-    private final static int HOSP_W = 200;
+    private static final int TOWN_W = 300;
+    private static final int HOSP_W = 200;
 
 
     //lists of persons
