@@ -1,8 +1,10 @@
 package com.ripcm.microbiomeres;
 
+import com.ripcm.microbiomeres.log.*;
 import com.ripcm.microbiomeres.person.ModelValues;
+import org.kohsuke.args4j.CmdLineException;
+import org.kohsuke.args4j.CmdLineParser;
 
-import java.io.FileNotFoundException;
 import java.util.Properties;
 import java.io.*;
 /**
@@ -10,23 +12,49 @@ import java.io.*;
  */
 
 public class Main {
+    public static void main(String[] args) throws IOException {
+        CommandLineArgs cliArgs = getCommandLineArgs(args);
+        if (cliArgs == null) return;
 
-
-    public static void main(String[] args) {
-
-        for (int i = 0; i < args.length; i++) {
-            System.out.println("Argument "+(i+1)+" = "+args[i]);
+        int runsCount = 1000;
+        long totalTime = 0;
+        for(int i = 0; i < runsCount; i++){
+            long start = System.currentTimeMillis();
+            readProperties(cliArgs.propertiesFile);
+            runSimulation(cliArgs);
+            long end = System.currentTimeMillis();
+            totalTime += end - start;
         }
+        System.out.printf("Runs: %d, totalTimeMillis: %d, millis per run: %f",
+                runsCount, totalTime, totalTime / (float)runsCount
+        );
 
-        int iterationNum = Integer.parseInt(args[0]);
-        //String outDir = "out/simulations/";
-        String fileName = args[1];
+    }
 
+    private static CommandLineArgs getCommandLineArgs(String[] args) {
+//        for (int i = 0; i < args.length; i++) {
+//            System.out.println("Argument "+(i+1)+" = "+args[i]);
+//        }
+
+        CommandLineArgs cliArgs = new CommandLineArgs();
+        CmdLineParser parser = new CmdLineParser(cliArgs);
+
+        try{
+            parser.parseArgument(args);
+        } catch (CmdLineException e) {
+            System.err.println(e.getMessage());
+            parser.printUsage(System.err);
+            return null;
+        }
+        return cliArgs;
+    }
+
+    private static void readProperties(String propertiesFile) {
         FileInputStream fis;
         Properties property = new Properties();
 
         try {
-            fis = new FileInputStream(args[2]);
+            fis = new FileInputStream(propertiesFile);
             property.load(fis);
 
             ModelValues.N_INCUB_LIMIT = Integer.valueOf(property.getProperty("N_INCUB_LIMIT"));
@@ -42,47 +70,26 @@ public class Main {
             ModelValues.C_DECREASE_COEF = Double.valueOf(property.getProperty("C_DECREASE_COEF"));
             ModelValues.P_HEALTHY_HOSPITALIZE = Double.valueOf(property.getProperty("P_HEALTHY_HOSPITALIZE"));
 
-/*          System.out.print("C_INFECTED_COEF = "+Integer.valueOf(property.getProperty("N_INFECTED_PEOPLE_PER_YEAR"))+" * "+Math.pow(10,2)+" / "+
-                    Double.valueOf(property.getProperty("N_PEOPLE_IN_COUNTRY"))+" * "+Math.pow(10,6)+"\n");
-            System.out.print("C_INFECTED_COEF = "+Integer.valueOf(property.getProperty("N_INFECTED_PEOPLE_PER_YEAR"))*Math.pow(10,2)+" / "+
-                    Double.valueOf(property.getProperty("N_PEOPLE_IN_COUNTRY"))*Math.pow(10,6)+"\n");
-            System.out.print("C_INFECTED_COEF = "+Integer.valueOf(property.getProperty("N_INFECTED_PEOPLE_PER_YEAR"))*Math.pow(10,2)/
-                    (Double.valueOf(property.getProperty("N_PEOPLE_IN_COUNTRY"))*Math.pow(10,6))+"\n");*/
-
-
-
         } catch (IOException e) {
-            System.err.println("File not found "+args[2]);
+            System.err.println("File not found "+ propertiesFile);
             e.printStackTrace();
         }
+    }
 
-        if (args.length > 3){
-            String logTransFileName = args[3];
-            try{
-                new Simulation(iterationNum, fileName, logTransFileName);
-            } catch (FileNotFoundException e){
-                System.out.println("File not found "+fileName+" or "+logTransFileName);
-                e.printStackTrace();
-            }
-        } else{
-            try {
-                new Simulation(iterationNum, fileName, null);
-            } catch (FileNotFoundException e) {
-                System.out.println("File not found "+fileName);
-                e.printStackTrace();
-                //e.printStackTrace();
-            }
-        }
-//  //      SwingUtilities.invokeLater(new Runnable() {
-//            public void run() {
-//  //              JFrame frame = new JFrame();
-//                frame.add(new MyComponentFromVera());
-//  //              frame.add(new Rectangle()); //mooving rectangle
-//                frame.pack();
-//  //              frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//                frame.setLocationRelativeTo(null); //?
-//                frame.setVisible(true);   //?
-//            }
-//        });
+    private static void runSimulation(CommandLineArgs cliArgs) throws IOException {
+        LogWriter transLogWriter = cliArgs.transitionLogFile != null ? new FileLogWriter(cliArgs.transitionLogFile) : new DummyLogWriter();
+        LogWriter personAmountWriter = cliArgs.personAmountLogFile != null ? new FileLogWriter(cliArgs.personAmountLogFile) : new DummyLogWriter();
+        LogWriter messagesWriter = cliArgs.quiet ? new DummyLogWriter() : new StdoutLogWriter();
+
+        new Simulation(
+                cliArgs.iterationsCount,
+                new PersonAmountLogger(personAmountWriter),
+                new TransitionLogger(transLogWriter),
+                messagesWriter
+        );
+
+        transLogWriter.close();
+        personAmountWriter.close();
+        messagesWriter.close();
     }
 }

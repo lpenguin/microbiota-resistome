@@ -87,36 +87,32 @@ public class Simulation {
     private ArrayList<HealthyHospPerson> healthyHospPeople = new ArrayList<>(N_HEALTHY_HOSP);  //"healthy" persons in hospitals (with another pathogen or doctors) (state 6 - not isInfected)
 
     private TransitionLogger transLogger;
+    private LogWriter messagesWriter;
     private PersonAmountLogger personAmountLogger;
 
 
     //Constructor
-    public Simulation(int iterationNum, String fileName, String logTransFileName) throws IOException {
+    public Simulation(int iterationNum, PersonAmountLogger personAmountLogger, TransitionLogger transLogger, LogWriter messagesWriter) throws IOException {
+        this.personAmountLogger = personAmountLogger;
+        this.transLogger = transLogger;
+        this.messagesWriter = messagesWriter;
 
         printBlock("Start working!");
+
         //TODO: join loggers (logTransFileName and PersonAmountLogger)
-
-        LogWriter transLogWriter = logTransFileName != null ? new FileLogWriter(logTransFileName) : new DummyLogWriter();
-        LogWriter personAmountWriter = fileName != null ? new FileLogWriter(fileName) : new DummyLogWriter();
-
-        transLogger = new TransitionLogger(transLogWriter);
-        personAmountLogger = new PersonAmountLogger(personAmountWriter);
 
         initPersones();
         for (ticks = 0; ticks < iterationNum; ticks++) {
             action();//(personAmountLogger, ticks);
         }
 
-        transLogWriter.close();
-        personAmountWriter.close();
-
         printBlock("Working finished!");
     }
 
-    public void printBlock(String inpStr) {
-        System.out.print("==" + new String(new char[inpStr.length()]).replace("\0", "=") + "== \n");
-        System.out.print("= " + inpStr + "= \n");
-        System.out.print("==" + new String(new char[inpStr.length()]).replace("\0", "=") + "== \n");
+    public void printBlock(String inpStr) throws IOException {
+        messagesWriter.writeMessage("==" + new String(new char[inpStr.length()]).replace("\0", "=") + "==");
+        messagesWriter.writeMessage("= " + inpStr + "= ");
+        messagesWriter.writeMessage("==" + new String(new char[inpStr.length()]).replace("\0", "=") + "== ");
     }
 
     public double getFixAvPathResistTown() {
@@ -217,8 +213,8 @@ public class Simulation {
 //                (((double) townHealthyPersons.size()) + ((double) numInfectedTown));
 
         //output
-        System.out.printf("%d %d %d %d %d %d\n", townHealthyPersons.size(), townIncPerPersons.size(), townAntTrPersons.size(),
-                hospAntTrPersons.size(), townAntTrPersons2.size(), townIncPerPersons2.size());
+        messagesWriter.writeMessage(String.format("%d %d %d %d %d %d", townHealthyPersons.size(), townIncPerPersons.size(), townAntTrPersons.size(),
+                hospAntTrPersons.size(), townAntTrPersons2.size(), townIncPerPersons2.size()));
         List<Number> personAmount = new ArrayList<Number>(12);
         personAmount.add(ticks);
         personAmount.add(townHealthyPersons.size());
@@ -236,14 +232,14 @@ public class Simulation {
 
 
         // it's we see on console
-        System.out.print("nHealthyTown =" + townHealthyPersons.size() + "\n");
-        System.out.print("nIncPerTown = " + townIncPerPersons.size() + "\n");
-        System.out.print("nAntTrTown =" + townAntTrPersons.size() + "\n");
-        System.out.print("N_PERS_HOSP =" + hospAntTrPersons.size() + "\n");
-        System.out.print("P_INF = " + p_INF + "\n");
-        System.out.print("avMicrobiоtaResistance = " + avMicResist + "\n");
-        System.out.print("avPathogeneResistance = " + avPathResist + "\n");
-        System.out.print("N_HEALTHY_HOSP = " + healthyHospPeople.size() + "\n");
+        messagesWriter.writeMessage("nHealthyTown =" + townHealthyPersons.size());
+        messagesWriter.writeMessage("nIncPerTown = " + townIncPerPersons.size());
+        messagesWriter.writeMessage("nAntTrTown =" + townAntTrPersons.size());
+        messagesWriter.writeMessage("N_PERS_HOSP =" + hospAntTrPersons.size());
+        messagesWriter.writeMessage("P_INF = " + p_INF + "\n");
+        messagesWriter.writeMessage("avMicrobiоtaResistance = " + avMicResist);
+        messagesWriter.writeMessage("avPathogeneResistance = " + avPathResist);
+        messagesWriter.writeMessage("N_HEALTHY_HOSP = " + healthyHospPeople.size());
 
 
         avMicResist = 0.; // i think this should not be if ticks!=0
