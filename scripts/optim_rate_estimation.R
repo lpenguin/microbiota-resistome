@@ -22,7 +22,7 @@ head(dt)
 time.t <- max(dt$Ticks)
 delta.tick <- 1
 estim.t <- NULL
-sigma.sq <- 0.008
+sigma.sq <- 0.04
 constA <- time.t
 all.lambda <- sapply(seq(0.1, 5, by=.1) , function(lambda) { # or so seq(1/time.t, 5, by=1/time.t)
   matog <- sapply(unique(dt$simulation) , function(sim) { # or so seq(1/time.t, 5, by=1/time.t)

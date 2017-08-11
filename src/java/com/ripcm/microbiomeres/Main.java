@@ -30,15 +30,17 @@ public class Main {
             property.load(fis);
 
             ModelValues.N_INCUB_LIMIT = Integer.valueOf(property.getProperty("N_INCUB_LIMIT"));
-            ModelValues.N_INCUB_LIMIT_RESIST = Integer.valueOf(property.getProperty("N_INCUB_LIMIT_RESIST"));
-            ModelValues.N_INFECTED_PEOPLE_PER_YEAR = Integer.valueOf(property.getProperty("N_INFECTED_PEOPLE_PER_YEAR"));
-            ModelValues.N_PEOPLE_IN_COUNTRY = Double.valueOf(property.getProperty("N_PEOPLE_IN_COUNTRY"));
+            //ModelValues.N_INCUB_LIMIT_RESIST = Integer.valueOf(property.getProperty("N_INCUB_LIMIT_RESIST"));
+            /*ModelValues.N_INFECTED_PEOPLE_PER_YEAR = Integer.valueOf(property.getProperty("N_INFECTED_PEOPLE_PER_YEAR"));
+            ModelValues.N_PEOPLE_IN_COUNTRY = Double.valueOf(property.getProperty("N_PEOPLE_IN_COUNTRY"));*/
+            ModelValues.C_INFECTED_COEF = Double.valueOf(property.getProperty("C_INFECTED_COEF"));
             ModelValues.C_PATHOGEN_RESIST_CHANGE_COEF = Double.valueOf(property.getProperty("C_PATHOGEN_RESIST_CHANGE_COEF"));
             ModelValues.P_INCUB_TO_HOSPITAL = Double.valueOf(property.getProperty("P_INCUB_TO_HOSPITAL"));
             ModelValues.P_WRONG_TREATMENT = Double.valueOf(property.getProperty("P_WRONG_TREATMENT"));
             ModelValues.P_BE_INFECTED_IN_HOSPITAL = Double.valueOf(property.getProperty("P_BE_INFECTED_IN_HOSPITAL"));
             ModelValues.C_GROWTH_COEF = Double.valueOf(property.getProperty("C_GROWTH_COEF"));
             ModelValues.C_DECREASE_COEF = Double.valueOf(property.getProperty("C_DECREASE_COEF"));
+            ModelValues.P_HEALTHY_HOSPITALIZE = Double.valueOf(property.getProperty("P_HEALTHY_HOSPITALIZE"));
 
 /*          System.out.print("C_INFECTED_COEF = "+Integer.valueOf(property.getProperty("N_INFECTED_PEOPLE_PER_YEAR"))+" * "+Math.pow(10,2)+" / "+
                     Double.valueOf(property.getProperty("N_PEOPLE_IN_COUNTRY"))+" * "+Math.pow(10,6)+"\n");
@@ -64,7 +66,7 @@ public class Main {
             }
         } else{
             try {
-                new Simulation(iterationNum, fileName, "");
+                new Simulation(iterationNum, fileName, null);
             } catch (FileNotFoundException e) {
                 System.out.println("File not found "+fileName);
                 e.printStackTrace();
