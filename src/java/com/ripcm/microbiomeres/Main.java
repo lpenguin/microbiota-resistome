@@ -16,18 +16,8 @@ public class Main {
         CommandLineArgs cliArgs = getCommandLineArgs(args);
         if (cliArgs == null) return;
 
-        int runsCount = 1000;
-        long totalTime = 0;
-        for(int i = 0; i < runsCount; i++){
-            long start = System.currentTimeMillis();
-            readProperties(cliArgs.propertiesFile);
-            runSimulation(cliArgs);
-            long end = System.currentTimeMillis();
-            totalTime += end - start;
-        }
-        System.out.printf("Runs: %d, totalTimeMillis: %d, millis per run: %f",
-                runsCount, totalTime, totalTime / (float)runsCount
-        );
+        readProperties(cliArgs.propertiesFile);
+        runSimulation(cliArgs);
 
     }
 
