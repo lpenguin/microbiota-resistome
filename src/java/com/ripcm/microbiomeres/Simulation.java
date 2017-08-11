@@ -3,7 +3,6 @@ package com.ripcm.microbiomeres;
 import com.ripcm.microbiomeres.log.*;
 import com.ripcm.microbiomeres.person.*;
 
-import java.awt.*;
 import java.util.List;
 import java.util.ArrayList;
 import java.io.*;
@@ -39,7 +38,7 @@ public class Simulation {
     //number of hospitals (not working yet, only 1 hospital now)
     private final static int N_Hosp = 1; //number of hospitals
 
-    private static final double P_HEALTHY_HOSPITALIZE = 0.002;//probability to be hospitalized with another infection
+
     //pathogene properties
     private final static int N_ANT_COURSE_TOWN_RIGHT = 5; //wright length of antibiotic course
     private final static int N_ANT_COURSE_TOWN_WRONG = 2; //wrong length of antibiotic course
@@ -47,8 +46,9 @@ public class Simulation {
 
 
     private static double avPathResist = 0; //percentage of resistant pathogens among all (now initially it can be only 0)
-    private final static double C_INFECTED_COEF = ((double) ModelValues.N_INFECTED_PEOPLE_PER_YEAR * Math.pow(10, 3)) /
-            (ModelValues.N_PEOPLE_IN_COUNTRY * Math.pow(10, 6));
+    /*private final static double C_INFECTED_COEF =
+            ((double) ModelValues.N_INFECTED_PEOPLE_PER_YEAR*Math.pow(10,3))/
+            ( ModelValues.N_PEOPLE_IN_COUNTRY*Math.pow(10,6));*/
 
 
 
@@ -204,7 +204,7 @@ public class Simulation {
                 townAntTrPersons2.size() +
                 townAntTrPersons.size();
 
-        double p_INF = (C_INFECTED_COEF * (1.2 * ((double) townIncPerPersons.size() + (double) townIncPerPersons2.size()) + (double) N_ANT_TR_TOWN + (double) N_ANT_TR_TOWN_2)) /
+        double p_INF = (ModelValues.C_INFECTED_COEF * (1.2*((double) townIncPerPersons.size() + (double) townIncPerPersons2.size()) + (double) N_ANT_TR_TOWN + (double) N_ANT_TR_TOWN_2)) /
                 ((double) townHealthyPersons.size() + (double) numInfectedTown);
 /*
         System.out.print("p_INF = (C_INFECTED_COEF * ((double) townIncPerPersons.size() + (double) townIncPerPersons2.size() + (double) N_ANT_TR_TOWN)) /\n" +
@@ -264,7 +264,7 @@ public class Simulation {
 
         //action for healthy people in town
         for (int i = 0; i < townHealthyPersons.size(); i++) {
-            townHealthyPersons.get(i).tick(this, p_INF, ModelValues.C_DECREASE_COEF, P_HEALTHY_HOSPITALIZE);
+            townHealthyPersons.get(i).tick(this, p_INF, ModelValues.C_DECREASE_COEF, ModelValues.P_HEALTHY_HOSPITALIZE);
             HealthyPerson pers = townHealthyPersons.get(i);
             avMicResist = avMicResist + pers.micResistance;
             if (pers.toBeChanged) {// & nHealthyTown != 0) {
