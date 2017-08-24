@@ -6,8 +6,9 @@ library("reshape")
 library(zoo)
 library(data.table)
 
+out.dir <- "" # arg[2]
 dt <- data.frame()
-for (cfile in list.files('out/simulations/Jun_23_time_17_07/', pattern = '.txt' )) {
+for (cfile in list.files('out/simulations/Jun_23_time_17_07/', pattern = '.txt' )) { # arg[1]
   cur.dt <- read.table(sprintf("out/simulations/Jun_23_time_17_07/%s", cfile), header = T, fill = T,
                        comment.char = '', quote = '')
   cur.dt$simulation <- cfile
@@ -33,7 +34,7 @@ all.lambda <- sapply(seq(0.1, 5, by=.1) , function(lambda) { # or so seq(1/time.
     infect.p <- dt[dt$simulation==sim,"AllInfectedPer"] #infeected people
     step.m <- cumsum(rexp(time.t*lambda, lambda)) # steps moments, markov moments
     step.m <- step.m[step.m<(time.t+1)&step.m>=1] 
-    observ <- infect.p[trunc(step.m)] #I dont like that we dont consider 0-step 
+    observ <- infect.p[trunc(step.m)] 
     observ.full <- unique(na.locf(merge(data.frame(val=observ, time=trunc(step.m)),data.frame(time=1:time.t), all.y = T), fromLast = F))
     observ.full[is.na(observ.full)] <- 0
     observ.full$real.v <- infect.p 
@@ -52,7 +53,8 @@ all.lambda <- sapply(seq(0.1, 5, by=.1) , function(lambda) { # or so seq(1/time.
   return(data.frame(l=lambda, estim=matog.est))
 })
 estim.t <- as.data.frame(t(all.lambda))
-plot(estim.t$l, estim.t$estim, type = "o", main= paste("Opt.intens =", as.numeric(estim.t[estim.t$estim==min(as.numeric(estim.t$estim)),]$l), ",  sigma^2 =", sigma.sq, sep=" "))
+plot(estim.t$l, estim.t$estim, col=rbPal(10)[as.numeric(cut(as.numeric(estim.t$estim),breaks = 10))],pch=20, main= paste("Opt.intens =", as.numeric(estim.t[estim.t$estim==min(as.numeric(estim.t$estim)),]$l), ",  sigma^2 =", sigma.sq, sep=" "),xlab = "Decomposition of intencity", ylab = "Estimation")
+abline(v=as.numeric(estim.t[estim.t$estim==min(as.numeric(estim.t$estim)),]$l), col="blue")
 min(as.numeric(estim.t$estim))
 print("##############################")
 print("#### Estimation of optimal ###")
@@ -61,6 +63,20 @@ print("##############################")
 print(paste("Optimal intensity of observations is ", as.numeric(estim.t[estim.t$estim==min(as.numeric(estim.t$estim)),]$l), sep=" "))
 print("##############################")
 typeof(estim.t$estim)
+
+
+
+x <- runif(100)
+dat <- data.frame(x = x,y = x^2 + 1)
+
+#Create a function to generate a continuous color palette
+rbPal <- colorRampPalette(c('#4575b4', "#fdae61","#f46d43","#d73027","#a50026"))
+
+#This adds a column of color values
+# based on the y values
+dat$Col <- rbPal(10)[as.numeric(cut(dat$y,breaks = 10))]
+
+plot(dat$x,dat$y,pch = 20,col = dat$Col)
 
 
 # #Poison procces

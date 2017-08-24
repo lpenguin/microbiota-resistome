@@ -263,7 +263,7 @@ public class Simulation {
             townHealthyPersons.get(i).tick(this, p_INF, ModelValues.C_DECREASE_COEF, ModelValues.P_HEALTHY_HOSPITALIZE);
             HealthyPerson pers = townHealthyPersons.get(i);
             avMicResist = avMicResist + pers.micResistance;
-            if (pers.toBeChanged) {// & nHealthyTown != 0) {
+            if (pers.toBeChanged) {// & nHealthyTown != 0) { //marking a person to be isInfected
                 townHealthyPersons.remove(i);
                 i--;
                 townIncPerPersons.add(new IncPeriodPerson(pers.id, pers.micResistance, pers.isResistant, ModelValues.N_INCUB_LIMIT + 1));

@@ -1,0 +1,52 @@
+---
+title: "ModelReport"
+output: pdf_document
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+##  Dissemination of the pathogen adjusted for antibiotic resistance
+
+Something about a model.
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+\newpage
+```{r plot1, echo=FALSE}
+# plot.col <- c("#999999", "#E69F00", "#56B4E9", "#33a02c")
+# number_of_people(abund.log,0,350, save = F, inp.title = "Shigella", col.pal = plot.col)
+knitr::include_graphics(paste(out.folder,"/tmp/plot1.pdf", sep=""))
+```
+\newpage
+```{r plot2, echo=FALSE}
+#dev.new(width=5, height=10)
+#number_of_people_area_plot(abund.log, inp.title="Shigella", plot.col)
+knitr::include_graphics(paste(out.folder,"/tmp/plot2.pdf", sep=""))
+```
+\newpage
+```{r plot3, echo=FALSE}
+# col.pall <- c("#a6cee3","#1f78b4","#b2df8a","#33a02c","#fb9a99","#fb6a4a","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#ffd92f","#fc4e2a")#c("#1f78b4","#C54E6D", "#009380","#ff7f00")
+# trans_line_plot(trans.summary.2ver, col.p = col.pall, note.t = trans.note, inp.title = "Shigella")
+knitr::include_graphics(paste(out.folder,"/tmp/plot3.pdf", sep=""))
+```
+\newpage
+```{r plot4, echo=FALSE}
+### area plot
+# trans_number_area_plot(trans.summary.2ver, "Shigella", col.pall, note.t = trans.note)
+knitr::include_graphics(paste(out.folder,"/tmp/plot4.pdf", sep=""))
+# by this way we can run .Rmd 
+# rmarkdown::render("reportGenerating.Rmd")
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

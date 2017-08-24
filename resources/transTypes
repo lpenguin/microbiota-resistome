@@ -1,0 +1,12 @@
+type	note
+healthyHospPeople-->townHealthyPersons	Healthy hospitalised to healthy in town
+hospAntTrPersons-->townHealthyPersons	AB treatment in hospital to healthy in town
+townAntTrPersons2-->townIncPerPersons2	AB wrong treatment in town to incubation state with resistant pathogen
+townAntTrPersons-->hospAntTrPersons	AB right treatment in town to AB treatment in hospital
+townAntTrPersons-->townHealthyPersons	AB right treatment in town to healthy in town
+townHealthyPersons-->healthyHospPeople	Healthy in town to healthy hospitalised
+townHealthyPersons-->townIncPerPersons	Healthy in town to incubation state
+townIncPerPersons2-->hospAntTrPersons	Incubation state with resistant pathogen to AB treatment in hospital
+townIncPerPersons-->hospAntTrPersons	Incubation state to AB treatment in hospital
+townIncPerPersons-->townAntTrPersons	Incubation state to AB right treatment in town
+townIncPerPersons-->townAntTrPersons2	Incubation state to AB wrong treatment in town
