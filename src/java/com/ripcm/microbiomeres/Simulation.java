@@ -41,7 +41,7 @@ public class Simulation {
 
     //pathogene properties
     private static final int N_ANT_COURSE_TOWN_RIGHT = 5; //wright length of antibiotic course
-    private static final int N_ANT_COURSE_TOWN_WRONG = 2; //wrong length of antibiotic course
+    private static final int N_ANT_COURSE_TOWN_WRONG = 3; //wrong length of antibiotic course
     private static final int N_ANT_COURSE_HOSP = 7; //length of antibiotic course
 
 
@@ -97,7 +97,7 @@ public class Simulation {
         this.transLogger = transLogger;
         this.messagesWriter = messagesWriter;
 
-        printBlock("Start working!");
+        printBlock("A calculus starting!");
 
         //TODO: join loggers (logTransFileName and PersonAmountLogger)
 
@@ -106,7 +106,7 @@ public class Simulation {
             action();//(personAmountLogger, ticks);
         }
 
-        printBlock("Working finished!");
+        printBlock("The successful completion of a task!");
     }
 
     public void printBlock(String inpStr) throws IOException {
@@ -406,8 +406,7 @@ public class Simulation {
             }
         }
 
-        int nPathResist = nResMembersA(townAntTrPersons) + nResMembersA(townAntTrPersons2) +
-                nResMembersI(townIncPerPersons) + nResMembersI(townIncPerPersons2) + nResMembersA(hospAntTrPersons);
+
         int nPathResistTown = nResMembersA(townAntTrPersons) + nResMembersA(townAntTrPersons2) +
                 nResMembersI(townIncPerPersons) + nResMembersI(townIncPerPersons2);
         int nPathResistHosp = nResMembersA(hospAntTrPersons);
@@ -415,8 +414,7 @@ public class Simulation {
 
         avMicResist = avMicResist / ((double) (townHealthyPersons.size() + townIncPerPersons.size() + townAntTrPersons.size() +
                 townAntTrPersons2.size() + townIncPerPersons2.size() + hospAntTrPersons.size() + healthyHospPeople.size()));
-        //avPathResist = nPathResist/((double) (townIncPerPersons.size() + townIncPerPersons2.size()+ townAntTrPersons.size()+ townAntTrPersons2.size() + hospAntTrPersons.size() ));
-        avPathResist = avPathResist / ((double) (townIncPerPersons.size() + townIncPerPersons2.size() + townAntTrPersons.size() + townAntTrPersons2.size() + hospAntTrPersons.size()));
+        avPathResist = (nPathResistTown+nPathResistHosp) / ((double) (townIncPerPersons.size() + townIncPerPersons2.size() + townAntTrPersons.size() + townAntTrPersons2.size() + hospAntTrPersons.size()));
         fixAvPathResistTown = nPathResistTown / ((double) (townIncPerPersons.size() + townAntTrPersons.size() + townAntTrPersons2.size() + townIncPerPersons2.size()));
         fixAvPathResistHosp = nPathResistHosp / ((double) (hospAntTrPersons.size() + healthyHospPeople.size()));
     }
