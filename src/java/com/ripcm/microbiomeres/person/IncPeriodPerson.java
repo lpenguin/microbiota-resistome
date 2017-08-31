@@ -18,8 +18,8 @@ public class IncPeriodPerson extends InfectedPerson{
         changePathResistance(micResistance, coefficient);
         if(micResistance !=0) {
             micResistance = micResistance - decreaseCoef;
-            if (micResistance < 0) {
-                micResistance = 0;
+            if (micResistance < ModelValues.PERM_RESIST_LEVEL) {
+                micResistance = ModelValues.PERM_RESIST_LEVEL;
             }
         }
     }

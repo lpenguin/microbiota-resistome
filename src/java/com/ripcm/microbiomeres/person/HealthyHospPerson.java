@@ -19,7 +19,7 @@ public class HealthyHospPerson extends Person {
     public void tick(Simulation simulation, double pBeInfectedInHospital, double decreaseCoef, double pResistant){
         if(micResistance !=0){
             micResistance = micResistance - decreaseCoef;
-            if(micResistance < 0) {micResistance = 0;}
+            if(micResistance < ModelValues.PERM_RESIST_LEVEL) {micResistance = ModelValues.PERM_RESIST_LEVEL;}
         }
         if(treatmentPeriod >0) treatmentPeriod = treatmentPeriod -1;
         else {

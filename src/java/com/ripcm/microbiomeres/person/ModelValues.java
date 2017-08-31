@@ -20,6 +20,8 @@ public class ModelValues {
 
     public static double C_GROWTH_COEF;//daily growth of microbiota resistance during antibiotic cource
     public static double C_DECREASE_COEF;//daily decrease of microbiota resistance in absence of antibiotics
+    public static double C_INF_OF_INCUB_PERS; // coefficient of infection contamination for persons in incub period
+    public static double PERM_RESIST_LEVEL;//Permanent level of agents microbiota resistance in general
 
     //public static final float SOME_PROBALILITY = 0.2;
     //public static final float SOME_PROBALILITY_2 = 0.2;

@@ -131,16 +131,16 @@ public class Simulation {
 //            int k = (10 + 20 * i - w) / TOWN_W;
 //            int h = k * 20 + 10;
             if (i < N_INC_PER_TOWN) {
-                townIncPerPersons.add(new IncPeriodPerson(Integer.toString(idIter), 0, false, ModelValues.N_INCUB_LIMIT + 1));
+                townIncPerPersons.add(new IncPeriodPerson(Integer.toString(idIter), ModelValues.PERM_RESIST_LEVEL, false, ModelValues.N_INCUB_LIMIT + 1));
                 transLogger.writeToTransLogFile(ticks, Integer.toString(idIter), "NA", "townIncPerPersons");
                 idIter -= 1;
             } else {
                 if (i < N_ANT_TR_TOWN) {
-                    townAntTrPersons.add(new AntTreatedPerson(Integer.toString(idIter), 0, false, N_ANT_COURSE_TOWN_RIGHT + 1, pGetToHosp(false), 0));
+                    townAntTrPersons.add(new AntTreatedPerson(Integer.toString(idIter), ModelValues.PERM_RESIST_LEVEL, false, N_ANT_COURSE_TOWN_RIGHT + 1, pGetToHosp(false), 0));
                     transLogger.writeToTransLogFile(ticks, Integer.toString(idIter), "NA", "townAntTrPersons");
                     idIter -= 1;
                 } else {
-                    townHealthyPersons.add(new HealthyPerson(Integer.toString(idIter), 0));
+                    townHealthyPersons.add(new HealthyPerson(Integer.toString(idIter), ModelValues.PERM_RESIST_LEVEL));
                     transLogger.writeToTransLogFile(ticks, Integer.toString(idIter), "NA", "townHealthyPersons");
                     idIter -= 1;
                 }
@@ -151,22 +151,22 @@ public class Simulation {
 //            int w = (10 + i * 20) % HOSP_W;
 //            int k = (10 + 20 * i - w) / HOSP_W;
 //            int h = k * 20 + 10;
-            hospAntTrPersons.add(new AntTreatedPerson(Integer.toString(idIter), 0, false, N_ANT_COURSE_HOSP + 1, 0, 0));
+            hospAntTrPersons.add(new AntTreatedPerson(Integer.toString(idIter), ModelValues.PERM_RESIST_LEVEL, false, N_ANT_COURSE_HOSP + 1, 0, 0));
             transLogger.writeToTransLogFile(ticks, Integer.toString(idIter), "NA", "hospAntTrPersons");
             idIter -= 1;
         }
         for (int i = 0; i < N_HEALTHY_HOSP; i++) {
-            healthyHospPeople.add(new HealthyHospPerson(Integer.toString(idIter), 0, N_ANT_COURSE_HOSP + 1));
+            healthyHospPeople.add(new HealthyHospPerson(Integer.toString(idIter), ModelValues.PERM_RESIST_LEVEL, N_ANT_COURSE_HOSP + 1));
             transLogger.writeToTransLogFile(ticks, Integer.toString(idIter), "NA", "healthyHospPeople");
             idIter -= 1;
         }
         for (int i = 0; i < N_INC_PER_TOWN_2; i++) {
-            townIncPerPersons2.add(new IncPeriodPerson(Integer.toString(idIter), 0, false, ModelValues.N_INCUB_LIMIT_RESIST + 1));
+            townIncPerPersons2.add(new IncPeriodPerson(Integer.toString(idIter), ModelValues.PERM_RESIST_LEVEL, false, ModelValues.N_INCUB_LIMIT_RESIST + 1));
             transLogger.writeToTransLogFile(ticks, Integer.toString(idIter), "NA", "townIncPerPersons2");
             idIter -= 1;
         }
         for (int i = 0; i < N_ANT_TR_TOWN_2; i++) {
-            townAntTrPersons2.add(new AntTreatedPerson(Integer.toString(idIter), 0, false, N_ANT_COURSE_TOWN_WRONG + 1, pGetToHosp(false), 0));
+            townAntTrPersons2.add(new AntTreatedPerson(Integer.toString(idIter), ModelValues.PERM_RESIST_LEVEL, false, N_ANT_COURSE_TOWN_WRONG + 1, pGetToHosp(false), 0));
             transLogger.writeToTransLogFile(ticks, Integer.toString(idIter), "NA", "townAntTrPersons2");
             idIter -= 1;
         }
@@ -200,7 +200,7 @@ public class Simulation {
                 townAntTrPersons2.size() +
                 townAntTrPersons.size();
 
-        double p_INF = (ModelValues.C_INFECTED_COEF * (1.2*((double) townIncPerPersons.size() + (double) townIncPerPersons2.size()) + (double) N_ANT_TR_TOWN + (double) N_ANT_TR_TOWN_2)) /
+        double p_INF = (ModelValues.C_INFECTED_COEF * (ModelValues.C_INF_OF_INCUB_PERS*((double) townIncPerPersons.size() + (double) townIncPerPersons2.size()) + (double) N_ANT_TR_TOWN + (double) N_ANT_TR_TOWN_2)) /
                 ((double) townHealthyPersons.size() + (double) numInfectedTown);
 /*
         System.out.print("p_INF = (C_INFECTED_COEF * ((double) townIncPerPersons.size() + (double) townIncPerPersons2.size() + (double) N_ANT_TR_TOWN)) /\n" +

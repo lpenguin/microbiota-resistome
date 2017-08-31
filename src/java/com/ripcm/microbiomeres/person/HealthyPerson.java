@@ -23,7 +23,7 @@ public class HealthyPerson extends Person {
     public void tick(Simulation simulation, double pInfected, double decreaseCoef, double pHospitalize){
         if(micResistance !=0){
             micResistance = micResistance - decreaseCoef;
-            if(micResistance < 0) {micResistance =0;}
+            if(micResistance < ModelValues.PERM_RESIST_LEVEL) {micResistance =ModelValues.PERM_RESIST_LEVEL;}
         }
         toBeChanged = Utils.bernoulli(pInfected);
         if (toBeChanged){

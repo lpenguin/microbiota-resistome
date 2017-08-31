@@ -33,7 +33,7 @@ public class AntTreatedPerson extends InfectedPerson {
             }
         } else if(micResistance !=0){ //it's needed for HospAntreatedPersones so as resistance should decreases, because in hospital people are treated with another antibiotic!
             micResistance += growthCoef;
-            if(micResistance <0) {micResistance = 0;}
+            if(micResistance <ModelValues.PERM_RESIST_LEVEL) {micResistance = ModelValues.PERM_RESIST_LEVEL;}
         }
     }
 }
