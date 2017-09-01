@@ -46,6 +46,7 @@ public class Simulation {
 
 
     private double avPathResist = 0; //percentage of resistant pathogens among all (now initially it can be only 0)
+    //TODO: check of c_infected_coef limit, if it's more than 1? coef should be equal 1
     /*private static final double C_INFECTED_COEF =
             ((double) ModelValues.N_INFECTED_PEOPLE_PER_YEAR*Math.pow(10,3))/
             ( ModelValues.N_PEOPLE_IN_COUNTRY*Math.pow(10,6));*/
@@ -65,7 +66,7 @@ public class Simulation {
 
 
     //microbiota properties
-    private double avMicResist = 0;// initial averaged level of microbiome resistance
+    private double avMicResist = ModelValues.PERM_RESIST_LEVEL;// initial averaged level of microbiome resistance
     private double fixAvPathResistTown = avPathResist;//averaged level of path resistance in town resistance in previous time step
     private double fixAvPathResistHosp = avPathResist;//averaged level of microbiome resistance in previous time step in hospital
 
@@ -200,7 +201,7 @@ public class Simulation {
                 townAntTrPersons2.size() +
                 townAntTrPersons.size();
 
-        double p_INF = (ModelValues.C_INFECTED_COEF * (ModelValues.C_INF_OF_INCUB_PERS*((double) townIncPerPersons.size() + (double) townIncPerPersons2.size()) + (double) N_ANT_TR_TOWN + (double) N_ANT_TR_TOWN_2)) /
+        double p_INF = (ModelValues.C_INFECTED_COEF * ((double) townIncPerPersons.size() + (double) townIncPerPersons2.size() + ModelValues.C_INF_OF_TREAT_PERS *((double) N_ANT_TR_TOWN + (double) N_ANT_TR_TOWN_2))) /
                 ((double) townHealthyPersons.size() + (double) numInfectedTown);
 /*
         System.out.print("p_INF = (C_INFECTED_COEF * ((double) townIncPerPersons.size() + (double) townIncPerPersons2.size() + (double) N_ANT_TR_TOWN)) /\n" +

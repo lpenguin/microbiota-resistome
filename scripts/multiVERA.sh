@@ -14,7 +14,7 @@ do
    namePath=$outPath"/rep$i.txt"
    echo "Created file "$namePath
    echo "Prop file "$(realpath "$4")
-   java -jar ../target/microbiomeres-0.1.jar $iterNum $namePath $(realpath "$4") -quiet /dev/null
+   java -jar ../target/microbiomeres-0.1-jar-with-dependencies.jar $iterNum $namePath $(realpath "$4") -quiet /dev/null
    # rm -f ../src/*.class
    # javac -cp ../src ../src/Main.java
    # java -cp ../src/ Main $iterNum $namePath

@@ -12,6 +12,8 @@ import java.io.*;
  */
 
 public class Main {
+    // mvn clean compile assembly:single
+    // now: ./build.sh from target folder
     public static void main(String[] args) throws IOException {
         CommandLineArgs cliArgs = getCommandLineArgs(args);
         if (cliArgs == null) return;
@@ -59,6 +61,8 @@ public class Main {
             ModelValues.C_GROWTH_COEF = Double.valueOf(property.getProperty("C_GROWTH_COEF"));
             ModelValues.C_DECREASE_COEF = Double.valueOf(property.getProperty("C_DECREASE_COEF"));
             ModelValues.P_HEALTHY_HOSPITALIZE = Double.valueOf(property.getProperty("P_HEALTHY_HOSPITALIZE"));
+            ModelValues.C_INF_OF_TREAT_PERS = Double.valueOf(property.getProperty("C_INF_OF_TREAT_PERS"));
+            ModelValues.PERM_RESIST_LEVEL = Double.valueOf(property.getProperty("PERM_RESIST_LEVEL"));
 
         } catch (IOException e) {
             System.err.println("File not found "+ propertiesFile);
