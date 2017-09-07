@@ -1,0 +1,56 @@
+---
+title: "Report"
+output: pdf_document
+fig_caption: yes
+fontsize: 12pt
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+---
+
+
+```{r functions, echo=FALSE, include=FALSE, message=FALSE , warning=FALSE}
+# A function for captioning and referencing images
+fig <- local({
+    i <- 0
+    ref <- list()
+    list(
+        cap=function(refName, text) {
+            i <<- i + 1
+            ref[[refName]] <<- i
+            paste("Figure ", i, ": ", text, sep="")
+        },
+        ref=function(refName) {
+            ref[[refName]]
+        })
+})
+```
+
+##  Estimation of optimal intensity of observation over	incidence
+
+```{r run, include=FALSE, echo=FALSE, message=FALSE}
+n.run
+```
+
+```{r time, include=FALSE, echo=FALSE, message=FALSE}
+time.t
+```
+
+```{r min, include=FALSE, echo=FALSE, message=FALSE}
+as.numeric(estim.t[estim.t$estim==min(as.numeric(estim.t$estim)),]$l)
+```
+
+For this task there was done `r n.run` model runs with modeling time `r time.t` and current properties (*Table 1*).
+
+```{r kable, message=FALSE, results = 'asis', echo=FALSE, scientific=FALSE}
+knitr::kable(cp[,c("Character", "Value")], format.args = list(scientific=T), 
+             caption = "Input variable for simulation.")
+```
+
+As a result of minimization of functional $\Phi^{(m)}_T(\gamma^{(m)})$ estimation of 
+**optimal intensity of observation** is equal to **`r as.numeric(estim.t[estim.t$estim==min(as.numeric(estim.t$estim)),]$l)`** . 
+You can see functional values on *Figure 1*.
+
+```{r plot1, message=FALSE, echo=FALSE, fig.cap=paste("Estimation of monitoring intensity. Green line depicts values of functional, and blue line means optimal observation intensity.")}
+# plot.col <- c("#999999", "#E69F00", "#56B4E9", "#33a02c")
+# number_of_people(abund.log,0,350, save = F, inp.title = "Shigella", col.pal = plot.col)
+knitr::include_graphics(paste(out.folder,"/tmp/plot.pdf", sep="") ) 
+```

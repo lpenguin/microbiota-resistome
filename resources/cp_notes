@@ -1,0 +1,12 @@
+name	Notion
+N_INCUB_LIMIT	Maximal incubation period of pathogen (days)
+C_INFECTED_COEF	Coefficient of infection ability of pathogen 
+C_PATHOGEN_RESIST_CHANGE_COEF	Pathogen susceptibility to receive antibiotic resistance
+P_INCUB_TO_HOSPITAL	Probability to be hospitalized during incubation period
+P_WRONG_TREATMENT	Probability of wrong antibiotic treatment
+P_BE_INFECTED_IN_HOSPITAL	Probability to be infected by pathogen during hospitalization without current infection
+C_GROWTH_COEF	Growth rate of antibiotic resistance
+C_DECREASE_COEF	Decrease rate of antibiotic resistance
+P_HEALTHY_HOSPITALIZE	Probability to be hospitalized without current infection
+C_INF_OF_TREAT_PERS	Infect ability of person which take antibiotic treatment in town
+PERM_RESIST_LEVEL	Permanent level of gut antibiotic resistance 
