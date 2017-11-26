@@ -64,6 +64,9 @@ public class Main {
             ModelValues.C_INF_OF_TREAT_PERS = Double.valueOf(property.getProperty("C_INF_OF_TREAT_PERS"));
             ModelValues.PERM_RESIST_LEVEL = Double.valueOf(property.getProperty("PERM_RESIST_LEVEL"));
 
+            ModelValues.N_HOSP_ANT_TR_PERSON = Integer.valueOf(property.getProperty("N_HOSP_ANT_TR_PERSON"));
+            ModelValues.N_PEOPLE_IN_TOWN = Integer.valueOf(property.getProperty("N_PEOPLE_IN_TOWN"));
+
         } catch (IOException e) {
             System.err.println("File not found "+ propertiesFile);
             e.printStackTrace();

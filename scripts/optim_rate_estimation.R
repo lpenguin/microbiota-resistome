@@ -15,8 +15,8 @@ library(data.table)
 
 # args <- c("/media/oksana/data/worspaceJAVA/microbiota-resistome/out/simulations/Jun_23_time_17_07/",
 #           "/media/oksana/data/worspaceJAVA/microbiota-resistome/resources/config.properties",
-#           "/media/oksana/data/worspaceJAVA/microbiota-resistome/out/plots/estimation", 
-#           "/media/oksana/data/worspaceJAVA/microbiota-resistome/resources/cp_notes")#"Shigella")
+#           "/media/oksana/data/worspaceJAVA/microbiota-resistome/out/simulations/mruns/OOIestimation",#"/media/oksana/data/worspaceJAVA/microbiota-resistome/out/plots/estimation",
+#           "/media/oksana/data/worspaceJAVA/microbiota-resistome/resources/cp_notes") #"Shigella")
 
 ###---- Output directory ----###
 out.folder <- args[3]
@@ -41,7 +41,7 @@ n.run <- as.numeric(length(unique(dt$simulation)))
 time.t <- max(dt$Ticks)
 delta.tick <- 1
 estim.t <- NULL
-sigma.sq <- 0.04
+sigma.sq <- 23*10/500# 0.04
 constA <- time.t
 all.lambda <- sapply(seq(0.1, 5, by=.1) , function(lambda) { # or so seq(1/time.t, 5, by=1/time.t)
   matog <- sapply(unique(dt$simulation) , function(sim) { # or so seq(1/time.t, 5, by=1/time.t)

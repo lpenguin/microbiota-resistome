@@ -10,3 +10,5 @@ C_DECREASE_COEF	Decrease rate of antibiotic resistance
 P_HEALTHY_HOSPITALIZE	Probability to be hospitalized without current infection
 C_INF_OF_TREAT_PERS	Infect ability of person which take antibiotic treatment in town
 PERM_RESIST_LEVEL	Permanent level of gut antibiotic resistance 
+N_PEOPLE_IN_TOWN	Population in town
+N_HOSP_ANT_TR_PERSON	Number of treated agents in hospital with current pathogen

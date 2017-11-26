@@ -9,13 +9,13 @@ import com.ripcm.microbiomeres.Simulation;
 public abstract class Person {
 
 
-    public Person(String id, double micResistance) {
+    public Person(int id, double micResistance) {
         this.id = id;
         this.micResistance = micResistance;
     }
 
     public double micResistance;
-    public String id;
+    public int id;
 
     public abstract void tick(Simulation simulation, double p, double coef, double changePathResCoef);
 }

@@ -4,12 +4,14 @@ args = commandArgs(trailingOnly=TRUE)
 #' Rscript --vanilla modelPlots.R ../out/simulations/buftable_15_06.txt 
 #' ../out/plots/Aug16/ ../out/log/transLog_14_06_2ver.txt Shigella
 
-
 # rootDir <- dirname(rstudioapi::getActiveDocumentContext()$path)
 # setwd(rootDir)
 source("functionsSet.R")
 
-# args <- c("../out/simulations/buftable_15_06.txt","../out/plots/Aug16/","../out/log/transLog_14_06_2ver.txt", "Shigella")
+# args <- c("../out/simulations/nov24/abundLog","../out/simulations/nov24/",
+#           "../out/simulations/nov24/transLog", "Shigella",
+#           "../resources/config.properties",
+#           "../resources/cp_notes")
 
 print("####################")
 print("##### R script #####")
@@ -52,6 +54,15 @@ rownames(trans.note) <- trans.note$type
 ###---- Name of pathogen ----###
 name.path <- args[4]
 
+###---- Config prop file ----###
+cp <- read.table (args[5], header = F, fill = TRUE, sep = "=", comment.char = '', quote = '', stringsAsFactors = F)
+cp.notes <- read.table (args[6], header = T, fill = TRUE, sep = "\t", comment.char = '', quote = '', stringsAsFactors = F)
+cp <- merge(cp, cp.notes, by.x = "V1", by.y = "name", all.x = T)
+colnames(cp) <- c("Name", "Value","Character")
+
+###-------- Model time ------### 
+time.t <- max(abund.log$Ticks)+1 
+
 
 ##################################
 ###----- Data preprocesing ----###
@@ -60,7 +71,7 @@ trans.log$path <- with(data = trans.log, paste(TransFromClass, TransToClass, sep
 trans.log$var <- 1
 
 trans.summary <- cast(trans.log[!is.na(trans.log$TransFromClass),], Ticks ~ path, sum, value = 'var') # why we see that on 1 tick townHealthyPersons-->townIncPerPersons isnot empty
-
+# head(trans.summary)
 
 ##################################
 ###------------ Plots ---------###
@@ -68,18 +79,19 @@ trans.summary <- cast(trans.log[!is.na(trans.log$TransFromClass),], Ticks ~ path
 col.pall.l <- c("#a6cee3","#1f78b4","#b2df8a","#33a02c","#fb9a99","#fb6a4a","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#ffd92f","#fc4e2a")
 col.pall.s <- c("#999999", "#E69F00", "#56B4E9", "#33a02c")
 
-###---- line plot of abund table ----###
+###---- stacked area plot with original value of abund table ----###
 pdf(file=paste(out.folder,"/tmp/plot1.pdf", sep=""))
-number_of_people(abund.log,0,350, save = F, inp.title = name.path, col.pal = col.pall.s)
+number_of_people_area_plot_orig_value(abund.log, inp.title=name.path, col.pall.s)
 dev.off()
+
 ###---- area plot of abund table ----###
 pdf(file=paste(out.folder,"/tmp/plot2.pdf", sep=""))
 number_of_people_area_plot(abund.log, inp.title=name.path, col.pall.s)
 dev.off()
 
-###---- line plot of trans table ----###
+###---- stacked area plot with original value of trans table ----###
 pdf(file=paste(out.folder,"/tmp/plot3.pdf", sep=""))
-trans_line_plot(trans.summary, col.p = col.pall.l, note.t = trans.note, inp.title = name.path)
+trans_number_area_plot_orig_value(trans.summary, name.path, col.pall.l, note.t = trans.note)
 dev.off()
 
 ###---- area plot of trans table ----###

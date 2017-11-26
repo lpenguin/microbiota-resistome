@@ -17,11 +17,22 @@ results <- read.table("out/simulations/buf_18_04.txt", header = T)
 results <- read.table("out/simulations/buftable_14_06_3ver.txt", header = T)
 results <- read.table("out/simulations/buftable_15_06.txt", header = T)
 
-tests(results)
+tests(results) #equal or not some features
 tests(results1)
 tests(results2)
 tests(results3)
 tests(results4)
+
+modif.results <- data.frame(results$Ticks)
+modif.results$InfectedPerson <- results$InfectedPersonsInTown + results$InfectedPersonsInHospital
+modif.results$InfectedPersonsWithResistantPathogen <- results$AvPathResistance*(results$InfectedPersonsInTown+results$InfectedPersonsInHospital)
+modif.results$HospitalisedPersonsWithPathogen <- results$InfectedPersonsInHospital # ?????? toli eto ???????
+modif.results$HospitalisedPersonsWithOtherProblems <-  results$HealthyPersonsInHospital
+modif.results[is.na(modif.results)] <- 0
+# file.create("out/simulations/buftable_14_06_3ver_modif.txt")
+# write.table(modif.results, file="out/simulations/buftable_14_06_3ver_modif.txt", sep="\t", append=F, row.names=F, col.names=T, quote=F)
+
+
 
 par(mfrow =c(1,1))
 #number_of_people(results,0,17000, save = F, "Shigella")
@@ -33,7 +44,7 @@ number_of_people(results,0,350, save = F, inp.title = "Shigella")
 ###################################
 pdf(file="data/plots/agent_abund_area_plots.pdf")#, height=3.5, width=5)
 #par(xpd=T, mar=par()$mar+c(8,1,1,5))
-number_of_people_are_plot(results, inp.title="Shigella")
+number_of_people_area_plot(results, inp.title="Shigella")
 
 
 

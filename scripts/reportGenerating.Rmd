@@ -1,52 +1,62 @@
 ---
 title: "ModelReport"
 output: pdf_document
+fig_caption: yes
+fontsize: 12pt
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r functions, echo=FALSE, include=FALSE, message=FALSE , warning=FALSE}
+# A function for captioning and referencing images
+fig <- local({
+    i <- 0
+    ref <- list()
+    list(
+        cap=function(refName, text) {
+            i <<- i + 1
+            ref[[refName]] <<- i
+            paste("Figure ", i, ": ", text, sep="")
+        },
+        ref=function(refName) {
+            ref[[refName]]
+        })
+})
+```
+
+```{r time, include=FALSE, echo=FALSE, message=FALSE}
+time.t
 ```
 
 ##  Dissemination of the pathogen adjusted for antibiotic resistance
 
-Something about a model.
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+For this task there was model running with modeling time `r time.t` and current properties (*Table 1*).
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r kable, message=FALSE, results = 'asis', echo=FALSE, scientific=FALSE}
+knitr::kable(cp[,c("Character", "Value")], format.args = list(scientific=T), 
+             caption = "Input variable for simulation.")
 ```
 
-## Including Plots
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+As a result you can see changes of agent classes size and transitions between them on following plots.
 
-You can also embed plots, for example:
-\newpage
-```{r plot1, echo=FALSE}
-# plot.col <- c("#999999", "#E69F00", "#56B4E9", "#33a02c")
-# number_of_people(abund.log,0,350, save = F, inp.title = "Shigella", col.pal = plot.col)
+
+```{r plot2, echo=FALSE,message=FALSE,fig.cap=paste("Agent states size in the model time.")}
 knitr::include_graphics(paste(out.folder,"/tmp/plot1.pdf", sep=""))
 ```
-\newpage
-```{r plot2, echo=FALSE}
-#dev.new(width=5, height=10)
-#number_of_people_area_plot(abund.log, inp.title="Shigella", plot.col)
+
+```{r plot3, echo=FALSE,message=FALSE,fig.cap=paste("Agent states size in the model time. There are proportions values from total number per day.")}
 knitr::include_graphics(paste(out.folder,"/tmp/plot2.pdf", sep=""))
 ```
-\newpage
-```{r plot3, echo=FALSE}
-# col.pall <- c("#a6cee3","#1f78b4","#b2df8a","#33a02c","#fb9a99","#fb6a4a","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#ffd92f","#fc4e2a")#c("#1f78b4","#C54E6D", "#009380","#ff7f00")
-# trans_line_plot(trans.summary.2ver, col.p = col.pall, note.t = trans.note, inp.title = "Shigella")
+
+```{r plot5, echo=FALSE,message=FALSE,fig.cap=paste("Transitions between states number in the model time.")}
 knitr::include_graphics(paste(out.folder,"/tmp/plot3.pdf", sep=""))
 ```
-\newpage
-```{r plot4, echo=FALSE}
-### area plot
-# trans_number_area_plot(trans.summary.2ver, "Shigella", col.pall, note.t = trans.note)
+
+```{r plot6, echo=FALSE,message=FALSE,fig.cap=paste("Transitions between states number in the model time. There are proportions values from total number per day.")}
 knitr::include_graphics(paste(out.folder,"/tmp/plot4.pdf", sep=""))
 # by this way we can run .Rmd 
 # rmarkdown::render("reportGenerating.Rmd")
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
