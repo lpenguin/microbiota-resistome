@@ -61,7 +61,6 @@ public class Main {
             ModelValues.C_GROWTH_COEF = Double.valueOf(property.getProperty("C_GROWTH_COEF"));
             ModelValues.C_DECREASE_COEF = Double.valueOf(property.getProperty("C_DECREASE_COEF"));
             ModelValues.P_HEALTHY_HOSPITALIZE = Double.valueOf(property.getProperty("P_HEALTHY_HOSPITALIZE"));
-            ModelValues.C_INF_OF_TREAT_PERS = Double.valueOf(property.getProperty("C_INF_OF_TREAT_PERS"));
             ModelValues.PERM_RESIST_LEVEL = Double.valueOf(property.getProperty("PERM_RESIST_LEVEL"));
 
             ModelValues.N_HOSP_ANT_TR_PERSON = Integer.valueOf(property.getProperty("N_HOSP_ANT_TR_PERSON"));

@@ -33,12 +33,13 @@ public class Simulation {
     //initial number of people
     private static final int N_PERS_HOSP = ModelValues.N_HOSP_ANT_TR_PERSON; //AntTreatedPerson, hospAntTrPersons | isInfected persons in hospital (state 6 - isInfected)
     //TODO: check it, right or not
-    private static final int N_HEALTHY_HOSP = (int) Math.round(ModelValues.P_HEALTHY_HOSPITALIZE*ModelValues.N_PEOPLE_IN_TOWN);//number of hospitalized persons without pathogen
+
     private static final int N_INC_PER_TOWN = (int) Math.round(N_PERS_HOSP/(ModelValues.P_INCUB_TO_HOSPITAL*50));//IncPeriodPerson, townIncPerPersons | state 2 on scheme in "Препринт"
     private static final int N_ANT_TR_TOWN = (int) Math.round(N_INC_PER_TOWN*(1-ModelValues.P_INCUB_TO_HOSPITAL)*(1-ModelValues.P_WRONG_TREATMENT)); //AntTreatedPerson, townAntTrPersons | state 3 on scheme in "Препринт"
     private static final int N_ANT_TR_TOWN_2 = (int) Math.round(ModelValues.P_WRONG_TREATMENT*N_INC_PER_TOWN*(1-ModelValues.P_INCUB_TO_HOSPITAL));//AntTreatedPerson, townAntTrPersons2 | wrong antibiotic treatment (state 4)
-    private static final int N_INC_PER_TOWN_2 = Math.round(N_ANT_TR_TOWN_2/10); //IncPeriodPerson, townIncPerPersons2 | incubation period after wrong treatment (state 5)
+    private static final int N_INC_PER_TOWN_2 = Math.round(N_ANT_TR_TOWN_2/4); //IncPeriodPerson, townIncPerPersons2 | incubation period after wrong treatment (state 5)
     private static final int N_INFECTED_TOWN = N_ANT_TR_TOWN + N_INC_PER_TOWN + N_ANT_TR_TOWN_2 + N_INC_PER_TOWN_2;
+    private static final int N_HEALTHY_HOSP = (int) Math.round(ModelValues.P_HEALTHY_HOSPITALIZE*(ModelValues.N_PEOPLE_IN_TOWN - N_INFECTED_TOWN - N_PERS_HOSP));//number of hospitalized persons without pathogen
     private static final int N_HEALTHY_TOWN = ModelValues.N_PEOPLE_IN_TOWN - N_INFECTED_TOWN - N_HEALTHY_HOSP - N_PERS_HOSP; //HealthyPerson, townHealthyPersons | state 1 on scheme in "Препринт"
 
 
@@ -166,7 +167,7 @@ public class Simulation {
             idIter -= 1;
         }
         for (int i = 0; i < N_INC_PER_TOWN_2; i++) {
-            townIncPerPersons2.add(new IncPeriodPerson(idIter, ModelValues.PERM_RESIST_LEVEL, false, ModelValues.N_INCUB_LIMIT_RESIST + 1));
+            townIncPerPersons2.add(new IncPeriodPerson(idIter, ModelValues.PERM_RESIST_LEVEL, true, ModelValues.N_INCUB_LIMIT_RESIST + 1));
             transLogger.writeToTransLogFile(ticks, Integer.toString(idIter), "NA", "townIncPerPersons2");
             idIter -= 1;
         }
@@ -212,7 +213,7 @@ public class Simulation {
                 townIncPerPersons2.size() +
                 townAntTrPersons2.size() +
                 townAntTrPersons.size();
-        double p_INF = (ModelValues.C_INFECTED_COEF * ((double) townIncPerPersons.size() + (double) townIncPerPersons2.size() + 0.5*((double) N_ANT_TR_TOWN + (double) N_ANT_TR_TOWN_2))) / ((double) townHealthyPersons.size() + (double) numInfectedTown);
+        double p_INF = (ModelValues.C_INFECTED_COEF * ((double) townIncPerPersons.size() + (double) townIncPerPersons2.size() + 0.5*((double) townAntTrPersons.size() + (double) townAntTrPersons2.size()))) / ((double) townHealthyPersons.size() + (double) numInfectedTown);
 
         //System.out.println("FixAvPathResistTown() "+fixAvPathResistTown);
 /*        double p_INF = (ModelValues.C_INFECTED_COEF * ((double) townIncPerPersons.size() + (double) townIncPerPersons2.size() + ModelValues.C_INF_OF_TREAT_PERS *((double) N_ANT_TR_TOWN + (double) N_ANT_TR_TOWN_2))) /
@@ -228,7 +229,7 @@ public class Simulation {
 //                (((double) townHealthyPersons.size()) + ((double) numInfectedTown));
 
         //output
-        messagesWriter.writeMessage(String.format("%d %d %d %d %d %d", townHealthyPersons.size(), townIncPerPersons.size(), townAntTrPersons.size(),
+        messagesWriter.writeMessage(String.format("%d\t%d\t%d\t%d\t%d\t%d", townHealthyPersons.size(), townIncPerPersons.size(), townAntTrPersons.size(),
                 hospAntTrPersons.size(), townAntTrPersons2.size(), townIncPerPersons2.size()));
         List<Number> personAmount = new ArrayList<Number>(12);
         personAmount.add(ticks);
@@ -422,7 +423,7 @@ public class Simulation {
 
             hospAntTrPersons.get(i).tick(this, 1, -ModelValues.C_DECREASE_COEF, ModelValues.C_PATHOGEN_RESIST_CHANGE_COEF);//resistance decreases, because in hospital people are treated with another antibiotic
             AntTreatedPerson pers = hospAntTrPersons.get(i);
-            if (pers.isResistant) nHospResistant = nHospResistant + 1; // it's never used
+            // if (pers.isResistant) nHospResistant = nHospResistant + 1; // it's never used
             //avMicResist = avMicResist + pers.micResistance;
             // TODO: Сделать переход в состояние два (townIncPerPersons2)
             if (pers.treatmentPeriod == 0) {
@@ -466,7 +467,11 @@ public class Simulation {
                 rateMicrResMembers(townIncPerPersons2)+rateMicrResMembers(townAntTrPersons2)+rateMicrResMembers(hospAntTrPersons);
         avMicResist = sumMicResOfPopul / ((double) (townHealthyPersons.size() + healthyHospPeople.size() + townIncPerPersons.size() + townAntTrPersons.size() +
                 townAntTrPersons2.size() + townIncPerPersons2.size() + hospAntTrPersons.size() ));
-        avPathResist = (nPathResistTown+nPathResistHosp) / ((double) (townIncPerPersons.size() + townIncPerPersons2.size() + townAntTrPersons.size() + townAntTrPersons2.size() + hospAntTrPersons.size()));
+        if ((townIncPerPersons.size() + townIncPerPersons2.size() + townAntTrPersons.size() + townAntTrPersons2.size() + hospAntTrPersons.size())==0) {
+            avPathResist = 0;
+        } else {
+            avPathResist = (nPathResistTown+nPathResistHosp) / ((double) (townIncPerPersons.size() + townIncPerPersons2.size() + townAntTrPersons.size() + townAntTrPersons2.size() + hospAntTrPersons.size()));
+        }
         if ((townIncPerPersons.size() + townAntTrPersons.size() + townAntTrPersons2.size() + townIncPerPersons2.size())==0) {
             fixAvPathResistTown = 0;
         } else {

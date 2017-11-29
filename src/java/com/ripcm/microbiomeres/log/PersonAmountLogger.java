@@ -15,7 +15,7 @@ public class PersonAmountLogger {
 
     public PersonAmountLogger(LogWriter logWriter) throws IOException {
         this.logWriter = logWriter;
-        this.logWriter.writeMessage("Ticks HealthyPersonsInTown InfectedPersonsInTown IncPeriodPersonsInTown IncPeriodPersonsInTown2 AntibioticTreatedPersonsInTown AntibioticTreatedPersonsInTown2 InfectedPersonsInHospital HealthyPersonsInHospital pGetInfectedTown AvMicResistance AvPathResistance");
+        this.logWriter.writeMessage("Ticks\tHealthyPersonsInTown\tInfectedPersonsInTown\tIncPeriodPersonsInTown\tIncPeriodPersonsInTown2\tAntibioticTreatedPersonsInTown\tAntibioticTreatedPersonsInTown2\tInfectedPersonsInHospital\tHealthyPersonsInHospital\tpGetInfectedTown\tAvMicResistance\tAvPathResistance");
     }
 
     public void WritePersonAmountLogFile(List<Number> stats) throws IOException {//, PrintWriter writeFile) { // old - WriteToFile
@@ -23,7 +23,7 @@ public class PersonAmountLogger {
 
         for (Number n : stats) {
             builder.append(n);
-            builder.append(" ");
+            builder.append("\t");
         }
         logWriter.writeMessage(builder.toString());
     }

@@ -20,6 +20,7 @@ public class AntTreatedPerson extends InfectedPerson {
     public void tick(Simulation simulation, double pBeHospitalized, double growthCoef, double coefficient){
         beHospitalized = Utils.bernoulli(pBeHospitalized);
         treatmentPeriod -= 1;
+        //TODO: we dont use incubPeriod in hospTreatment
         if (incubPeriod !=0) { //??? WTF: it's can't be
             incubPeriod -= 1;}
         boolean tmp = isResistant;
