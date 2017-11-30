@@ -1,67 +1,0 @@
-null device 
-          1 
-  |                                                                         |                                                                 |   0%  |                                                                         |.....                                                            |   8%
-   inline R code fragments
-
-  |                                                                         |...........                                                      |  17%
-label: functions (with options) 
-List of 4
- $ echo   : logi FALSE
- $ include: logi FALSE
- $ message: logi FALSE
- $ warning: logi FALSE
-
-  |                                                                         |................                                                 |  25%
-  ordinary text without R code
-
-  |                                                                         |......................                                           |  33%
-label: run (with options) 
-List of 3
- $ include: logi FALSE
- $ echo   : logi FALSE
- $ message: logi FALSE
-
-  |                                                                         |...........................                                      |  42%
-  ordinary text without R code
-
-  |                                                                         |................................                                 |  50%
-label: time (with options) 
-List of 3
- $ include: logi FALSE
- $ echo   : logi FALSE
- $ message: logi FALSE
-
-  |                                                                         |......................................                           |  58%
-  ordinary text without R code
-
-  |                                                                         |...........................................                      |  67%
-label: min (with options) 
-List of 3
- $ include: logi FALSE
- $ echo   : logi FALSE
- $ message: logi FALSE
-
-  |                                                                         |.................................................                |  75%
-   inline R code fragments
-
-  |                                                                         |......................................................           |  83%
-label: kable (with options) 
-List of 4
- $ message   : logi FALSE
- $ results   : chr "asis"
- $ echo      : logi FALSE
- $ scientific: logi FALSE
-
-  |                                                                         |............................................................     |  92%
-   inline R code fragments
-
-  |                                                                         |.................................................................| 100%
-label: plot1 (with options) 
-List of 3
- $ message: logi FALSE
- $ echo   : logi FALSE
- $ fig.cap: language paste("Estimation of monitoring intensity. Green line depicts values of functional, and blue line means optimal observation intensity.")
-
-
-/home/oksana/.local/bin/pandoc +RTS -K512m -RTS ooiReportGenerating.utf8.md --to latex --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash --output pandoc11de6b59da85.pdf --template /home/oksana/R/x86_64-pc-linux-gnu-library/3.3/rmarkdown/rmd/latex/default-1.17.0.2.tex --highlight-style tango --latex-engine pdflatex --variable graphics=yes --variable 'geometry:margin=1in' 
-[1] Report was generated!
