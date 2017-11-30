@@ -24,6 +24,6 @@ for (( i=1; i<=$repNum; i++ ))
 do
    abPath=$abund"/rep$i.txt"
    trPath=$trans"/trRep$i.txt"
-   java -jar ../target/microbiomeres-0.1-jar-with-dependencies.jar $iterNum $abPath $confile $trPath -quiet
+   java -jar ./microbiomeres.jar $iterNum $abPath $confile $trPath -quiet
    echo "Proccessed run "$i
 done
