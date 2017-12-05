@@ -75,7 +75,7 @@ Argument description
 * -t name of pathogen 
 * -c file with input parameters, config properties.
 
-As a result report will be in input diredtory in new folder /inputDir/plots.
+As a result report will be in input diredtory in new folder /inputDir/plots , something so [example of pdf-report](https://github.com/lpenguin/microbiota-resistome/blob/master/pictures/Report_2017-11-29%2012:39:54.pdf).
 
 Example:
 ```
