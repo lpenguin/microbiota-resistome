@@ -15,9 +15,27 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="transitions.svg">
+   sodipodi:docname="transitions.svg"
+   inkscape:export-filename="/media/oksana/data/worspaceJAVA/microbiota-resistome/for article/transitions.svg.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
   <defs
      id="defs4">
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker4593"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Lend">
+      <path
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:#fc4e2a;fill-opacity:1;fill-rule:evenodd;stroke:#fc4e2a;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         id="path4595"
+         inkscape:connector-curvature="0" />
+    </marker>
     <marker
        inkscape:stockid="Arrow2Lend"
        orient="auto"
@@ -320,7 +338,8 @@
        refX="0"
        id="Arrow2Lend-6-9-3"
        style="overflow:visible"
-       inkscape:isstock="true">
+       inkscape:isstock="true"
+       inkscape:collect="always">
       <path
          inkscape:connector-curvature="0"
          id="path4913-25-3-8"
@@ -425,6 +444,21 @@
          d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
          transform="matrix(-1.1,0,0,-1.1,-1.1,0)" />
     </marker>
+    <marker
+       inkscape:stockid="Arrow2Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow2Lend-6-9-3-3"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4913-25-3-8-6"
+         style="fill:#fc4e2a;fill-opacity:1;fill-rule:evenodd;stroke:#fc4e2a;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)" />
+    </marker>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -434,7 +468,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.88313726"
-     inkscape:cx="410.59912"
+     inkscape:cx="202.25099"
      inkscape:cy="609.27512"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -456,7 +490,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -922,33 +956,6 @@
     <text
        xml:space="preserve"
        style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:125%;font-family:sans-serif;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;baseline-shift:baseline;text-anchor:start;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
-       x="14.077225"
-       y="526.70142"
-       id="text4586-5-29"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan4588-6-6"
-         x="14.077225"
-         y="526.70142"
-         style="font-weight:bold;font-size:8.75px">NONINFECTED PERSON IN HOSPITAL  </tspan><tspan
-         sodipodi:role="line"
-         x="14.077225"
-         y="537.63892"
-         id="tspan4590-9-1"
-         style="font-size:8.75px">Hospital. There are patients without current infection. </tspan><tspan
-         sodipodi:role="line"
-         x="14.077225"
-         y="548.57642"
-         style="font-size:8.75px"
-         id="tspan4845">Person may be infected by resist or not pathogen. </tspan><tspan
-         sodipodi:role="line"
-         x="14.077225"
-         y="559.51392"
-         style="font-size:8.75px"
-         id="tspan4657-4">Microbiota resistance falls or doesn't exist.</tspan></text>
-    <text
-       xml:space="preserve"
-       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:125%;font-family:sans-serif;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;baseline-shift:baseline;text-anchor:start;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
        x="281.49298"
        y="594.83582"
        id="text4586-5-29-2"
@@ -969,7 +976,7 @@
          style="font-size:8.75px"
          id="tspan4657-4-5">Microbiota resistance falls or doesn't exist.</tspan></text>
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#fc4e2a;stroke-width:0.80000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend)"
+       style="fill:none;fill-rule:evenodd;stroke:#fc4e2a;stroke-width:1.01;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend)"
        d="m 63.53348,337.99663 129.98191,0.21373"
        id="path4882"
        inkscape:connector-curvature="0" />
@@ -993,7 +1000,7 @@
          style="font-weight:bold;font-size:7.5px;fill:#fc4e2a;fill-opacity:1"
          id="tspan4657-9">Infection probability</tspan></text>
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#fc4e2a;stroke-width:0.76846391;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend-6)"
+       style="fill:none;fill-rule:evenodd;stroke:#fc4e2a;stroke-width:1.01;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend-6)"
        d="M 50.538563,367.83207 194.89394,472.82433"
        id="path4882-4"
        inkscape:connector-curvature="0"
@@ -1017,7 +1024,7 @@
          style="font-weight:bold;font-size:7.5px;text-align:center;text-anchor:middle;fill:#fc4e2a;fill-opacity:1"
          id="tspan7690">without pathogen</tspan></text>
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#fc4e2a;stroke-width:0.76846391;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend-6-9)"
+       style="fill:none;fill-rule:evenodd;stroke:#fc4e2a;stroke-width:1.01;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend-6-9)"
        d="M 187.90173,482.01422 43.546348,377.02195"
        id="path4882-4-6"
        inkscape:connector-curvature="0"
@@ -1036,7 +1043,7 @@
          style="font-weight:bold;font-size:7.5px;text-align:center;text-anchor:middle;fill:#fc4e2a;fill-opacity:1"
          id="tspan7690-0">At the end of hospitolization period</tspan></text>
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#fc4e2a;stroke-width:0.80906719;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend-2)"
+       style="fill:none;fill-rule:evenodd;stroke:#fc4e2a;stroke-width:1.01;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend-2)"
        d="m 219.42357,462.53459 0.31234,-90.97189"
        id="path4882-43"
        inkscape:connector-curvature="0" />
@@ -1064,7 +1071,7 @@
          style="font-weight:bold;font-size:7.5px;text-align:center;text-anchor:middle;fill:#fc4e2a;fill-opacity:1"
          id="tspan9971">at the enf of hospitalization</tspan></text>
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#fc4e2a;stroke-width:0.87797093;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend-6-7)"
+       style="fill:none;fill-rule:evenodd;stroke:#fc4e2a;stroke-width:1.01;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend-6-7)"
        d="M 237.17878,353.13356 344.10942,527.83527"
        id="path4882-4-3"
        inkscape:connector-curvature="0"
@@ -1088,7 +1095,7 @@
          style="font-weight:bold;font-size:7.5px;text-align:center;text-anchor:middle;fill:#fc4e2a;fill-opacity:1"
          id="tspan7690-6">with pathogen</tspan></text>
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#fc4e2a;stroke-width:0.81816959;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend-9)"
+       style="fill:none;fill-rule:evenodd;stroke:#fc4e2a;stroke-width:1.01;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend-9)"
        d="M 245.55935,337.5207 486.097,337.6415"
        id="path4882-2"
        inkscape:connector-curvature="0" />
@@ -1133,12 +1140,12 @@
          style="font-weight:bold;font-size:7.5px;text-align:center;text-anchor:middle;fill:#fc4e2a;fill-opacity:1"
          id="tspan12566-8">treatment</tspan></text>
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#fc4e2a;stroke-width:0.67034966;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend-8)"
+       style="fill:none;fill-rule:evenodd;stroke:#fc4e2a;stroke-width:1.01;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend-8)"
        d="m 240.79729,237.74363 80.27839,-63.86517"
        id="path4882-8"
        inkscape:connector-curvature="0" />
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#fc4e2a;stroke-width:0.81684744;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend-6-9-3)"
+       style="fill:none;fill-rule:evenodd;stroke:#fc4e2a;stroke-width:1.01;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend-6-9-3)"
        d="M 308.97935,147.31723 54.597598,147.07942 54.049831,225.24896"
        id="path4882-4-6-3"
        inkscape:connector-curvature="0"
@@ -1163,7 +1170,7 @@
          style="font-weight:bold;font-size:7.5px;text-align:center;text-anchor:middle;fill:#fc4e2a;fill-opacity:1"
          id="tspan20558">treatment, if pathogen didn't become resist</tspan></text>
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#fc4e2a;stroke-width:1.00990486;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend-6-7-4)"
+       style="fill:none;fill-rule:evenodd;stroke:#fc4e2a;stroke-width:1.01;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend-6-7-4)"
        d="m 343.61828,191.84083 -0.11027,265.54282"
        id="path4882-4-3-6"
        inkscape:connector-curvature="0"
@@ -1242,7 +1249,7 @@
          points="591.64692,493.04337 591.64692,514.90524 569.54226,503.8515 569.54226,483.37664 " />
     </g>
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#fc4e2a;stroke-width:0.53069174;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend-6-7-8)"
+       style="fill:none;fill-rule:evenodd;stroke:#fc4e2a;stroke-width:1.01;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend-6-7-8)"
        d="m 516.50137,360.16556 64.70479,101.16163"
        id="path4882-4-3-60"
        inkscape:connector-curvature="0"
@@ -1266,7 +1273,7 @@
          style="font-weight:bold;font-size:7.5px;text-align:center;text-anchor:middle;fill:#fc4e2a;fill-opacity:1"
          id="tspan26273"> treatment period</tspan></text>
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#fc4e2a;stroke-width:0.7288689;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend-6-9-0)"
+       style="fill:none;fill-rule:evenodd;stroke:#fc4e2a;stroke-width:1.01;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend-6-9-0)"
        d="M 560.49504,507.41525 393.15958,542.35432"
        id="path4882-4-6-8"
        inkscape:connector-curvature="0"
@@ -1285,7 +1292,7 @@
          style="font-weight:bold;font-size:7.5px;text-align:center;text-anchor:middle;fill:#fc4e2a;fill-opacity:1"
          id="tspan7690-0-0">At the end of incubation period</tspan></text>
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#fc4e2a;stroke-width:0.79122585;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend-6-9-0-8)"
+       style="fill:none;fill-rule:evenodd;stroke:#fc4e2a;stroke-width:1.01;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend-6-9-0-8)"
        d="M 495.74559,353.97057 388.06744,517.02604"
        id="path4882-4-6-8-2"
        inkscape:connector-curvature="0"
@@ -1303,5 +1310,40 @@
          y="631.56714"
          style="font-weight:bold;font-size:7.49999999px;text-align:center;text-anchor:middle;fill:#fc4e2a;fill-opacity:1"
          id="tspan7690-0-0-7">At the end of incubation period</tspan></text>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#fc4e2a;stroke-width:1.01;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker4593)"
+       d="m 329.19097,571.03605 -292.595325,0.5914 -0.630053,-194.3997"
+       id="path4882-4-6-3-7"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccc"
+       inkscape:transform-center-x="-2.5696248"
+       inkscape:transform-center-y="-0.91017557" />
+    <text
+       xml:space="preserve"
+       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:125%;font-family:sans-serif;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;baseline-shift:baseline;text-anchor:start;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       x="45.069946"
+       y="526.43146"
+       id="text4586-5-29"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4588-6-6"
+         x="45.069946"
+         y="526.43146"
+         style="font-weight:bold;font-size:8.75px">NONINFECTED PERSON IN HOSPITAL  </tspan><tspan
+         sodipodi:role="line"
+         x="45.069946"
+         y="537.36896"
+         id="tspan4590-9-1"
+         style="font-size:8.75px">Hospital. There are patients without current infection. </tspan><tspan
+         sodipodi:role="line"
+         x="45.069946"
+         y="548.30646"
+         style="font-size:8.75px"
+         id="tspan4845">Person may be infected by resist or not pathogen. </tspan><tspan
+         sodipodi:role="line"
+         x="45.069946"
+         y="559.24396"
+         style="font-size:8.75px"
+         id="tspan4657-4">Microbiota resistance falls or doesn't exist.</tspan></text>
   </g>
 </svg>

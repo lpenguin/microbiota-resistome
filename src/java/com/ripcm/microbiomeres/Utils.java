@@ -25,7 +25,7 @@ public class Utils {
 
     public static boolean bernoulli(double p) { //?????????????????
         if (!(p >= 0.0 & p <= 1.0))
-            throw new IllegalArgumentException("Probability must be between 0.0 and 1.0");
+                throw new IllegalArgumentException("Probability must be between 0.0 and 1.0");
         double ans = random.nextDouble();
         return ans < p;
     }
