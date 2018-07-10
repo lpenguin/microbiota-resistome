@@ -16,7 +16,7 @@ public class ModelValues {
     public static double P_INCUB_TO_HOSPITAL;//probability of being hospitalized at the first day of antibiotic treatment
     public static double P_WRONG_TREATMENT;//probability of wrong antibiotic treatment
     public static double P_BE_INFECTED_IN_HOSPITAL; //probability to be isInfected after being hospitalized for a "healthy" person
-    public static final double P_TREATMENT_TO_HOSP = 0.01; //I don't know i defined variables right or not
+    public static final double P_TREATMENT_TO_HOSP = P_INCUB_TO_HOSPITAL; //it was 0.01; I don't know i defined variables right or not
 
     public static double C_GROWTH_COEF;//daily growth of microbiota resistance during antibiotic cource
     public static double C_DECREASE_COEF;//daily decrease of microbiota resistance in absence of antibiotics
