@@ -6,10 +6,13 @@ do
  in
  i) repNum=${OPTARG};;
  t) iterNum=${OPTARG};;
- o) outdir=$(readlink --canonicalize "${OPTARG}");;
+ o) preOutdir=${OPTARG};;
  c) confile=$(readlink --canonicalize "${OPTARG}");;
  esac
 done
+
+mkdir -p $preOutdir
+outdir=$(readlink --canonicalize "$preOutdir")
 
 abund=$outdir"/abundTables"
 trans=$outdir"/transTables"
