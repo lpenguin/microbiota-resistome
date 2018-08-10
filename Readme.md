@@ -35,7 +35,7 @@ To run model from command line use the following syntax:
 ./runVERA.sh -t <ticks> -o <outputDir> -c <configPropertiesFile> [-q]
 ```
 Argument description
-* -t run time, model observation time, model time ( in article we use "tiks");
+* -t run time, model observation time, model time;
 * -o output directory, which will contain running results with agent number in each state (abundLog) and agents transition between states (transLog).
 * -c file with input parameters, config properties.
 * -q optional feature when you don't want to call up model states; but it's possible don't use it.
@@ -53,7 +53,7 @@ For model multiple running from command line use the following syntax:
 ```
 Argument description
 * -i run number, how much you want to run model.
-* -t run time, model observation time, model time ( in article we use "tiks").
+* -t run time, model observation time, model time.
 * -o output directory, which will contain running results with agent number in each state (abundTables) and agents transition between states (transTables).
 * -c file with input parameters, config properties.
 
