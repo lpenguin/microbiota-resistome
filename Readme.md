@@ -3,7 +3,7 @@
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**VERA** is an agent model for simulation a spread of infection considering transmission of antibiotic resistance between human pathogens and gut microbiota. Algorithm of VERA model is following (Fig.1). 
  
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Step 1.** Input values of model parameters in config properties file or use default properties for *Shigella sp*. **Step 2.** Model VERA running. There is simulation of agent transmission between states. As a result we can get 1. an abundance table with agents number in each states and values main model indicators during simulation time, and 2. table with transmissions of each agent between states. **Step 3.** It's optional feature. At this point dynamic visualization of simulation processes, statistical analysis are available. As advanced feature we offer to estimate an optimal observation intensity. 
-<img align="center" src="https://github.com/lpenguin/microbiota-resistome/blob/master/pictures/pipline.png" alt="Developed using Browsersyncrrrrrrrr" title="Browsersyncrrrrrrr" hspace="20"/>
+<img align="center" src="https://github.com/lpenguin/microbiota-resistome/blob/master/pictures/pipline_vertical-1.png" alt="Developed using Browsersyncrrrrrrrr" title="Browsersyncrrrrrrr" hspace="20"/>
 
 
 ## Dependencies
