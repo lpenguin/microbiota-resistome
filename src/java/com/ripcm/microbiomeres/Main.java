@@ -74,6 +74,7 @@ public class Main {
             ModelValues.N_HOSP_ANT_TR_PERSON = Integer.valueOf(property.getProperty("N_HOSP_ANT_TR_PERSON"));
             ModelValues.N_PEOPLE_IN_TOWN = Integer.valueOf(property.getProperty("N_PEOPLE_IN_TOWN"));
 
+
         } catch (IOException e) {
             System.err.println("File not found "+ propertiesFile);
             e.printStackTrace();
