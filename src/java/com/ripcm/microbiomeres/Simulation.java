@@ -3,8 +3,8 @@ package com.ripcm.microbiomeres;
 import com.ripcm.microbiomeres.log.*;
 import com.ripcm.microbiomeres.person.*;
 
-import javax.jws.WebParam;
-import java.sql.Array;
+//import javax.jws.WebParam;
+//import java.sql.Array;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ import java.lang.*;
 
 
 /**
- * Created by anna on 20.07.16.
+ * Created by Oxana on 25.06.18.
  */
 public class Simulation {
 
@@ -39,8 +39,6 @@ public class Simulation {
         } else return ModelValues.P_TREATMENT_TO_HOSP;
     }
 
-    ; //probability to get to a hospital during antibiotic course
-
 
     //initial number of people
     private static final int N_PERS_HOSP = ModelValues.N_HOSP_ANT_TR_PERSON; //AntTreatedPerson, hospAntTrPersons | isInfected persons in hospital (state 6 - isInfected)
@@ -56,7 +54,7 @@ public class Simulation {
 
 
     //number of hospitals (not working yet, only 1 hospital now)
-    private static final int N_Hosp = 1; //number of hospitals
+    //private static final int N_Hosp = 1; //number of hospitals
 
 
     //pathogene properties
@@ -92,8 +90,8 @@ public class Simulation {
     //time and graphics parameters
     private int ticks = 0;
     private Random rand = new Random();
-    private static final int TOWN_W = 300;
-    private static final int HOSP_W = 200;
+    //private static final int TOWN_W = 300;
+    //private static final int HOSP_W = 200;
 
 
     //lists of persons
@@ -505,7 +503,7 @@ public class Simulation {
             }
             chekedPersons[healthyHospPeople.get(i).id] = true;
 
-            healthyHospPeople.get(i).tick(this, ModelValues.P_BE_INFECTED_IN_HOSPITAL, fixAvPathResistHosp);//resistance decreases, because in hospital people are treated with another antibiotic
+            healthyHospPeople.get(i).tick(this, ModelValues.P_BE_INFECTED_IN_HOSPITAL, 0);//resistance decreases, because in hospital people are treated with another antibiotic
             HealthyHospPerson pers = healthyHospPeople.get(i);
             //avMicResist = avMicResist + pers.micResistance;
             if (pers.treatmentPeriod == 0) {

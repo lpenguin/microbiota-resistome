@@ -16,7 +16,7 @@ public class HealthyHospPerson extends Person {
     public boolean isInfected = false;
     public boolean[] isResistant; //TRUE - resistant pathogen, FALSE -non resistant pathogen
     //public boolean pRes;
-    public void tick(Simulation simulation, double pBeInfectedInHospital, double[] pResistant){
+    public void tick(Simulation simulation, double pBeInfectedInHospital, double pHospitalized){
         for (int i = 0; i < simulation.N_ANT; i++){
             if(micResistance[i] !=0){
                 micResistance[i] = micResistance[i] - ModelValues.C_DECREASE_COEF[i];
@@ -26,7 +26,7 @@ public class HealthyHospPerson extends Person {
         if(treatmentPeriod >0) treatmentPeriod = treatmentPeriod -1;
         else {
             isInfected = Utils.bernoulli(pBeInfectedInHospital);
-            if(isInfected)  for (int i = 0; i < simulation.N_ANT; i++) isResistant[i] = Utils.bernoulli(pResistant[i]);
+            if(isInfected)  for (int i = 0; i < simulation.N_ANT; i++) isResistant[i] = Utils.bernoulli(simulation.getFixAvPathResistTown()[i]);
         }
     }
 }
