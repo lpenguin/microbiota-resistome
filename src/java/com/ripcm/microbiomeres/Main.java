@@ -70,6 +70,7 @@ public class Main {
             ModelValues.P_HEALTHY_HOSPITALIZE = Double.valueOf(property.getProperty("P_HEALTHY_HOSPITALIZE"));
             ModelValues.PERM_RESIST_LEVEL = convertToDoubleArray(property.getProperty("PERM_RESIST_LEVEL"));
 
+
             ModelValues.N_HOSP_ANT_TR_PERSON = Integer.valueOf(property.getProperty("N_HOSP_ANT_TR_PERSON"));
             ModelValues.N_PEOPLE_IN_TOWN = Integer.valueOf(property.getProperty("N_PEOPLE_IN_TOWN"));
 
