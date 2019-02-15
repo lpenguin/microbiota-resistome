@@ -11,23 +11,28 @@ import com.ripcm.microbiomeres.Utils;
 public class HealthyPerson extends Person {
 
     //constructor
-    public HealthyPerson (int id, double micResistance){
+    public HealthyPerson (int id, double[] micResistance){
         super(id, micResistance);
     }
     public boolean toBeChanged = false; // probability that agent will be isInfected
     public boolean toBeHospitalized = false; // probability that agent will be hospitalized with other illness
-    public boolean isResistant; // probability that pathogen will be resistant
+    public boolean[] isResistant; // probability that pathogen will be resistant
     //public boolean getToBeChanged(){return toBeChanged;}
 
     // marking a person to be isInfected
-    public void tick(Simulation simulation, double pInfected, double decreaseCoef, double pHospitalize){
-        if(micResistance !=0){
-            micResistance = micResistance - decreaseCoef;
-            if(micResistance < ModelValues.PERM_RESIST_LEVEL) {micResistance =ModelValues.PERM_RESIST_LEVEL;}
+    public void tick(Simulation simulation, double pInfected, double pHospitalize){
+        for (int i = 0; i < simulation.N_ANT; i++) {
+            if(micResistance[i] !=0){
+                micResistance[i] = micResistance[i] - ModelValues.C_DECREASE_COEF[i];
+                if(micResistance[i] < ModelValues.PERM_RESIST_LEVEL[i]) {micResistance[i] =ModelValues.PERM_RESIST_LEVEL[i];}
+            }
         }
+
         toBeChanged = Utils.bernoulli(pInfected);
         if (toBeChanged){
-            isResistant = Utils.bernoulli(simulation.getFixAvPathResistTown());
+            for (int i = 0; i < simulation.N_ANT; i++) {
+                isResistant[i] = Utils.bernoulli(simulation.getFixAvPathResistTown()[i]);
+            }
         } else { toBeHospitalized = Utils.bernoulli(pHospitalize);}
     }
 }
