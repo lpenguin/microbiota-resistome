@@ -12,7 +12,9 @@ public class HealthyPerson extends Person {
 
     //constructor
     public HealthyPerson (int id, double[] micResistance){
+
         super(id, micResistance);
+        isResistant = new boolean[micResistance.length];
     }
     public boolean toBeChanged = false; // probability that agent will be isInfected
     public boolean toBeHospitalized = false; // probability that agent will be hospitalized with other illness
