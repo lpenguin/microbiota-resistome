@@ -13,6 +13,7 @@ public class AntTreatedPerson extends InfectedPerson {
         this.treatmentPeriod = treatmentPeriod;
         this.pGetToHosp = pGetToHosp;
         this.antibioticType=antibioticType;
+        this.incrResist=incrResist;
     }
     public int antibioticType;
     public int treatmentPeriod;
@@ -25,11 +26,12 @@ public class AntTreatedPerson extends InfectedPerson {
         //TODO: we dont use incubPeriod in hospTreatment
         if (incubPeriod !=0) { //??? WTF: it's can't be
             incubPeriod -= 1;}
-        boolean tmp = isResistant[antibioticType];
-        changePathResistance(micResistance, ModelValues.C_PATHOGEN_RESIST_CHANGE_COEF);
-        if(!tmp && isResistant[antibioticType]) { //??? WTF: it's can't be, it's same pathogen, incub period mustn't be
-            incubPeriod = Simulation.getN_incLimit2();} //if pathogene becomes resistant the countdown begins
+
         if(incrResist){ // now it isn't needed !
+            boolean tmp = isResistant[antibioticType];
+            changePathResistance(micResistance, ModelValues.C_PATHOGEN_RESIST_CHANGE_COEF);
+            if(!tmp && isResistant[antibioticType]) { //??? WTF: it's can't be, it's same pathogen, incub period mustn't be
+                incubPeriod = Simulation.getN_incLimit2();} //if pathogene becomes resistant the countdown begins
             if(micResistance[antibioticType] !=1){
                 micResistance[antibioticType] = micResistance[antibioticType] + ModelValues.C_GROWTH_COEF[antibioticType];
                 if(micResistance[antibioticType] > 1) {micResistance[antibioticType] = 1;}
