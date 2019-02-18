@@ -21,5 +21,5 @@ trans=$outdir"/transLog"
 
 # echo "qp = $qp"
 
-java -jar ./microbiomeres.jar $iterNum $abund $confile $trans $qp
+java -jar ../target/microbiomeres-0.1-jar-with-dependencies.jar $iterNum $abund $confile $trans $qp
 
