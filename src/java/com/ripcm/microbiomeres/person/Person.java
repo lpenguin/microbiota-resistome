@@ -13,7 +13,7 @@ public abstract class Person {
 
     public Person(int id, double[] micResistance) {
         this.id = id;
-        this.micResistance = Arrays.copyOf(micResistance, micResistance.length);
+        this.micResistance = Arrays.copyOf(micResistance, micResistance.length);//its done so as micresistace from modelValues not to be overwritten
     }
 
     public double[] micResistance;

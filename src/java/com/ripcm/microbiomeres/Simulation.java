@@ -170,7 +170,7 @@ public class Simulation {
 //            int w = (10 + i * 20) % HOSP_W;
 //            int k = (10 + 20 * i - w) / HOSP_W;
 //            int h = k * 20 + 10;
-            hospAntTrPersons.add(new AntTreatedPerson(idIter, ModelValues.PERM_RESIST_LEVEL, new boolean[N_ANT], N_ANT_COURSE_HOSP + 1, 0, 0, N_ANT-1, false));
+            hospAntTrPersons.add(new AntTreatedPerson(idIter, ModelValues.PERM_RESIST_LEVEL, new boolean[N_ANT], N_ANT_COURSE_HOSP + 1, 0, 0, -1, false));
             transLogger.writeToTransLogFile(ticks, Integer.toString(idIter), "NA", "hospAntTrPersons");
             idIter -= 1;
         }
@@ -381,7 +381,7 @@ public class Simulation {
                 //removeIndexes.add(i);
                 i--;
                 if (getToHospital) {
-                    hospAntTrPersons.add(new AntTreatedPerson(pers.id, pers.micResistance, pers.isResistant, N_ANT_COURSE_HOSP + 1, 0, 0, N_ANT-1, false));
+                    hospAntTrPersons.add(new AntTreatedPerson(pers.id, pers.micResistance, pers.isResistant, N_ANT_COURSE_HOSP + 1, 0, 0, -1, false));
                     transLogger.writeToTransLogFile(ticks, Integer.toString(pers.id), "townIncPerPersons", "hospAntTrPersons");
                 } else {
                     if (!Utils.bernoulli(ModelValues.P_WRONG_TREATMENT)) {
@@ -412,7 +412,7 @@ public class Simulation {
                 //rMic = pers.micResistance;
                 townIncPerPersons2.remove(i);
                 i--;
-                hospAntTrPersons.add(new AntTreatedPerson(pers.id, pers.micResistance, pers.isResistant, N_ANT_COURSE_HOSP + 1, 0, 0,N_ANT-1, false));
+                hospAntTrPersons.add(new AntTreatedPerson(pers.id, pers.micResistance, pers.isResistant, N_ANT_COURSE_HOSP + 1, 0, 0,-1, false));
                 transLogger.writeToTransLogFile(ticks, Integer.toString(pers.id), "townIncPerPersons2", "hospAntTrPersons");
             }
         }
@@ -431,7 +431,7 @@ public class Simulation {
             if (pers.beHospitalized) {
                 townAntTrPersons.remove(i);
                 i--;
-                hospAntTrPersons.add(new AntTreatedPerson(pers.id, pers.micResistance, pers.isResistant, N_ANT_COURSE_HOSP + 1, 0, 0, N_ANT-1, false));
+                hospAntTrPersons.add(new AntTreatedPerson(pers.id, pers.micResistance, pers.isResistant, N_ANT_COURSE_HOSP + 1, 0, 0, -1, false));
                 transLogger.writeToTransLogFile(ticks, Integer.toString(pers.id), "townAntTrPersons", "hospAntTrPersons");
 
             } else if (pers.treatmentPeriod == 0) {
@@ -443,7 +443,7 @@ public class Simulation {
                     townHealthyPersons.add(new HealthyPerson(pers.id, pers.micResistance));
                     transLogger.writeToTransLogFile(ticks, Integer.toString(pers.id), "townAntTrPersons", "townHealthyPersons");
                 } else { // hospital treatment period should be for AB2 !!! OR NOT?????
-                    hospAntTrPersons.add(new AntTreatedPerson(pers.id, pers.micResistance, pers.isResistant, N_ANT_COURSE_HOSP + 1, 0, 0, N_ANT-1, false));
+                    hospAntTrPersons.add(new AntTreatedPerson(pers.id, pers.micResistance, pers.isResistant, N_ANT_COURSE_HOSP + 1, 0, 0, -1, false));
                     transLogger.writeToTransLogFile(ticks, Integer.toString(pers.id), "townAntTrPersons", "hospAntTrPersons");
                 }
             }
@@ -464,7 +464,7 @@ public class Simulation {
             if (pers.beHospitalized) {
                 townAntTrPersons2.remove(i);
                 i--;
-                hospAntTrPersons.add(new AntTreatedPerson(pers.id, pers.micResistance, pers.isResistant, N_ANT_COURSE_HOSP + 1, 0, 0, N_ANT-1, false));
+                hospAntTrPersons.add(new AntTreatedPerson(pers.id, pers.micResistance, pers.isResistant, N_ANT_COURSE_HOSP + 1, 0, 0, -1, false));
                 transLogger.writeToTransLogFile(ticks, Integer.toString(pers.id), "townAntTrPersons2", "hospAntTrPersons");
             } else if (pers.treatmentPeriod == 0) {
                 townAntTrPersons2.remove(i);
