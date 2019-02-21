@@ -8,18 +8,18 @@ import com.ripcm.microbiomeres.Simulation;
 public class IncPeriodPerson extends InfectedPerson{
 
     //Constructor
-    public IncPeriodPerson (int id, double micResistance,boolean isResistant, int incubPeriod){
+    public IncPeriodPerson (int id, double[] micResistance,boolean[] isResistant, int incubPeriod){
         super(id, micResistance,isResistant,incubPeriod);
     }
 
 
-    public void tick(Simulation simulation, double p, double decreaseCoef, double coefficient){
+    public void tick(Simulation simulation, double pInfected, double pHospit){
         incubPeriod -= 1;
-        changePathResistance(micResistance, coefficient);
-        if(micResistance !=0) {
-            micResistance = micResistance - decreaseCoef;
-            if (micResistance < ModelValues.PERM_RESIST_LEVEL) {
-                micResistance = ModelValues.PERM_RESIST_LEVEL;
+        changePathResistance(micResistance, ModelValues.C_PATHOGEN_RESIST_CHANGE_COEF);
+        for (int i = 0; i < simulation.N_ANT; i++) {
+            if(micResistance[i] !=0){
+                micResistance[i] = micResistance[i] - ModelValues.C_DECREASE_COEF[i];
+                if(micResistance[i] < ModelValues.PERM_RESIST_LEVEL[i]) {micResistance[i] =ModelValues.PERM_RESIST_LEVEL[i];}
             }
         }
     }

@@ -8,33 +8,40 @@ import com.ripcm.microbiomeres.Utils;
  */
 public class AntTreatedPerson extends InfectedPerson {
     //constructor
-    public AntTreatedPerson (int id, double micResistance, boolean isResistant, int treatmentPeriod, double pGetToHosp, int incubPeriod){
+    public AntTreatedPerson (int id, double[] micResistance, boolean[] isResistant, int treatmentPeriod, double pGetToHosp, int incubPeriod, int antibioticType, boolean incrResist){
         super(id, micResistance,isResistant, incubPeriod);
         this.treatmentPeriod = treatmentPeriod;
         this.pGetToHosp = pGetToHosp;
+        this.antibioticType=antibioticType;
+        this.incrResist=incrResist;
     }
-
+    public int antibioticType;
     public int treatmentPeriod;
     public double pGetToHosp;
     public boolean beHospitalized =false;
-    public void tick(Simulation simulation, double pBeHospitalized, double growthCoef, double coefficient){
+    public boolean incrResist;
+    public void tick(Simulation simulation,double pInfect, double pBeHospitalized){
         beHospitalized = Utils.bernoulli(pBeHospitalized);
         treatmentPeriod -= 1;
         //TODO: we dont use incubPeriod in hospTreatment
         if (incubPeriod !=0) { //??? WTF: it's can't be
             incubPeriod -= 1;}
-        boolean tmp = isResistant;
-        changePathResistance(micResistance, coefficient);
-        if(!tmp && isResistant) { //??? WTF: it's can't be, it's same pathogen, incub period mustn't be
-            incubPeriod = Simulation.getN_incLimit2();} //if pathogene becomes resistant the countdown begins
-        if(growthCoef > 0){ // now it isn't needed !
-            if(micResistance !=1){
-                micResistance = micResistance + growthCoef;
-                if(micResistance > 1) {micResistance = 1;}
+
+        if(incrResist){ // now it isn't needed !
+            boolean tmp = isResistant[antibioticType];
+            changePathResistance(micResistance, ModelValues.C_PATHOGEN_RESIST_CHANGE_COEF);
+            if(!tmp && isResistant[antibioticType]) { //??? WTF: it's can't be, it's same pathogen, incub period mustn't be
+                incubPeriod = Simulation.getN_incLimit2();} //if pathogene becomes resistant the countdown begins
+            if(micResistance[antibioticType] !=1){
+                micResistance[antibioticType] = micResistance[antibioticType] + ModelValues.C_GROWTH_COEF[antibioticType];
+                if(micResistance[antibioticType] > 1) {micResistance[antibioticType] = 1;}
             }
-        } else if(micResistance !=0){ //it's needed for HospAntreatedPersones so as resistance should decreases, because in hospital people are treated with another antibiotic!
-            micResistance += growthCoef;
-            if(micResistance <ModelValues.PERM_RESIST_LEVEL) {micResistance = ModelValues.PERM_RESIST_LEVEL;}
-        }
+        } else
+            for (int i = 0; i < simulation.N_ANT; i++){
+                if(micResistance[i] !=0){ //it's needed for HospAntreatedPersones so as resistance should decreases, because in hospital people are treated with another antibiotic!
+                    micResistance[i] -= ModelValues.C_DECREASE_COEF[i];
+                    if(micResistance[i] <ModelValues.PERM_RESIST_LEVEL[i]) {micResistance[i] = ModelValues.PERM_RESIST_LEVEL[i];}
+                }
+            }
     }
 }

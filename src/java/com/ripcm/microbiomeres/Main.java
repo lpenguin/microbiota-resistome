@@ -5,6 +5,7 @@ import com.ripcm.microbiomeres.person.ModelValues;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 
+import java.util.Arrays;
 import java.util.Properties;
 import java.io.*;
 /**
@@ -41,6 +42,12 @@ public class Main {
         return cliArgs;
     }
 
+    private static double[] convertToDoubleArray(String inputValue){
+        String[] parts = inputValue.split(",");
+        double[] doubleValues = Arrays.stream(parts).mapToDouble(Double::parseDouble).toArray();
+        return doubleValues;
+    }
+
     private static void readProperties(String propertiesFile) {
         FileInputStream fis;
         Properties property = new Properties();
@@ -54,17 +61,19 @@ public class Main {
             /*ModelValues.N_INFECTED_PEOPLE_PER_YEAR = Integer.valueOf(property.getProperty("N_INFECTED_PEOPLE_PER_YEAR"));
             ModelValues.N_PEOPLE_IN_COUNTRY = Double.valueOf(property.getProperty("N_PEOPLE_IN_COUNTRY"));*/
             ModelValues.C_INFECTED_COEF = Double.valueOf(property.getProperty("C_INFECTED_COEF"));
-            ModelValues.C_PATHOGEN_RESIST_CHANGE_COEF = Double.valueOf(property.getProperty("C_PATHOGEN_RESIST_CHANGE_COEF"));
+            ModelValues.C_PATHOGEN_RESIST_CHANGE_COEF = convertToDoubleArray(property.getProperty("C_PATHOGEN_RESIST_CHANGE_COEF"));
             ModelValues.P_INCUB_TO_HOSPITAL = Double.valueOf(property.getProperty("P_INCUB_TO_HOSPITAL"));
             ModelValues.P_WRONG_TREATMENT = Double.valueOf(property.getProperty("P_WRONG_TREATMENT"));
             ModelValues.P_BE_INFECTED_IN_HOSPITAL = Double.valueOf(property.getProperty("P_BE_INFECTED_IN_HOSPITAL"));
-            ModelValues.C_GROWTH_COEF = Double.valueOf(property.getProperty("C_GROWTH_COEF"));
-            ModelValues.C_DECREASE_COEF = Double.valueOf(property.getProperty("C_DECREASE_COEF"));
+            ModelValues.C_GROWTH_COEF = convertToDoubleArray(property.getProperty("C_GROWTH_COEF"));
+            ModelValues.C_DECREASE_COEF = convertToDoubleArray(property.getProperty("C_DECREASE_COEF"));
             ModelValues.P_HEALTHY_HOSPITALIZE = Double.valueOf(property.getProperty("P_HEALTHY_HOSPITALIZE"));
-            ModelValues.PERM_RESIST_LEVEL = Double.valueOf(property.getProperty("PERM_RESIST_LEVEL"));
+            ModelValues.PERM_RESIST_LEVEL = convertToDoubleArray(property.getProperty("PERM_RESIST_LEVEL"));
+
 
             ModelValues.N_HOSP_ANT_TR_PERSON = Integer.valueOf(property.getProperty("N_HOSP_ANT_TR_PERSON"));
             ModelValues.N_PEOPLE_IN_TOWN = Integer.valueOf(property.getProperty("N_PEOPLE_IN_TOWN"));
+
 
         } catch (IOException e) {
             System.err.println("File not found "+ propertiesFile);
@@ -79,7 +88,7 @@ public class Main {
 
         new Simulation(
                 cliArgs.iterationsCount,
-                new PersonAmountLogger(personAmountWriter),
+                new PersonAmountLogger(personAmountWriter,ModelValues.C_GROWTH_COEF.length),
                 new TransitionLogger(transLogWriter),
                 messagesWriter
         );
